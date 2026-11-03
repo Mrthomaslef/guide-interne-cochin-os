@@ -373,7 +373,7 @@
       color: var(--ink);
       box-shadow: var(--key-shadow);
       transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.15s ease;
-      min-height: 138px;
+      min-height: 92px;
       overflow: hidden;
     }
 
@@ -396,12 +396,11 @@
     /* Span full width for primary keys on mobile, or 2-col layout */
     .app-key.span-2 {
       grid-column: span 2;
-      min-height: 132px;
     }
 
     .key-top {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       gap: 10px;
     }
@@ -427,50 +426,13 @@
       color: var(--ink);
     }
 
-    .key-body {
-      margin-top: 14px;
-    }
-
     .key-title {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 800;
       font-size: 21px;
       letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin: 0 0 5px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .key-desc {
-      font-size: 13px;
-      color: var(--ink-soft);
-      margin: 0;
-      line-height: 1.35;
-      font-weight: 500;
-    }
-
-    .key-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 12px;
-    }
-
-    .micro-chip {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 4px 8px;
-      border-radius: 6px;
-      background: var(--bg-well);
-      color: var(--ink);
-      text-decoration: none;
-      border: 1px solid transparent;
-    }
-    .micro-chip:hover {
-      border-color: var(--ink);
+      line-height: 1.15;
+      margin: 12px 0 0;
     }
 
     /* Color accents per key */
@@ -574,70 +536,46 @@
         <!-- 01 : PLANNING INTERNES -->
         <a href="https://mrthomaslef.github.io/agenda-internes/" class="app-key key-planning">
           <div class="key-top">
-            <span class="key-index">01 // PLANNING</span>
+            <span class="key-index">01</span>
             <span class="key-arrow">↗</span>
           </div>
-          <div class="key-body">
-            <h2 class="key-title">Planning Internes</h2>
-            <p class="key-desc">Vacations Radio B, Gardes, Congés, Cas du Mardi &amp; Biblio du Vendredi.</p>
-            <div class="key-chips">
-              <span class="micro-chip">TDM SAU / IRM / Écho</span>
-              <span class="micro-chip" id="nextPresChip">Cas &amp; Biblio</span>
-            </div>
-          </div>
+          <h2 class="key-title">Planning Internes</h2>
         </a>
 
-        <!-- 02 : ANNUAIRE COCHIN (APP SÉPARÉE) -->
+        <!-- 02 : ANNUAIRE COCHIN -->
         <a href="./annuaire/index.html" class="app-key key-annuaire">
           <div class="key-top">
-            <span class="key-index">02 // APP DÉDIÉE</span>
+            <span class="key-index">02</span>
             <span class="key-arrow">→</span>
           </div>
-          <div class="key-body">
-            <h2 class="key-title">Annuaire Cochin</h2>
-            <p class="key-desc">Postes 5 chiffres (1XXXX), DECT, Consoles, Seniors Radio B &amp; Services.</p>
-            <div class="key-chips">
-              <span class="micro-chip" onclick="event.preventDefault();window.location.href='tel:0158412163'">☎ RI 12163</span>
-              <span class="micro-chip" onclick="event.preventDefault();window.location.href='tel:0158412488'">☎ CCA 12488</span>
-              <span class="micro-chip" onclick="event.preventDefault();window.location.href='tel:0158412360'">☎ Accueil 12360</span>
-            </div>
-          </div>
+          <h2 class="key-title">Annuaire Cochin</h2>
         </a>
 
         <!-- 03 : BIBLIO OSTÉO -->
         <a href="https://mrthomaslef.github.io/biblioosteo/" class="app-key key-biblio span-2">
           <div class="key-top">
-            <span class="key-index">03 // BIBLIOGRAPHIE</span>
+            <span class="key-index">03</span>
             <span class="key-arrow">↗</span>
           </div>
-          <div class="key-body">
-            <h2 class="key-title">BiblioOstéo Cochin</h2>
-            <p class="key-desc">Portail bibliographique, articles PDF &amp; résumés cliniques d'Imagerie Ostéo-Articulaire et Radiologie Interventionnelle.</p>
-          </div>
+          <h2 class="key-title">BiblioOstéo Cochin</h2>
         </a>
 
-        <!-- 04 : QUIZ IMAGERIE (1 IMAGE 1 DIAG) -->
+        <!-- 04 : QUIZ IMAGERIE -->
         <a href="https://mrthomaslef.github.io/quiz-imagerie/" class="app-key key-quiz1">
           <div class="key-top">
-            <span class="key-index">04 // QUIZ FLASH</span>
+            <span class="key-index">04</span>
             <span class="key-arrow">↗</span>
           </div>
-          <div class="key-body">
-            <h2 class="key-title">Quiz Imagerie</h2>
-            <p class="key-desc">1 Image, 1 Diagnostic — entraînement visuel rapide RX, TDM &amp; IRM.</p>
-          </div>
+          <h2 class="key-title">Quiz Imagerie</h2>
         </a>
 
         <!-- 05 : QUIZ COCHIN MSK -->
         <a href="https://radio-thomas-ten.vercel.app/#/" class="app-key key-quiz2">
           <div class="key-top">
-            <span class="key-index">05 // QUIZ MSK</span>
+            <span class="key-index">05</span>
             <span class="key-arrow">↗</span>
           </div>
-          <div class="key-body">
-            <h2 class="key-title">Quiz Cochin Ostéo</h2>
-            <p class="key-desc">Quiz complet d'imagerie musculosquelettique &amp; cas de sémiologie.</p>
-          </div>
+          <h2 class="key-title">Quiz Cochin Ostéo</h2>
         </a>
       </main>
     </div>
