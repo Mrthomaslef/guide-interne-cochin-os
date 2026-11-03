@@ -1,0 +1,448 @@
+[
+  {
+    "id": "tel-ri-direct",
+    "category": "Radiologie B — Secrétariats & Consoles",
+    "name": "Salle / Coordination Radiologie Interventionnelle (RI)",
+    "role": "Ligne directe RI (Ollier / Achard)",
+    "poste": "12163",
+    "phone": "01 58 41 21 63",
+    "fax": "",
+    "building": "Bâtiment Ollier / Achard",
+    "pinnedDefault": true
+  },
+  {
+    "id": "tel-bureau-cca",
+    "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
+    "name": "Bureau des CCA / Assistants Radio B",
+    "role": "Ligne directe Bureau CCA (Dr Lefèvre, Dr Monnier, Dr Talabard, Dr Lusi, Dr Allel)",
+    "poste": "12488 / 12489",
+    "phone": "01 58 41 24 88",
+    "fax": "",
+    "building": "Bâtiment Albarran / Ollier",
+    "pinnedDefault": true
+  },
+  {
+    "id": "tel-accueil-ollier",
+    "category": "Radiologie B — Secrétariats & Consoles",
+    "name": "Accueil & Rendez-vous Radio B (Ollier -1)",
+    "role": "Accueil examens TDM / IRM / Écho / Biopsies",
+    "poste": "12360 / 12350",
+    "phone": "01 58 41 23 60",
+    "fax": "01 58 41 24 49",
+    "building": "Bâtiment Ollier (1er sous-sol)",
+    "pinnedDefault": true
+  },
+  {
+    "id": "tel-ri-sec",
+    "category": "Radiologie B — Secrétariats & Consoles",
+    "name": "Secrétariat Radiologie Interventionnelle (RI)",
+    "role": "Programmation RI & Consultations — Bât. Ollier",
+    "poste": "14612 / 12476",
+    "phone": "01 58 41 46 12",
+    "fax": "01 58 41 24 55",
+    "building": "Bâtiment Ollier",
+    "pinnedDefault": true
+  },
+  {
+    "id": "tel-fortin",
+    "category": "Radiologie B — Secrétariats & Consoles",
+    "name": "Anne-Marie FORTIN-COZIC",
+    "role": "Secrétariat Chef de Service (Pr Antoine FEYDY) — Bât. Albarran",
+    "poste": "12483 / 13788",
+    "phone": "01 58 41 24 83",
+    "fax": "01 58 41 24 55",
+    "building": "Albarran / Ollier",
+    "pinnedDefault": true
+  },
+  {
+    "id": "tel-sellami",
+    "category": "Radiologie B — Secrétariats & Consoles",
+    "name": "Laila SELLAMI (Référente PACS Carestream)",
+    "role": "Informatique Imagerie / PACS Carestream (CCH, HTD, BRC)",
+    "poste": "DECT 12197",
+    "phone": "01 58 41 21 97",
+    "fax": "",
+    "building": "Imagerie Cochin",
+    "pinnedDefault": true
+  },
+  {
+    "id": "tel-mouyoungui",
+    "category": "Radiologie B — Secrétariats & Consoles",
+    "name": "Andress Gyslève MOUYOUNGUI",
+    "role": "Assistante Médico-Administrative (AMA) — Radio B",
+    "poste": "12684",
+    "phone": "01 58 41 26 84",
+    "fax": "01 58 41 24 55",
+    "building": "Bâtiment Ollier"
+  },
+  {
+    "id": "tel-gameiro",
+    "category": "Radiologie B — Secrétariats & Consoles",
+    "name": "Mariana GAMEIRO JORGE",
+    "role": "Assistante Médico-Administrative (AMA) — Radio B",
+    "poste": "11788",
+    "phone": "01 58 41 17 88",
+    "fax": "01 58 41 24 55",
+    "building": "Bâtiment Ollier"
+  },
+  {
+    "id": "tel-orak",
+    "category": "Radiologie B — Secrétariats & Consoles",
+    "name": "Secrétariat Pr Jean-Luc DRAPÉ (Mme ORAK)",
+    "role": "Assistante Médico-Administrative — Radio B",
+    "poste": "12502",
+    "phone": "01 58 41 25 02",
+    "fax": "01 58 41 21 51",
+    "building": "Bâtiment Ollier"
+  },
+  {
+    "id": "tel-menage",
+    "category": "Radiologie B — Secrétariats & Consoles",
+    "name": "Isabelle MENAGE",
+    "role": "Cadre Médico-Technique — Service de Radiologie B",
+    "poste": "12484",
+    "phone": "01 58 41 24 84",
+    "fax": "",
+    "building": "Bâtiment Ollier (1er sous-sol)"
+  },
+  {
+    "id": "tel-logistique-matos",
+    "category": "Radiologie B — Secrétariats & Consoles",
+    "name": "Logisticiens / Matériel RI (O. Peaudecerf / D. Vannifterik)",
+    "role": "Commandes & Matériel Interventionnel",
+    "poste": "DECT 12183",
+    "phone": "01 58 41 21 83",
+    "fax": "",
+    "building": "Radiologie B"
+  },
+  {
+    "id": "tel-feydy",
+    "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
+    "name": "Pr Antoine FEYDY",
+    "role": "PU-PH, Chef de Service — Radiologie B (Ostéo-Articulaire)",
+    "poste": "12483 / 12481",
+    "phone": "01 58 41 24 83",
+    "fax": "01 58 41 24 55",
+    "building": "Albarran / Ollier"
+  },
+  {
+    "id": "tel-drape",
+    "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
+    "name": "Pr Jean-Luc DRAPÉ",
+    "role": "PU-PH — Radiologie B",
+    "poste": "12502 / 12480",
+    "phone": "01 58 41 25 02",
+    "fax": "01 58 41 21 51",
+    "building": "Albarran / Ollier"
+  },
+  {
+    "id": "tel-mihoubi",
+    "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
+    "name": "Dr Fadila MIHOUBI BOUVIER",
+    "role": "PH — Responsable Pédagogique Internes & Staffs",
+    "poste": "12483",
+    "phone": "01 58 41 24 83",
+    "fax": "",
+    "building": "Albarran / Ollier"
+  },
+  {
+    "id": "tel-laporte",
+    "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
+    "name": "Dr Amandine LAPORTE",
+    "role": "PH / Senior — Référente Sarcomes & Radiologie B",
+    "poste": "12483 / 12488",
+    "phone": "01 58 41 24 83",
+    "fax": "",
+    "building": "Albarran / Ollier"
+  },
+  {
+    "id": "tel-costea",
+    "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
+    "name": "Dr Adina COSTEA",
+    "role": "Praticien Hospitalier — Radiologie B",
+    "poste": "12483",
+    "phone": "01 58 41 24 83",
+    "fax": "",
+    "building": "Albarran / Ollier"
+  },
+  {
+    "id": "tel-yang",
+    "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
+    "name": "Dr Malika YANG",
+    "role": "Praticien — IRM, Écho & Staff Rachis/Rhumato",
+    "poste": "12483",
+    "phone": "01 58 41 24 83",
+    "fax": "",
+    "building": "Albarran / Ollier"
+  },
+  {
+    "id": "tel-lefevre",
+    "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
+    "name": "Dr Thomas LEFÈVRE",
+    "role": "Chef de Clinique / Assistant — Radiologie Interventionnelle & Ostéo-Articulaire",
+    "poste": "12489 / 12163 (DECT 12504)",
+    "phone": "01 58 41 24 89",
+    "fax": "",
+    "building": "Albarran / Ollier / Achard"
+  },
+  {
+    "id": "tel-talabard",
+    "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
+    "name": "Dr Marie-Pauline TALABARD",
+    "role": "Chef de Clinique Assistant — Imagerie Ostéo-Articulaire & RI",
+    "poste": "12489",
+    "phone": "01 58 41 24 89",
+    "fax": "",
+    "building": "Albarran / Ollier"
+  },
+  {
+    "id": "tel-monnier",
+    "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
+    "name": "Dr Hippolyte MONNIER",
+    "role": "Chef de Clinique Assistant — Radiologie B & Staff CIRTAL",
+    "poste": "12488 / 12489",
+    "phone": "01 58 41 24 88",
+    "fax": "",
+    "building": "Albarran / Ollier"
+  },
+  {
+    "id": "tel-hamadouche",
+    "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
+    "name": "Dr Macil HAMADOUCHE",
+    "role": "Assistant Spécialiste — Imagerie Ostéo-Articulaire & RI",
+    "poste": "DECT 12504 / 12488",
+    "phone": "01 58 41 25 04",
+    "fax": "",
+    "building": "Albarran / Ollier"
+  },
+  {
+    "id": "tel-lusi",
+    "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
+    "name": "Dr Stéphano LUSI",
+    "role": "Chef de Clinique Assistant — Radiologie B",
+    "poste": "12488 / 12489",
+    "phone": "01 58 41 24 88",
+    "fax": "",
+    "building": "Albarran / Ollier"
+  },
+  {
+    "id": "tel-allel",
+    "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
+    "name": "Dr Yazid ALLEL",
+    "role": "Chef de Clinique Assistant — Radiologie B",
+    "poste": "12488 / 12489",
+    "phone": "01 58 41 24 88",
+    "fax": "",
+    "building": "Albarran / Ollier"
+  },
+  {
+    "id": "tel-radio-a",
+    "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
+    "name": "Service de Radiologie A (Pr A. Dohan / Pr M. Barat)",
+    "role": "Secrétariat Radiologie A & Gardes d'Imagerie",
+    "poste": "12490",
+    "phone": "01 58 41 24 90",
+    "fax": "",
+    "building": "Hôpital Cochin"
+  },
+  {
+    "id": "tel-ortho-biau",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Chirurgie Orthopédique & Oncologique — Pr David BIAU (Mme A. Tison)",
+    "role": "Secrétariat Pr Biau (Sarcomes & Tumeurs osseuses)",
+    "poste": "13037",
+    "phone": "01 58 41 30 37",
+    "fax": "01 58 41 30 60",
+    "building": "Bâtiment Ollier"
+  },
+  {
+    "id": "tel-ortho-cca",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Secrétariat CCA Chirurgie Orthopédique (M. Rahmani / A. P. Bitty / L. Guedj)",
+    "role": "Chirurgie Orthopédique et Traumatologique",
+    "poste": "13130 / 13082 / 13107",
+    "phone": "01 58 41 31 30",
+    "fax": "01 58 41 30 60",
+    "building": "Bâtiment Ollier"
+  },
+  {
+    "id": "tel-ortho-maalouf",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Chirurgie Orthopédique — Dr P. MAALOUF / Dr A. VILLARD / Banque Os",
+    "role": "Secrétariats Orthopédie (13077 / 13041 / 13104)",
+    "poste": "13077 / 13041",
+    "phone": "01 58 41 30 77",
+    "fax": "",
+    "building": "Bâtiment Ollier"
+  },
+  {
+    "id": "tel-rhumato-allanore",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Service de Rhumatologie (Pr Y. ALLANORE — Mme Canvel)",
+    "role": "Secrétariat Rhumatologie A/B & Demandes Cimentoplastie",
+    "poste": "12606 / 12619",
+    "phone": "01 58 41 26 06",
+    "fax": "01 58 41 40 97",
+    "building": "Bâtiment Achard / Hardy"
+  },
+  {
+    "id": "tel-anesth",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Service d'Anesthésie-Réanimation & Consultations d'Anesthésie",
+    "role": "Médecine Péri-Opératoire & Programmation AG",
+    "poste": "11563 / 11566 / 11528",
+    "phone": "01 58 41 15 63",
+    "fax": "",
+    "building": "Hôpital Cochin"
+  },
+  {
+    "id": "tel-uca",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Unité de Chirurgie Ambulatoire (UCA — Mme S. Azzopardi)",
+    "role": "Cadre de santé IBODE / Ambulatoire",
+    "poste": "14022",
+    "phone": "01 58 41 40 22",
+    "fax": "",
+    "building": "Bâtiment Port-Royal"
+  },
+  {
+    "id": "tel-achard-poly",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Polyclinique Bâtiment Achard RDC (Mme E. Vaugenot Nardy)",
+    "role": "Cadre de santé — Bâtiment Achard RDC",
+    "poste": "12412",
+    "phone": "01 58 41 24 12",
+    "fax": "",
+    "building": "Bâtiment Achard"
+  },
+  {
+    "id": "tel-anapath",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Service d'Anatomie et Cytologie Pathologiques (Anapath)",
+    "role": "Secrétariat Pathologie (Mme L. Chanat) & UF CRB-Cancer",
+    "poste": "13542 / 14719",
+    "phone": "01 58 41 35 42",
+    "fax": "",
+    "building": "Hôpital Cochin"
+  },
+  {
+    "id": "tel-douleur",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Centre d'Évaluation et Traitement de la Douleur (CETD — Pr Perrot)",
+    "role": "Secrétariat Douleur (Mme C. Taliercio) & UF Douleur",
+    "poste": "13040 / 12704",
+    "phone": "01 58 41 30 40",
+    "fax": "",
+    "building": "Hôpital Cochin"
+  },
+  {
+    "id": "tel-onco-thorax",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Oncologie Thoracique & Pneumologie",
+    "role": "DECT Oncologie 14352 / Secrétariats 12349 & 13099",
+    "poste": "DECT 14352 / 12349",
+    "phone": "01 58 41 23 49",
+    "fax": "01 58 41 23 85",
+    "building": "Hôpital Cochin"
+  },
+  {
+    "id": "tel-med-interne",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Service de Médecine Interne",
+    "role": "Secrétariat 12103 / DECT Interne 18184",
+    "poste": "12103 / DECT 18184",
+    "phone": "01 58 41 21 03",
+    "fax": "01 58 41 15 79",
+    "building": "Hôpital Cochin"
+  },
+  {
+    "id": "tel-hemato-clin",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Service d'Hématologie Clinique (Mme V. Kerouaz)",
+    "role": "Secrétariat Hématologie Clinique",
+    "poste": "12110 / 13919",
+    "phone": "01 58 41 21 10",
+    "fax": "",
+    "building": "Hôpital Cochin"
+  },
+  {
+    "id": "tel-endocrino",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Service d'Endocrinologie & Programmation Hospitalisations (Copernic)",
+    "role": "Secrétariat 11878 / Programmation Hospit 11888 & 13940",
+    "poste": "11878 / 11888",
+    "phone": "01 58 41 18 88",
+    "fax": "01 58 41 18 10",
+    "building": "Pavillon Copernic"
+  },
+  {
+    "id": "tel-hemostase",
+    "category": "Laboratoires, Pharmacie & Administration (DAM)",
+    "name": "Consultation & Laboratoire d'Hémostase / Hématologie Biologique",
+    "role": "Bilan d'hémostase pré-geste (13445) / Labo Hémato J. Dausset (14141 / 13520)",
+    "poste": "13445 / 14141",
+    "phone": "01 58 41 34 45",
+    "fax": "",
+    "building": "Bâtiment Jean Dausset"
+  },
+  {
+    "id": "tel-bio-auto",
+    "category": "Laboratoires, Pharmacie & Administration (DAM)",
+    "name": "Diagnostic Biologique Automatisé & Virologie / Parasitologie",
+    "role": "Biochimie-Garde (14146) / Viro-Parasito (11547)",
+    "poste": "14146 / 11547",
+    "phone": "01 58 41 41 46",
+    "fax": "",
+    "building": "Bâtiment Jean Dausset"
+  },
+  {
+    "id": "tel-pharmacie",
+    "category": "Laboratoires, Pharmacie & Administration (DAM)",
+    "name": "Pharmacie Hospitalière (Dr M-L. Brandely-Piat / Dr H. Palisson)",
+    "role": "Médicaments, Bléomycine ECT & Dispositifs Médicaux Stériles (MDS)",
+    "poste": "14275 / 12314 / 12982",
+    "phone": "01 58 41 42 75",
+    "fax": "01 58 41 18 84",
+    "building": "Service Pharmacie Cochin"
+  },
+  {
+    "id": "tel-hygiene",
+    "category": "Laboratoires, Pharmacie & Administration (DAM)",
+    "name": "Équipe Opérationnelle d'Hygiène (EOH — Mme L. Meyer)",
+    "role": "Hygiène Hospitalière Cochin / Hôtel-Dieu / Broca",
+    "poste": "12632",
+    "phone": "01 58 41 26 32",
+    "fax": "",
+    "building": "Hôpital Cochin"
+  },
+  {
+    "id": "tel-ucsa",
+    "category": "Laboratoires, Pharmacie & Administration (DAM)",
+    "name": "UCSA — Unité de Consultations et Soins Ambulatoires (La Santé)",
+    "role": "Liaison UCSA / Hôpital Cochin",
+    "poste": "12700",
+    "phone": "01 58 41 27 00",
+    "fax": "",
+    "building": "Cochin / La Santé"
+  },
+  {
+    "id": "tel-dam",
+    "category": "Laboratoires, Pharmacie & Administration (DAM)",
+    "name": "Bureau du Personnel Médical — Pavillon de Chasse (Mme A. N'Diaye / Mme M. Lambert)",
+    "role": "Gestion des Internes & Seniors Cochin (12295 / 11014 / 11071)",
+    "poste": "12295 / 11014",
+    "phone": "01 58 41 22 95",
+    "fax": "",
+    "building": "Port-Royal — Pavillon de Chasse"
+  },
+  {
+    "id": "tel-standard",
+    "category": "Laboratoires, Pharmacie & Administration (DAM)",
+    "name": "Standard Général Hôpital Cochin",
+    "role": "Standard AP-HP Cochin (27 rue du Faubourg Saint-Jacques)",
+    "poste": "11000 / 9",
+    "phone": "01 58 41 10 00",
+    "fax": "",
+    "building": "Hôpital Cochin"
+  }
+]

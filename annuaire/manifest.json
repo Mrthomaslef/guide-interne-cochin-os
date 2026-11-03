@@ -1,0 +1,17 @@
+{
+  "name": "Annuaire Cochin — Radio B & Services",
+  "short_name": "Annuaire Cochin",
+  "description": "Annuaire rapide DECT & Postes à 5 chiffres (01 58 41 XX XX) — Radiologie B Hôpital Cochin",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F2EFE9",
+  "theme_color": "#F2EFE9",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#141920"/>
+      <stop offset="100%" stop-color="#080B0F"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <rect x="28" y="28" width="456" height="456" rx="92" fill="none" stroke="#FF4D2D" stroke-width="3" stroke-opacity="0.35"/>
+  <!-- DECT Keypad dots -->
+  <g fill="#F4F1EA" opacity="0.22">
+    <circle cx="176" cy="148" r="10"/>
+    <circle cx="256" cy="148" r="10"/>
+    <circle cx="336" cy="148" r="10"/>
+    <circle cx="176" cy="212" r="10"/>
+    <circle cx="256" cy="212" r="10"/>
+    <circle cx="336" cy="212" r="10"/>
+  </g>
+  <!-- Handset Silhouette -->
+  <path d="M168 182 C142 208 148 268 198 318 C248 368 308 374 334 348 L362 320 C372 310 372 294 360 284 L322 254 C312 246 296 248 286 258 L272 272 C252 260 232 240 220 220 L234 206 C244 196 246 180 238 170 L208 132 C198 120 182 120 172 130 Z" fill="#F4F1EA"/>
+  <!-- Poste Badge -->
+  <rect x="126" y="388" width="260" height="54" rx="14" fill="#FF4D2D"/>
+  <text x="256" y="424" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-weight="800" font-size="28" fill="#FAF8F5" letter-spacing="3">12483·DECT</text>
+</svg>

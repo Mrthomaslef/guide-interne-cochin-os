@@ -1,0 +1,17 @@
+{
+  "name": "COCHIN·OS — Espace Internes Radio B",
+  "short_name": "Cochin OS",
+  "description": "Portail minimaliste des internes de Radiologie B (Ostéo-Articulaire & RI) — Hôpital Cochin",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F2EFE9",
+  "theme_color": "#F2EFE9",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
