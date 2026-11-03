@@ -207,6 +207,80 @@
       transform: translateY(1px);
     }
 
+    /* Top Daily Quiz Banner ("Je fais mes quiz journaliers") */
+    .daily-quiz-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 12px;
+      padding: 13px 16px;
+      background: var(--ink);
+      color: var(--bg-card);
+      border: 2px solid var(--ink);
+      border-radius: 13px;
+      text-decoration: none;
+      box-shadow: 0 4px 0 var(--vermilion);
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+    html.negatoscope .daily-quiz-banner {
+      background: linear-gradient(135deg, #132232 0%, #0D1824 100%);
+      color: var(--ink);
+      border-color: var(--xray);
+      box-shadow: 0 4px 0 var(--xray);
+    }
+    .daily-quiz-banner:hover {
+      transform: translateY(-1px);
+    }
+    .daily-quiz-banner:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 var(--vermilion);
+    }
+
+    .daily-quiz-left {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+
+    .daily-quiz-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--vermilion);
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .daily-quiz-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .daily-quiz-cta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--vermilion);
+      background: rgba(255, 77, 45, 0.16);
+      padding: 5px 10px;
+      border-radius: 7px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    html.negatoscope .daily-quiz-cta {
+      color: var(--xray);
+      background: var(--xray-soft);
+    }
+
     /* Live Guard / Quick Dial Bar */
     .telemetry-strip {
       display: flex;
@@ -438,6 +512,12 @@
         max-width: 100%;
         width: 100%;
       }
+      .daily-quiz-banner {
+        padding: 12px 13px;
+      }
+      .daily-quiz-text {
+        font-size: 14.5px;
+      }
     }
   </style>
 </head>
@@ -462,8 +542,17 @@
         </div>
       </header>
 
+      <!-- Top Banner : Je fais mes quiz journaliers (Chemin Quiz Cochin) -->
+      <a href="https://radio-thomas-ten.vercel.app/#/" class="daily-quiz-banner">
+        <div class="daily-quiz-left">
+          <span class="daily-quiz-badge">CHEMIN DU JOUR</span>
+          <span class="daily-quiz-text">Je fais mes quiz journaliers</span>
+        </div>
+        <span class="daily-quiz-cta">GO ↗</span>
+      </a>
+
       <!-- Live Guard + Instant Poste Dialer Strip -->
-      <div class="telemetry-strip" style="margin-top:12px;">
+      <div class="telemetry-strip" style="margin-top:10px;">
         <a href="https://mrthomaslef.github.io/agenda-internes/" class="garde-indicator" id="liveGardeStatus">
           <span class="pulse-dot"></span>
           <span id="gardeText">SEMAINE EN COURS • PLANNING RADIO B</span>
@@ -540,7 +629,7 @@
         </a>
 
         <!-- 05 : QUIZ COCHIN MSK -->
-        <a href="https://radio-thomas-ten.vercel.app" class="app-key key-quiz2">
+        <a href="https://radio-thomas-ten.vercel.app/#/" class="app-key key-quiz2">
           <div class="key-top">
             <span class="key-index">05 // QUIZ MSK</span>
             <span class="key-arrow">↗</span>
