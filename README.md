@@ -9,9 +9,3 @@ Portail minimaliste (« Papier Radio / Négatoscope ») donnant un accès direct
 3. **BiblioOstéo Cochin (`03 // BIBLIOGRAPHIE`)** — [mrthomaslef.github.io/biblioosteo](https://mrthomaslef.github.io/biblioosteo/)
 4. **Quiz Imagerie (`04 // QUIZ FLASH`)** — [mrthomaslef.github.io/quiz-imagerie](https://mrthomaslef.github.io/quiz-imagerie/) (*1 Image, 1 Diagnostic*)
 5. **Quiz Cochin Ostéo (`05 // QUIZ MSK`)** — [radio-thomas-ten.vercel.app](https://radio-thomas-ten.vercel.app)
-
-### Accès complémentaires (Dock)
-- **Agenda RI Seniors** (`agenda-cochin`)
-- **TPack PACS** (`dicomviewer`)
-- **TPack Cases** (`tpack-cases`)
-- **TomatoCalc** (`Tomatocalc`)
