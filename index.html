@@ -598,6 +598,22 @@
         </div>
       </header>
 
+      <!-- Stylized Current Semester Capsule : 2 Nov -> 2 Mai -->
+      <div class="semester-capsule">
+        <span class="sem-tag">
+          <span class="sem-dot"></span>
+          <span>SEMESTRE D'HIVER</span>
+        </span>
+        <div class="sem-timeline">
+          <span class="sem-date">2 NOV</span>
+          <div class="sem-track" title="Progression du semestre (2 nov – 2 mai)">
+            <div class="sem-fill" id="semFill"></div>
+          </div>
+          <span class="sem-date">2 MAI</span>
+        </div>
+        <span class="sem-progress-pill" id="semBadge">S1 / 26</span>
+      </div>
+
       <!-- Top Banner : Je fais mes quiz journaliers (Chemin Quiz Cochin) -->
       <a href="https://radio-thomas-ten.vercel.app/#/" class="daily-quiz-banner">
         <div class="daily-quiz-left">
@@ -700,6 +716,18 @@
       const t = now.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
       const el = document.getElementById("liveClock");
       if (el) el.textContent = `${d} ${t}`;
+
+      // Semester gauge (2 Nov 2026 -> 2 Mai 2027)
+      const start = new Date("2026-11-02T00:00:00");
+      const end = new Date("2027-05-02T23:59:59");
+      const totalMs = end - start;
+      const elapsedMs = Math.max(0, Math.min(totalMs, now - start));
+      const pct = Math.max(2, Math.min(100, Math.round((elapsedMs / totalMs) * 100)));
+      const weekNum = Math.max(1, Math.min(26, Math.floor(elapsedMs / (7 * 86400000)) + 1));
+      const fillEl = document.getElementById("semFill");
+      const badgeEl = document.getElementById("semBadge");
+      if (fillEl) fillEl.style.width = `${pct}%`;
+      if (badgeEl) badgeEl.textContent = `SEM. ${weekNum}/26`;
     }
 
     function handleQuickDial(e) {
