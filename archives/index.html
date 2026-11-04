@@ -357,14 +357,84 @@
     .search-row {
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: space-between;
+      gap: 10px;
       flex-wrap: wrap;
+    }
+
+    .search-mode-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1.5px dashed var(--line);
+      background: var(--bg);
+      flex-wrap: wrap;
+      transition: all 0.15s ease;
+    }
+    .search-mode-banner.active {
+      border-style: solid;
+      border-color: var(--xray);
+      background: var(--xray-soft);
+    }
+
+    .search-mode-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--ink-soft);
+    }
+    .search-mode-banner.active .search-mode-info {
+      color: var(--ink);
+    }
+
+    .btn-search-mode {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      height: 36px;
+      padding: 0 13px;
+      border-radius: 9px;
+      border: 2px solid var(--ink);
+      background: var(--bg-card);
+      color: var(--ink);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 2px 0 var(--ink);
+      transition: all 0.12s ease;
+      white-space: nowrap;
+    }
+    .btn-search-mode:hover {
+      border-color: var(--xray);
+      color: var(--xray);
+    }
+    .btn-search-mode.active {
+      background: var(--xray);
+      color: #FFFFFF;
+      border-color: var(--ink);
+    }
+    html.negatoscope .btn-search-mode.active {
+      color: #061018;
+      border-color: var(--xray);
     }
 
     .search-input-wrap {
       position: relative;
       flex: 1;
+      width: 100%;
       min-width: 220px;
+      display: none;
+    }
+    .search-input-wrap.visible {
+      display: block;
     }
 
     .search-icon {
@@ -383,7 +453,7 @@
       height: 40px;
       padding: 0 74px 0 34px;
       border-radius: 9px;
-      border: 1.5px solid var(--line);
+      border: 1.5px solid var(--xray);
       background: var(--bg);
       color: var(--ink);
       font-family: 'Inter', sans-serif;
@@ -393,7 +463,7 @@
       transition: border-color 0.15s ease;
     }
     .search-input:focus {
-      border-color: var(--xray);
+      border-color: var(--vermilion);
     }
 
     .search-kbd {
@@ -701,6 +771,85 @@
       color: var(--ink);
     }
 
+    .dossier-meta-badges {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .dossier-intern-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--xray);
+      background: var(--xray-soft);
+      border: 1px solid rgba(2, 132, 199, 0.28);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .dossier-year-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--ink);
+      background: var(--bg-well);
+      border: 1px solid var(--line);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .diag-masked-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      border: 1.5px dashed var(--line);
+      background: var(--bg);
+      color: var(--ink-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .diag-revealed-box {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1.5px solid var(--emerald);
+      background: var(--emerald-soft);
+      color: var(--ink);
+    }
+
+    .diag-revealed-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 800;
+      color: var(--emerald);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .diag-revealed-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14.5px;
+      font-weight: 800;
+      line-height: 1.25;
+      color: var(--ink);
+    }
+
     .card-context {
       font-size: 12.5px;
       line-height: 1.45;
@@ -909,8 +1058,8 @@
 
     .viewer-main {
       flex: 1;
-      display: grid;
-      grid-template-columns: 1.25fr 1fr;
+      display: flex;
+      flex-direction: column;
       min-height: 0;
       overflow: hidden;
     }
@@ -918,20 +1067,16 @@
       .viewer-window {
         height: 96dvh;
       }
-      .viewer-main {
-        grid-template-columns: 1fr;
-        overflow-y: auto;
-      }
     }
 
-    /* Left: Radiology / Slide Canvas + PACS Windowing */
+    /* Fullscreen Faithful Slide Stage + PACS Windowing */
     .slide-stage-col {
       background: #060A10;
-      border-right: 1.5px solid var(--line);
+      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 290px;
+      min-height: 320px;
       position: relative;
       overflow: hidden;
     }
@@ -944,7 +1089,7 @@
       overflow: hidden;
       position: relative;
       cursor: grab;
-      padding: 12px;
+      padding: 14px;
     }
     .pacs-viewport:active {
       cursor: grabbing;
@@ -953,8 +1098,11 @@
     .pacs-slide-img {
       max-width: 100%;
       max-height: 100%;
+      width: auto;
+      height: auto;
       object-fit: contain;
-      border-radius: 10px;
+      border-radius: 6px;
+      box-shadow: 0 12px 38px rgba(0, 0, 0, 0.65);
       transition: filter 0.1s ease;
       user-select: none;
       -webkit-user-drag: none;
@@ -965,8 +1113,8 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      padding: 7px 12px;
-      background: rgba(12, 19, 29, 0.92);
+      padding: 7px 14px;
+      background: rgba(12, 19, 29, 0.94);
       border-top: 1px solid #1E2C3B;
       color: #CBD5E1;
       font-family: 'JetBrains Mono', monospace;
@@ -996,96 +1144,9 @@
       border-color: #38BDF8;
     }
 
-    /* Right: Slide Clinical Content, Bullets, Takeaways & Speaker Notes */
-    .slide-text-col {
-      padding: 18px 20px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      background: var(--bg-card);
-    }
-
-    .slide-step-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .slide-step-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 800;
-      color: var(--xray);
-      background: var(--xray-soft);
-      padding: 4px 9px;
-      border-radius: 6px;
-    }
-
-    .slide-heading {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 20px;
-      font-weight: 800;
-      line-height: 1.22;
-      margin: 0;
-      color: var(--ink);
-    }
-
-    .slide-bullets {
-      margin: 0;
-      padding-left: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-      font-size: 14px;
-      line-height: 1.52;
-      color: var(--ink-soft);
-    }
-    .slide-bullets li::marker {
-      color: var(--vermilion);
-      font-weight: 800;
-    }
-
-    .takeaway-box {
-      padding: 12px 14px;
-      border-radius: 10px;
-      background: var(--emerald-soft);
-      border-left: 4px solid var(--emerald);
-      font-size: 13px;
-      line-height: 1.45;
-      color: var(--ink);
-    }
-    .takeaway-box strong {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      text-transform: uppercase;
-      color: var(--emerald);
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .notes-box {
-      padding: 11px 13px;
-      border-radius: 9px;
-      background: var(--bg-well);
-      border: 1px solid var(--line);
-      font-size: 12.5px;
-      line-height: 1.45;
-      color: var(--ink-soft);
-    }
-    .notes-box strong {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10.5px;
-      color: var(--ink);
-      display: block;
-      margin-bottom: 3px;
-    }
-
     /* Blind / Staff Quiz Mode Blur */
     .blind-blur {
-      filter: blur(7px);
+      filter: blur(10px);
       user-select: none;
       transition: filter 0.2s ease;
       cursor: pointer;
@@ -1304,6 +1365,93 @@
       resize: vertical;
     }
 
+    .sem-mode-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .sem-mode-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 9px 10px;
+      border-radius: 10px;
+      border: 1.5px solid var(--line);
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.12s ease;
+      text-align: center;
+    }
+    .sem-mode-btn:hover {
+      border-color: var(--ink);
+    }
+    .sem-mode-btn.active {
+      border-color: var(--xray);
+      background: var(--xray);
+      color: #FFFFFF;
+      box-shadow: 0 2px 0 var(--ink);
+    }
+    html.negatoscope .sem-mode-btn.active {
+      color: #061018;
+    }
+    .sem-mode-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      opacity: 0.88;
+    }
+
+    .past-semester-box {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      padding: 11px 12px;
+      border-radius: 10px;
+      background: var(--bg-well);
+      border: 1.5px solid var(--line);
+      margin-top: 4px;
+    }
+    .past-semester-box.visible {
+      display: flex;
+    }
+
+    .year-pills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .year-pill-btn {
+      border: 1.5px solid var(--line);
+      background: var(--bg-card);
+      color: var(--ink);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 5px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+    .year-pill-btn:hover {
+      border-color: var(--xray);
+    }
+    .year-pill-btn.active {
+      background: var(--xray);
+      color: #FFFFFF;
+      border-color: var(--xray);
+    }
+    html.negatoscope .year-pill-btn.active {
+      color: #061018;
+    }
+
     .empty-state {
       text-align: center;
       padding: 42px 20px;
@@ -1358,7 +1506,7 @@
             type="search"
             id="searchInput"
             class="search-input"
-            placeholder="Rechercher un Bone Club, Cas du mardi, Biblio du vendredi, Cours ou texte dans une diapo..."
+            placeholder="Rechercher un titre, prénom d'interne, année, Bone Club, Cas, Biblio, Cours..."
             autocomplete="off"
           />
           <span class="search-kbd">/</span>
@@ -1376,7 +1524,7 @@
           <span class="cat-count" id="count-bone-club">0</span>
         </button>
         <button type="button" class="cat-tab tab-cas" data-cat="cas" onclick="setCategory('cas')">
-          <span>🩻 CAS DU MARDI</span>
+          <span>🩺 CAS DU MARDI</span>
           <span class="cat-count" id="count-cas">0</span>
         </button>
         <button type="button" class="cat-tab tab-biblio" data-cat="biblio" onclick="setCategory('biblio')">
@@ -1397,7 +1545,7 @@
   </div>
 
   <!-- ===================================================================== -->
-  <!-- 5. MODAL : VISIONNEUSE DIAPORAMA & NÉGATOSCOPE PACS                   -->
+  <!-- 5. MODAL : VISIONNEUSE DIAPORAMA (AFFICHAGE STRICTEMENT IDENTIQUE)    -->
   <!-- ===================================================================== -->
   <div id="viewerModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="viewerTitle">
     <div class="viewer-window" onclick="event.stopPropagation()">
@@ -1405,9 +1553,10 @@
         <div class="viewer-title-wrap">
           <span id="viewerTypeBadge" class="type-badge type-cas">CAS DU MARDI</span>
           <h2 id="viewerTitle" class="viewer-title">Titre de la présentation</h2>
+          <span id="viewerDossierMeta" class="dossier-year-badge" style="display:none"></span>
         </div>
         <div class="viewer-toolbar">
-          <button type="button" id="btnBlindMode" class="v-btn" onclick="toggleBlindMode()" title="Masquer le diagnostic jusqu'à la fin pour s'entraîner en mode Staff">
+          <button type="button" id="btnBlindMode" class="v-btn" onclick="toggleBlindMode()" title="Masquer la dernière diapo / diagnostic pour s'entraîner en mode Staff">
             🙈 Mode Staff (Diag caché)
           </button>
           <a id="btnDownloadPptx" href="#" download class="v-btn" title="Télécharger le fichier PowerPoint (.pptx) compressé">
@@ -1423,10 +1572,10 @@
       </div>
 
       <div class="viewer-main">
-        <!-- Left column: Visual slide + PACS zoom/contrast controls -->
+        <!-- Full-stage slide viewer: exact PowerPoint slide aspect ratio & layout -->
         <div class="slide-stage-col">
           <div class="pacs-viewport" id="pacsViewport">
-            <img id="viewerSlideImg" class="pacs-slide-img" src="" alt="Diapositive" />
+            <img id="viewerSlideImg" class="pacs-slide-img" src="" alt="Diapositive" onclick="this.classList.remove('blind-blur')" />
           </div>
           <div class="pacs-controls-bar">
             <span id="pacsSlideCounter">DIAPO 1 / 5</span>
@@ -1437,28 +1586,6 @@
               <button type="button" class="pacs-mini-btn" onclick="adjustContrast(20)" title="Augmenter le contraste radiologique">◐ Contraste</button>
               <button type="button" class="pacs-mini-btn" onclick="toggleInvert()" id="invertBtn" title="Inverser Négatif / Positif (Touche I)">🔄 Négatif</button>
             </div>
-          </div>
-        </div>
-
-        <!-- Right column: Structured slide text, bullets, takeaway & speaker notes -->
-        <div class="slide-text-col">
-          <div class="slide-step-header">
-            <span class="slide-step-badge" id="viewerSlideStage">ÉTAPE 1</span>
-            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-muted)" id="viewerSlideAuthor"></span>
-          </div>
-
-          <h3 class="slide-heading" id="viewerSlideHeading">Titre de la diapositive</h3>
-
-          <ul class="slide-bullets" id="viewerSlideBullets"></ul>
-
-          <div class="takeaway-box" id="viewerTakeawayBox">
-            <strong>💡 Message clé à retenir</strong>
-            <span id="viewerTakeawayText"></span>
-          </div>
-
-          <div class="notes-box" id="viewerNotesBox">
-            <strong>🎙️ Notes de présentation / Commentaires Staff Cochin</strong>
-            <span id="viewerNotesText"></span>
           </div>
         </div>
       </div>
@@ -1505,22 +1632,56 @@
           />
         </div>
 
-        <!-- 2. Catégorie + Titre + 1 bouton Déposer -->
-        <form id="archiveForm" onsubmit="handleSaveArchive(event)" style="display:flex;flex-direction:column;gap:14px">
+        <!-- 2. Catégorie + Titre + Prénom + Semestre/Année + 1 bouton Déposer -->
+        <form id="archiveForm" onsubmit="handleSaveArchive(event)" style="display:flex;flex-direction:column;gap:13px">
           <div class="field-group">
             <label class="field-label">CATÉGORIE</label>
             <input type="hidden" id="formCategory" value="cas" />
             <div class="cat-pick-grid">
               <button type="button" class="cat-pick-btn" data-pick-cat="bone-club" onclick="selectUploadCategory('bone-club')">🦴 Bone Club</button>
-              <button type="button" class="cat-pick-btn active" data-pick-cat="cas" onclick="selectUploadCategory('cas')">🩻 Cas du mardi</button>
+              <button type="button" class="cat-pick-btn active" data-pick-cat="cas" onclick="selectUploadCategory('cas')">🩺 Cas du mardi</button>
               <button type="button" class="cat-pick-btn" data-pick-cat="biblio" onclick="selectUploadCategory('biblio')">📚 Biblio du vendredi</button>
               <button type="button" class="cat-pick-btn" data-pick-cat="cours" onclick="selectUploadCategory('cours')">🎓 Cours</button>
             </div>
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="formTitle">TITRE</label>
+            <label class="field-label" for="formTitle">TITRE DU DOSSIER</label>
             <input type="text" id="formTitle" class="field-input" required placeholder="Rempli automatiquement depuis vos diapos..." />
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="formInternName">PRÉNOM DE L'INTERNE</label>
+            <input type="text" id="formInternName" class="field-input" required placeholder="Ex : Thomas, Clara..." autocomplete="given-name" />
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">SEMESTRE & ANNÉE</label>
+            <input type="hidden" id="formSemesterMode" value="current" />
+            <div class="sem-mode-grid">
+              <button type="button" id="btnSemCurrent" class="sem-mode-btn active" onclick="setSemesterMode('current')">
+                <span>📅 Semestre en cours</span>
+                <span class="sem-mode-sub" id="currentSemSubLabel">Hiver 2026</span>
+              </button>
+              <button type="button" id="btnSemPast" class="sem-mode-btn" onclick="setSemesterMode('past')">
+                <span>🗂️ Anciens semestres</span>
+                <span class="sem-mode-sub" id="pastSemSubLabel">Choisir l'année</span>
+              </button>
+            </div>
+
+            <div id="pastSemesterBox" class="past-semester-box">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+                <label class="field-label" for="formArchiveYear" style="margin:0;color:var(--ink)">CHOISIR L'ANNÉE DU SEMESTRE :</label>
+                <div style="display:flex;gap:5px">
+                  <button type="button" class="year-pill-btn active" data-sem-season="Hiver" onclick="selectPastSeason('Hiver')">❄️ Hiver</button>
+                  <button type="button" class="year-pill-btn" data-sem-season="Été" onclick="selectPastSeason('Été')">☀️ Été</button>
+                </div>
+              </div>
+              <div id="quickYearPills" class="year-pills-grid"></div>
+              <select id="formArchiveYear" class="field-select" onchange="handlePastYearSelectChange(this.value)">
+                <option value="">— Sélectionner l'année —</option>
+              </select>
+            </div>
           </div>
 
           <button type="submit" id="btnSubmitArchive" class="btn-studio-open btn-submit-full">
@@ -1711,6 +1872,27 @@
       rebuildMergedCatalog(baseIndex, customDecksList);
       renderRegionPills();
       renderCatalog();
+
+      // Automatically upgrade any previously saved custom deck in IndexedDB so its slides match the exact PPTX layout
+      upgradeLegacyCustomDecksInBackground(baseIndex);
+    }
+
+    async function upgradeLegacyCustomDecksInBackground(baseIndex) {
+      let updatedAny = false;
+      for (const cd of customDecksList) {
+        if (cd && cd.pptxDataUrl && cd.renderVersion !== 3) {
+          const ok = await upgradeDeckSlidesFromPptxDataUrl(cd);
+          if (ok) updatedAny = true;
+        }
+      }
+      if (updatedAny) {
+        rebuildMergedCatalog(baseIndex, customDecksList);
+        renderCatalog();
+        if (currentDeck && decksById[currentDeck.id]) {
+          currentDeck = decksById[currentDeck.id];
+          renderActiveSlide();
+        }
+      }
     }
 
     function rebuildMergedCatalog(baseIndex, customList) {
@@ -1756,7 +1938,7 @@
       const summaries = archive.slideSummaries || (archive.slides || []).map(s => ({
         index: s.index,
         title: s.title,
-        searchText: [s.title, ...(s.bullets || []), s.takeaway || "", s.notes || ""].join(" ")
+        searchText: [s.title, ...(s.bullets || []), s.takeaway || ""].join(" ")
       }));
       for (const s of summaries) {
         if (normalizeStr(s.searchText).includes(normQuery)) {
@@ -1787,6 +1969,9 @@
           item.region,
           item.modality,
           item.author,
+          item.internName,
+          item.year,
+          item.semester,
           item.diagnosis,
           item.clinicalContext,
           item.journal,
@@ -1824,6 +2009,17 @@
           || (item.slides && item.slides[0] && item.slides[0].image)
           || buildSlidePlaceholderSvg(item.shortTitle || item.title, 1, slideTotal);
 
+        const internFirstName = (item.internName || item.author || "").trim();
+        const yearMatch = String(item.year || item.semester || item.date || "").match(/\b(20\d{2})\b/);
+        const archiveYear = (item.year || (yearMatch ? yearMatch[1] : "")).trim();
+        const semesterLabel = (item.semester || "").trim();
+
+        const footerSummaryParts = [];
+        if (internFirstName) footerSummaryParts.push(internFirstName);
+        if (archiveYear) footerSummaryParts.push(archiveYear);
+        else if (item.date) footerSummaryParts.push(item.date);
+        const footerSummary = footerSummaryParts.join(" · ");
+
         return `
           <article class="archive-card" onclick="openViewer('${escapeHtml(item.id)}', ${jumpSlideIdx})">
             <div class="card-cover">
@@ -1847,6 +2043,10 @@
 
             <div class="card-body">
               <h2 class="card-title">${escapeHtml(item.shortTitle || item.title)}</h2>
+              <div class="dossier-meta-badges">
+                ${internFirstName ? `<span class="dossier-intern-badge" title="Prénom de l'interne">👤 ${escapeHtml(internFirstName)}</span>` : ""}
+                ${archiveYear ? `<span class="dossier-year-badge" title="${escapeHtml(semesterLabel || archiveYear)}">📅 ${escapeHtml(archiveYear)}${semesterLabel && !semesterLabel.includes(archiveYear) ? ` · ${escapeHtml(semesterLabel)}` : (semesterLabel ? ` (${escapeHtml(semesterLabel)})` : "")}</span>` : ""}
+              </div>
               ${item.clinicalContext ? `<p class="card-context">${escapeHtml(item.clinicalContext)}</p>` : ""}
 
               ${matchedSlide ? `
@@ -1858,7 +2058,7 @@
             </div>
 
             <div class="card-footer">
-              <span class="author-label">${escapeHtml(item.date || "")}</span>
+              <span class="author-label">${escapeHtml(footerSummary)}</span>
               <div class="card-actions" onclick="event.stopPropagation()">
                 ${(item.pptxDataUrl || item.pptxUrl) ? `
                   <a href="${escapeHtml(item.pptxDataUrl || item.pptxUrl)}" download="${escapeHtml(item.shortTitle || item.id)}.pptx" class="btn-card-pptx" title="Télécharger le PowerPoint (.pptx)">
@@ -1889,6 +2089,11 @@
       }
       if (!deck) return;
 
+      if (deck.pptxDataUrl && deck.renderVersion !== 3) {
+        await upgradeDeckSlidesFromPptxDataUrl(deck);
+        renderCatalog();
+      }
+
       currentDeck = deck;
       currentSlideIdx = Math.max(0, Math.min((deck.slides || []).length - 1, startSlideIndex));
       blindMode = false;
@@ -1899,6 +2104,19 @@
       badge.textContent = categoryLabel(deck.category);
 
       document.getElementById("viewerTitle").textContent = deck.title;
+
+      const metaBadge = document.getElementById("viewerDossierMeta");
+      if (metaBadge) {
+        const intern = (deck.internName || deck.author || "").trim();
+        const yr = (deck.year || "").trim();
+        const parts = [intern ? `👤 ${intern}` : "", yr ? `📅 ${yr}` : ""].filter(Boolean);
+        if (parts.length > 0) {
+          metaBadge.textContent = parts.join(" · ");
+          metaBadge.style.display = "inline-flex";
+        } else {
+          metaBadge.style.display = "none";
+        }
+      }
 
       // PPTX download button
       const dlBtn = document.getElementById("btnDownloadPptx");
@@ -1954,42 +2172,10 @@
       const slide = slides[currentSlideIdx];
 
       document.getElementById("pacsSlideCounter").textContent = `DIAPO ${currentSlideIdx + 1} / ${slides.length}`;
-      document.getElementById("viewerSlideStage").textContent = slide.stage
-        ? `DIAPO ${currentSlideIdx + 1}/${slides.length} • ${slide.stage.toUpperCase()}`
-        : `DIAPO ${currentSlideIdx + 1} SUR ${slides.length}`;
-      document.getElementById("viewerSlideAuthor").textContent = currentDeck.author || "";
 
       const imgEl = document.getElementById("viewerSlideImg");
       imgEl.src = slide.image || currentDeck.coverImage || buildSlidePlaceholderSvg(slide.title, currentSlideIdx + 1, slides.length);
-
-      const headingEl = document.getElementById("viewerSlideHeading");
-      headingEl.textContent = slide.title || `Diapositive ${currentSlideIdx + 1}`;
-      headingEl.classList.toggle("blind-blur", blindMode && currentSlideIdx >= slides.length - 2);
-
-      const bulletsEl = document.getElementById("viewerSlideBullets");
-      bulletsEl.innerHTML = (slide.bullets || []).map((b, i) => {
-        const shouldBlur = blindMode && (currentSlideIdx >= slides.length - 2 || i === (slide.bullets.length - 1));
-        return `<li class="${shouldBlur ? "blind-blur" : ""}" onclick="this.classList.remove('blind-blur')">${escapeHtml(b)}</li>`;
-      }).join("");
-
-      const takeawayBox = document.getElementById("viewerTakeawayBox");
-      const takeawayText = document.getElementById("viewerTakeawayText");
-      if (slide.takeaway) {
-        takeawayBox.style.display = "block";
-        takeawayText.textContent = slide.takeaway;
-        takeawayText.className = blindMode ? "blind-blur" : "";
-      } else {
-        takeawayBox.style.display = "none";
-      }
-
-      const notesBox = document.getElementById("viewerNotesBox");
-      const notesText = document.getElementById("viewerNotesText");
-      if (slide.notes) {
-        notesBox.style.display = "block";
-        notesText.textContent = slide.notes;
-      } else {
-        notesBox.style.display = "none";
-      }
+      imgEl.classList.toggle("blind-blur", blindMode && currentSlideIdx >= slides.length - 1);
 
       document.getElementById("btnPrevSlide").disabled = currentSlideIdx === 0;
       document.getElementById("btnNextSlide").disabled = currentSlideIdx === slides.length - 1;
@@ -2000,7 +2186,7 @@
           type="button"
           class="slide-dot-btn ${idx === currentSlideIdx ? "active" : ""}"
           onclick="goToSlide(${idx})"
-          title="${escapeHtml(s.title)}"
+          title="${escapeHtml(s.title || `Diapo ${idx + 1}`)}"
         >${idx + 1}</button>
       `).join("");
     }
@@ -2051,7 +2237,108 @@
       applyPacsTransform();
     }
 
-    // 8. ULTRA-SIMPLE .PPTX DEPOSIT & AUTO-COMPRESSION
+    // 8. ULTRA-SIMPLE .PPTX DEPOSIT & EXACT SLIDE RENDERER
+    const INTERN_NAME_STORAGE_KEY = "cochin_os_intern_firstname_v1";
+    let selectedPastSeason = "Hiver";
+
+    function getCurrentSemesterInfo() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth() + 1; // 1..12
+      // Internat de médecine : Semestre d'hiver (Nov–Avril), Semestre d'été (Mai–Oct)
+      if (month >= 11) {
+        return {
+          season: "Hiver",
+          year: String(year),
+          label: `Hiver ${year}–${year + 1}`,
+          shortLabel: `Hiver ${year}`
+        };
+      }
+      if (month <= 4) {
+        return {
+          season: "Hiver",
+          year: String(year),
+          label: `Hiver ${year - 1}–${year}`,
+          shortLabel: `Hiver ${year}`
+        };
+      }
+      return {
+        season: "Été",
+        year: String(year),
+        label: `Été ${year}`,
+        shortLabel: `Été ${year}`
+      };
+    }
+
+    function populateYearPicker() {
+      const currentYear = new Date().getFullYear();
+      const selectEl = document.getElementById("formArchiveYear");
+      const pillsContainer = document.getElementById("quickYearPills");
+      if (!selectEl || !pillsContainer) return;
+
+      const years = [];
+      for (let y = currentYear; y >= 2015; y--) {
+        years.push(String(y));
+      }
+
+      selectEl.innerHTML = `<option value="">— Choisir l'année —</option>` +
+        years.map(y => `<option value="${y}">${y}</option>`).join("");
+
+      const quickYears = years.slice(0, 6);
+      pillsContainer.innerHTML = quickYears.map(y => `
+        <button type="button" class="year-pill-btn" data-pick-year="${y}" onclick="selectPastYear('${y}')">${y}</button>
+      `).join("");
+    }
+
+    function setSemesterMode(mode) {
+      document.getElementById("formSemesterMode").value = mode;
+      const btnCurrent = document.getElementById("btnSemCurrent");
+      const btnPast = document.getElementById("btnSemPast");
+      const pastBox = document.getElementById("pastSemesterBox");
+      const yearSelect = document.getElementById("formArchiveYear");
+
+      if (btnCurrent) btnCurrent.classList.toggle("active", mode === "current");
+      if (btnPast) btnPast.classList.toggle("active", mode === "past");
+      if (pastBox) pastBox.classList.toggle("visible", mode === "past");
+      if (yearSelect) yearSelect.required = (mode === "past");
+      updatePastSemSubLabel();
+    }
+
+    function selectPastSeason(season) {
+      selectedPastSeason = season;
+      document.querySelectorAll("[data-sem-season]").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-sem-season") === season);
+      });
+      updatePastSemSubLabel();
+    }
+
+    function selectPastYear(yearStr) {
+      const selectEl = document.getElementById("formArchiveYear");
+      if (selectEl) selectEl.value = yearStr;
+      document.querySelectorAll("[data-pick-year]").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-pick-year") === yearStr);
+      });
+      updatePastSemSubLabel();
+    }
+
+    function handlePastYearSelectChange(yearStr) {
+      document.querySelectorAll("[data-pick-year]").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-pick-year") === yearStr);
+      });
+      updatePastSemSubLabel();
+    }
+
+    function updatePastSemSubLabel() {
+      const sub = document.getElementById("pastSemSubLabel");
+      const yearVal = document.getElementById("formArchiveYear")?.value || "";
+      if (!sub) return;
+      if (yearVal) {
+        sub.textContent = `${selectedPastSeason} ${yearVal}`;
+      } else {
+        sub.textContent = "Choisir l'année";
+      }
+    }
+
     function selectUploadCategory(cat) {
       document.getElementById("formCategory").value = cat;
       document.querySelectorAll(".cat-pick-btn").forEach(btn => {
@@ -2068,6 +2355,23 @@
       document.getElementById("dropzoneSub").textContent = "Compression et mise en ligne automatiques";
       const defaultCat = (activeCategory && activeCategory !== "all") ? activeCategory : "cas";
       selectUploadCategory(defaultCat);
+
+      // Initialize current semester label & reset to current semester by default
+      const curSem = getCurrentSemesterInfo();
+      const curSemLabel = document.getElementById("currentSemSubLabel");
+      if (curSemLabel) curSemLabel.textContent = curSem.shortLabel;
+      populateYearPicker();
+      selectedPastSeason = curSem.season;
+      selectPastSeason(curSem.season);
+      setSemesterMode("current");
+
+      // Pre-fill saved intern first name if available
+      try {
+        const savedName = localStorage.getItem(INTERN_NAME_STORAGE_KEY);
+        const nameInput = document.getElementById("formInternName");
+        if (savedName && nameInput) nameInput.value = savedName;
+      } catch (e) {}
+
       document.getElementById("studioModal").classList.add("open");
     }
 
@@ -2084,7 +2388,36 @@
       });
     }
 
-    function compressImageBlobInBrowser(blob, maxDim = 1360, quality = 0.78) {
+    function dataUrlToBlob(dataUrl) {
+      try {
+        const parts = (dataUrl || "").split(",");
+        if (parts.length < 2) return null;
+        const mimeMatch = parts[0].match(/:(.*?);/);
+        const mime = mimeMatch ? mimeMatch[1] : "application/octet-stream";
+        const binStr = atob(parts[1]);
+        const len = binStr.length;
+        const arr = new Uint8Array(len);
+        for (let i = 0; i < len; i++) arr[i] = binStr.charCodeAt(i);
+        return new Blob([arr], { type: mime });
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function loadImgElement(src) {
+      return new Promise((resolve) => {
+        if (!src) {
+          resolve(null);
+          return;
+        }
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+        img.src = src;
+      });
+    }
+
+    function compressImageBlobInBrowser(blob, maxDim = 1600, quality = 0.85, forcePng = false) {
       return new Promise((resolve) => {
         const url = URL.createObjectURL(blob);
         const img = new Image();
@@ -2095,20 +2428,682 @@
           canvas.width = Math.max(1, Math.round(img.width * scale));
           canvas.height = Math.max(1, Math.round(img.height * scale));
           const ctx = canvas.getContext("2d");
-          ctx.fillStyle = "#090E17";
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const dataUrl = canvas.toDataURL("image/jpeg", quality);
+          // Preserve PNG alpha transparency so logos/annotations/overlays render identically
+          const isPng = forcePng || blob.type === "image/png";
+          const outMime = isPng ? "image/png" : "image/jpeg";
+          const dataUrl = isPng ? canvas.toDataURL("image/png") : canvas.toDataURL("image/jpeg", quality);
           canvas.toBlob((outBlob) => {
-            resolve({ blob: outBlob || blob, dataUrl });
-          }, "image/jpeg", quality);
+            resolve({ blob: outBlob || blob, dataUrl, imgWidth: img.width, imgHeight: img.height });
+          }, outMime, quality);
         };
         img.onerror = () => {
           URL.revokeObjectURL(url);
-          resolve({ blob, dataUrl: "" });
+          resolve({ blob, dataUrl: "", imgWidth: 0, imgHeight: 0 });
         };
         img.src = url;
       });
+    }
+
+    function wrapCanvasParagraphLines(ctx, text, maxWidth) {
+      const rawLines = String(text || "").split(/\r?\n/);
+      const lines = [];
+      for (const raw of rawLines) {
+        const words = raw.trim().split(/\s+/).filter(Boolean);
+        if (!words.length) {
+          lines.push("");
+          continue;
+        }
+        let current = "";
+        for (const w of words) {
+          const test = current ? current + " " + w : w;
+          if (ctx.measureText(test).width > maxWidth && current) {
+            lines.push(current);
+            current = w;
+          } else {
+            current = test;
+          }
+        }
+        if (current) lines.push(current);
+      }
+      return lines.length ? lines : [""];
+    }
+
+    function parseXmlColorHex(node, fallbackHex = null, themeColors = null) {
+      if (!node) return fallbackHex;
+      const srgb = node.getElementsByTagNameNS("*", "srgbClr")[0];
+      if (srgb && srgb.getAttribute("val")) {
+        return "#" + srgb.getAttribute("val");
+      }
+      const sysClr = node.getElementsByTagNameNS("*", "sysClr")[0];
+      if (sysClr && sysClr.getAttribute("lastClr")) {
+        return "#" + sysClr.getAttribute("lastClr");
+      }
+      const scheme = node.getElementsByTagNameNS("*", "schemeClr")[0];
+      if (scheme) {
+        const val = scheme.getAttribute("val") || "";
+        if (themeColors && themeColors[val]) return themeColors[val];
+        if (val === "lt1" || val === "bg1") return (themeColors && themeColors.lt1) || "#FFFFFF";
+        if (val === "dk1" || val === "tx1") return (themeColors && themeColors.dk1) || "#11151C";
+        if (val === "lt2" || val === "bg2") return (themeColors && themeColors.lt2) || "#F1F5F9";
+        if (val === "dk2" || val === "tx2") return (themeColors && themeColors.dk2) || "#1E293B";
+        if (val === "accent1") return (themeColors && themeColors.accent1) || "#0284C7";
+        if (val === "accent2") return (themeColors && themeColors.accent2) || "#FF4D2D";
+      }
+      return fallbackHex;
+    }
+
+    function isDarkColorHex(hex) {
+      if (!hex || hex.length < 7) return false;
+      const r = parseInt(hex.slice(1, 3), 16) || 0;
+      const g = parseInt(hex.slice(3, 5), 16) || 0;
+      const b = parseInt(hex.slice(5, 7), 16) || 0;
+      return (r * 0.299 + g * 0.587 + b * 0.114) < 128;
+    }
+
+    function extractPlaceholdersFromXmlDoc(xmlDoc) {
+      const map = {};
+      if (!xmlDoc) return map;
+      const spNodes = Array.from(xmlDoc.getElementsByTagNameNS("*", "sp"));
+      for (const sp of spNodes) {
+        const ph = sp.getElementsByTagNameNS("*", "ph")[0];
+        if (!ph) continue;
+        const type = ph.getAttribute("type") || "";
+        const idx = ph.getAttribute("idx") || "";
+        const spPr = sp.getElementsByTagNameNS("*", "spPr")[0];
+        const xfrm = spPr ? spPr.getElementsByTagNameNS("*", "xfrm")[0] : null;
+        const off = xfrm ? xfrm.getElementsByTagNameNS("*", "off")[0] : null;
+        const ext = xfrm ? xfrm.getElementsByTagNameNS("*", "ext")[0] : null;
+        if (off && ext) {
+          const box = {
+            x: parseInt(off.getAttribute("x") || "0", 10),
+            y: parseInt(off.getAttribute("y") || "0", 10),
+            cx: parseInt(ext.getAttribute("cx") || "0", 10),
+            cy: parseInt(ext.getAttribute("cy") || "0", 10)
+          };
+          if (idx) map[`idx:${idx}`] = box;
+          if (type) map[`type:${type}`] = box;
+          if (!type && !idx) map["default"] = box;
+        }
+      }
+      return map;
+    }
+
+    async function renderSlideXmlToDataUrl(doc, relTargetToDataUrl, slideW_Emu, slideH_Emu, context = {}) {
+      const {
+        themeColors = {},
+        masterBgHex = "#FFFFFF",
+        masterBgImg = "",
+        layoutDoc = null,
+        masterDoc = null,
+        layoutRelMedia = {},
+        masterRelMedia = {},
+        placeholderBoxes = {}
+      } = context;
+
+      const canvasW = 1600;
+      const canvasH = Math.max(900, Math.round(canvasW * (slideH_Emu / Math.max(slideW_Emu, 1))));
+      const canvas = document.createElement("canvas");
+      canvas.width = canvasW;
+      canvas.height = canvasH;
+      const ctx = canvas.getContext("2d");
+
+      // 1. Determine Slide Background Color or Background Image (Slide -> Layout -> Master)
+      let bgHex = masterBgHex || "#FFFFFF";
+      let bgImgDataUrl = masterBgImg || "";
+
+      function checkBgFromDoc(xmlDoc, relMap) {
+        if (!xmlDoc) return;
+        const bgNode = xmlDoc.getElementsByTagNameNS("*", "bg")[0];
+        if (!bgNode) return;
+        const parsedBg = parseXmlColorHex(bgNode, null, themeColors);
+        if (parsedBg) bgHex = parsedBg;
+        const blip = bgNode.getElementsByTagNameNS("*", "blip")[0];
+        if (blip) {
+          const rId = blip.getAttribute("r:embed") || blip.getAttributeNS("http://schemas.openxmlformats.org/officeDocument/2006/relationships", "embed");
+          if (rId && relMap[rId]) bgImgDataUrl = relMap[rId];
+        }
+      }
+
+      checkBgFromDoc(masterDoc, masterRelMedia);
+      checkBgFromDoc(layoutDoc, layoutRelMedia);
+      checkBgFromDoc(doc, relTargetToDataUrl);
+
+      ctx.fillStyle = bgHex;
+      ctx.fillRect(0, 0, canvasW, canvasH);
+
+      if (bgImgDataUrl) {
+        const bgImg = await loadImgElement(bgImgDataUrl);
+        if (bgImg) ctx.drawImage(bgImg, 0, 0, canvasW, canvasH);
+      }
+
+      const defaultTextColor = isDarkColorHex(bgHex) ? "#FFFFFF" : ((themeColors && themeColors.dk1) || "#11151C");
+
+      // Map EMU coordinates through current group affine transform to canvas pixels
+      function mapX(emuX, tf) {
+        const slideEmuX = tf.offX + (emuX - tf.chOffX) * tf.scaleX;
+        return (slideEmuX / slideW_Emu) * canvasW;
+      }
+      function mapY(emuY, tf) {
+        const slideEmuY = tf.offY + (emuY - tf.chOffY) * tf.scaleY;
+        return (slideEmuY / slideH_Emu) * canvasH;
+      }
+      function mapW(emuW, tf) {
+        return ((emuW * tf.scaleX) / slideW_Emu) * canvasW;
+      }
+      function mapH(emuH, tf) {
+        return ((emuH * tf.scaleY) / slideH_Emu) * canvasH;
+      }
+
+      const rootTransform = { offX: 0, offY: 0, chOffX: 0, chOffY: 0, scaleX: 1, scaleY: 1 };
+
+      // Helper to recursively render spTree nodes in exact z-order
+      async function renderNodeList(nodes, tf, mediaMap, skipPlaceholders = false) {
+        for (const node of nodes) {
+          const local = node.localName || (node.tagName ? node.tagName.split(":").pop() : "");
+          if (local === "grpSp") {
+            const grpSpPr = node.getElementsByTagNameNS("*", "grpSpPr")[0];
+            const xfrm = grpSpPr ? grpSpPr.getElementsByTagNameNS("*", "xfrm")[0] : null;
+            let nextTf = tf;
+            if (xfrm) {
+              const off = xfrm.getElementsByTagNameNS("*", "off")[0];
+              const ext = xfrm.getElementsByTagNameNS("*", "ext")[0];
+              const chOff = xfrm.getElementsByTagNameNS("*", "chOff")[0];
+              const chExt = xfrm.getElementsByTagNameNS("*", "chExt")[0];
+              if (off && ext && chOff && chExt) {
+                const gx = parseInt(off.getAttribute("x") || "0", 10);
+                const gy = parseInt(off.getAttribute("y") || "0", 10);
+                const gw = Math.max(1, parseInt(ext.getAttribute("cx") || "1", 10));
+                const gh = Math.max(1, parseInt(ext.getAttribute("cy") || "1", 10));
+                const cx = parseInt(chOff.getAttribute("x") || "0", 10);
+                const cy = parseInt(chOff.getAttribute("y") || "0", 10);
+                const cw = Math.max(1, parseInt(chExt.getAttribute("cx") || "1", 10));
+                const ch = Math.max(1, parseInt(chExt.getAttribute("cy") || "1", 10));
+                nextTf = {
+                  offX: tf.offX + (gx - tf.chOffX) * tf.scaleX,
+                  offY: tf.offY + (gy - tf.chOffY) * tf.scaleY,
+                  chOffX: cx,
+                  chOffY: cy,
+                  scaleX: tf.scaleX * (gw / cw),
+                  scaleY: tf.scaleY * (gh / ch)
+                };
+              }
+            }
+            const subNodes = Array.from(node.children || node.childNodes || []);
+            await renderNodeList(subNodes, nextTf, mediaMap, skipPlaceholders);
+            continue;
+          }
+
+          if (local === "pic") {
+            const blip = node.getElementsByTagNameNS("*", "blip")[0];
+            if (!blip) continue;
+            const rId = blip.getAttribute("r:embed") || blip.getAttributeNS("http://schemas.openxmlformats.org/officeDocument/2006/relationships", "embed");
+            const imgDataUrl = rId ? mediaMap[rId] : "";
+            if (!imgDataUrl) continue;
+
+            const img = await loadImgElement(imgDataUrl);
+            if (!img) continue;
+
+            const spPr = node.getElementsByTagNameNS("*", "spPr")[0];
+            const xfrm = spPr ? spPr.getElementsByTagNameNS("*", "xfrm")[0] : null;
+            const off = xfrm ? xfrm.getElementsByTagNameNS("*", "off")[0] : null;
+            const ext = xfrm ? xfrm.getElementsByTagNameNS("*", "ext")[0] : null;
+
+            let x = 0, y = 0, w = 0, h = 0, hasBox = false;
+            if (off && ext) {
+              x = mapX(parseInt(off.getAttribute("x") || "0", 10), tf);
+              y = mapY(parseInt(off.getAttribute("y") || "0", 10), tf);
+              w = mapW(parseInt(ext.getAttribute("cx") || "0", 10), tf);
+              h = mapH(parseInt(ext.getAttribute("cy") || "0", 10), tf);
+              hasBox = w > 0 && h > 0;
+            } else {
+              const ph = node.getElementsByTagNameNS("*", "ph")[0];
+              if (ph) {
+                const phIdx = ph.getAttribute("idx") || "";
+                const phType = ph.getAttribute("type") || "";
+                const pBox = (phIdx && placeholderBoxes[`idx:${phIdx}`]) || (phType && placeholderBoxes[`type:${phType}`]);
+                if (pBox) {
+                  x = mapX(pBox.x, tf);
+                  y = mapY(pBox.y, tf);
+                  w = mapW(pBox.cx, tf);
+                  h = mapH(pBox.cy, tf);
+                  hasBox = w > 0 && h > 0;
+                }
+              }
+            }
+
+            if (hasBox) {
+              const srcRect = node.getElementsByTagNameNS("*", "srcRect")[0];
+              if (srcRect) {
+                const l = parseInt(srcRect.getAttribute("l") || "0", 10) / 100000;
+                const t = parseInt(srcRect.getAttribute("t") || "0", 10) / 100000;
+                const r = parseInt(srcRect.getAttribute("r") || "0", 10) / 100000;
+                const b = parseInt(srcRect.getAttribute("b") || "0", 10) / 100000;
+                const sx = Math.max(0, img.width * l);
+                const sy = Math.max(0, img.height * t);
+                const sw = Math.max(1, img.width * (1 - l - r));
+                const sh = Math.max(1, img.height * (1 - t - b));
+                ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
+              } else {
+                ctx.drawImage(img, x, y, w, h);
+              }
+            } else {
+              const scale = Math.min(canvasW / img.width, canvasH / img.height);
+              const dw = img.width * scale;
+              const dh = img.height * scale;
+              ctx.drawImage(img, (canvasW - dw) / 2, (canvasH - dh) / 2, dw, dh);
+            }
+          } else if (local === "sp") {
+            const ph = node.getElementsByTagNameNS("*", "ph")[0];
+            if (skipPlaceholders && ph) continue;
+
+            const spPr = node.getElementsByTagNameNS("*", "spPr")[0];
+            const xfrm = spPr ? spPr.getElementsByTagNameNS("*", "xfrm")[0] : null;
+            const off = xfrm ? xfrm.getElementsByTagNameNS("*", "off")[0] : null;
+            const ext = xfrm ? xfrm.getElementsByTagNameNS("*", "ext")[0] : null;
+
+            const phType = ph ? (ph.getAttribute("type") || "") : "";
+            const phIdx = ph ? (ph.getAttribute("idx") || "") : "";
+            const isTitle = phType === "title" || phType === "ctrTitle";
+
+            let boxX = isTitle ? canvasW * 0.05 : canvasW * 0.06;
+            let boxY = isTitle ? canvasH * 0.04 : canvasH * 0.18;
+            let boxW = canvasW * 0.88;
+            let boxH = isTitle ? canvasH * 0.14 : canvasH * 0.74;
+
+            if (off && ext) {
+              boxX = mapX(parseInt(off.getAttribute("x") || "0", 10), tf);
+              boxY = mapY(parseInt(off.getAttribute("y") || "0", 10), tf);
+              boxW = mapW(parseInt(ext.getAttribute("cx") || "0", 10), tf);
+              boxH = mapH(parseInt(ext.getAttribute("cy") || "0", 10), tf);
+            } else if (ph) {
+              const inherited =
+                (phIdx && placeholderBoxes[`idx:${phIdx}`]) ||
+                (phType && placeholderBoxes[`type:${phType}`]) ||
+                (!phType && phIdx === "1" && placeholderBoxes["type:body"]) ||
+                placeholderBoxes["default"];
+              if (inherited) {
+                boxX = mapX(inherited.x, tf);
+                boxY = mapY(inherited.y, tf);
+                boxW = mapW(inherited.cx, tf);
+                boxH = mapH(inherited.cy, tf);
+              }
+            }
+
+            // Shape background fill and border if present
+            if (spPr) {
+              const noFill = Array.from(spPr.children || []).find(
+                c => (c.localName || c.tagName.split(":").pop()) === "noFill"
+              );
+              if (!noFill) {
+                const solidFill = Array.from(spPr.children || []).find(
+                  c => (c.localName || c.tagName.split(":").pop()) === "solidFill"
+                );
+                if (solidFill) {
+                  const fillHex = parseXmlColorHex(solidFill, null, themeColors);
+                  if (fillHex) {
+                    ctx.fillStyle = fillHex;
+                    ctx.fillRect(boxX, boxY, boxW, boxH);
+                  }
+                }
+              }
+              const ln = Array.from(spPr.children || []).find(
+                c => (c.localName || c.tagName.split(":").pop()) === "ln"
+              );
+              if (ln) {
+                const lnNoFill = ln.getElementsByTagNameNS("*", "noFill")[0];
+                if (!lnNoFill) {
+                  const strokeHex = parseXmlColorHex(ln, null, themeColors);
+                  if (strokeHex) {
+                    const wEmu = parseInt(ln.getAttribute("w") || "12700", 10);
+                    ctx.strokeStyle = strokeHex;
+                    ctx.lineWidth = Math.max(1, (wEmu / slideW_Emu) * canvasW);
+                    ctx.strokeRect(boxX, boxY, boxW, boxH);
+                  }
+                }
+              }
+            }
+
+            const txBody = node.getElementsByTagNameNS("*", "txBody")[0];
+            if (!txBody) continue;
+
+            const bodyPr = txBody.getElementsByTagNameNS("*", "bodyPr")[0];
+            const anchor = bodyPr ? (bodyPr.getAttribute("anchor") || "t") : (phType === "ctrTitle" ? "ctr" : "t");
+
+            const pNodes = Array.from(txBody.getElementsByTagNameNS("*", "p"));
+            const parsedParagraphs = [];
+            let totalTextHeight = 0;
+
+            for (const pNode of pNodes) {
+              const rNodes = Array.from(pNode.getElementsByTagNameNS("*", "r"));
+              const fullText = Array.from(pNode.getElementsByTagNameNS("*", "t"))
+                .map(n => n.textContent || "")
+                .join("")
+                .trim();
+              if (!fullText) {
+                parsedParagraphs.push({ empty: true, height: 14 });
+                totalTextHeight += 14;
+                continue;
+              }
+
+              let szHundredths = isTitle ? 3200 : (phType === "subTitle" ? 2200 : 1800);
+              let isBold = isTitle;
+              let isItalic = false;
+              let textColor = defaultTextColor;
+
+              const pPr = pNode.getElementsByTagNameNS("*", "pPr")[0];
+              const algn = pPr ? (pPr.getAttribute("algn") || "") : (phType === "ctrTitle" || phType === "subTitle" ? "ctr" : "l");
+              const lvl = pPr ? parseInt(pPr.getAttribute("lvl") || "0", 10) : 0;
+              const hasBuNone = pPr ? !!pPr.getElementsByTagNameNS("*", "buNone")[0] : false;
+              const buCharNode = pPr ? pPr.getElementsByTagNameNS("*", "buChar")[0] : null;
+              const bulletChar = (!isTitle && !hasBuNone && (buCharNode || phType === "body" || (!phType && phIdx === "1")))
+                ? (buCharNode ? (buCharNode.getAttribute("char") || "•") : "•")
+                : "";
+
+              if (rNodes.length > 0) {
+                const rPr = rNodes[0].getElementsByTagNameNS("*", "rPr")[0];
+                if (rPr) {
+                  if (rPr.getAttribute("sz")) {
+                    szHundredths = parseInt(rPr.getAttribute("sz"), 10) || szHundredths;
+                  }
+                  if (rPr.getAttribute("b") === "1" || rPr.getAttribute("b") === "true") {
+                    isBold = true;
+                  }
+                  if (rPr.getAttribute("i") === "1" || rPr.getAttribute("i") === "true") {
+                    isItalic = true;
+                  }
+                  const runColor = parseXmlColorHex(rPr, null, themeColors);
+                  if (runColor) textColor = runColor;
+                }
+              }
+
+              const pt = szHundredths / 100;
+              const pxSize = Math.max(14, Math.min(88, Math.round(pt * (canvasW / 960))));
+              const fontStr = `${isItalic ? "italic " : ""}${isBold ? "700" : "500"} ${pxSize}px Inter, -apple-system, BlinkMacSystemFont, sans-serif`;
+              ctx.font = fontStr;
+
+              const indentPx = lvl * 24;
+              const displayPrefix = bulletChar && algn !== "ctr" ? `${bulletChar} ` : "";
+              const wrappedLines = wrapCanvasParagraphLines(ctx, displayPrefix + fullText, Math.max(80, boxW - 16 - indentPx));
+              const lineHeight = Math.round(pxSize * 1.26);
+              const paraSpacing = Math.round(pxSize * 0.22);
+              const pHeight = wrappedLines.length * lineHeight + paraSpacing;
+
+              parsedParagraphs.push({
+                empty: false,
+                fontStr,
+                textColor,
+                algn,
+                indentPx,
+                wrappedLines,
+                lineHeight,
+                paraSpacing
+              });
+              totalTextHeight += pHeight;
+            }
+
+            let cursorY = boxY + 8;
+            if (anchor === "ctr" && totalTextHeight < boxH) {
+              cursorY = boxY + Math.max(4, (boxH - totalTextHeight) / 2);
+            } else if (anchor === "b" && totalTextHeight < boxH) {
+              cursorY = boxY + Math.max(4, boxH - totalTextHeight - 8);
+            }
+
+            for (const p of parsedParagraphs) {
+              if (p.empty) {
+                cursorY += p.height;
+                continue;
+              }
+              ctx.font = p.fontStr;
+              ctx.fillStyle = p.textColor;
+              ctx.textBaseline = "top";
+              for (const line of p.wrappedLines) {
+                let drawX = boxX + 8 + p.indentPx;
+                if (p.algn === "ctr") {
+                  const lw = ctx.measureText(line).width;
+                  drawX = boxX + Math.max(0, (boxW - lw) / 2);
+                } else if (p.algn === "r") {
+                  const lw = ctx.measureText(line).width;
+                  drawX = boxX + Math.max(0, boxW - lw - 8);
+                }
+                ctx.fillText(line, drawX, cursorY);
+                cursorY += p.lineHeight;
+              }
+              cursorY += p.paraSpacing;
+            }
+          }
+        }
+      }
+
+      // 2. Render Master & Layout non-placeholder decorative background elements if showMasterSp !== "0"
+      const sldRoot = doc.documentElement;
+      const showMasterSp = !sldRoot || sldRoot.getAttribute("showMasterSp") !== "0";
+      if (showMasterSp) {
+        if (masterDoc) {
+          const mTree = masterDoc.getElementsByTagNameNS("*", "spTree")[0];
+          if (mTree) {
+            await renderNodeList(Array.from(mTree.children || []), rootTransform, masterRelMedia, true);
+          }
+        }
+        if (layoutDoc) {
+          const lTree = layoutDoc.getElementsByTagNameNS("*", "spTree")[0];
+          if (lTree) {
+            await renderNodeList(Array.from(lTree.children || []), rootTransform, layoutRelMedia, true);
+          }
+        }
+      }
+
+      // 3. Render Slide elements in exact z-order
+      const spTree = doc.getElementsByTagNameNS("*", "spTree")[0] || doc.documentElement;
+      const children = Array.from(spTree.children || spTree.childNodes || []);
+      await renderNodeList(children, rootTransform, relTargetToDataUrl, false);
+
+      return canvas.toDataURL("image/jpeg", 0.88);
+    }
+
+    async function extractSlidesAndSlimZip(zip, shouldSlimMedia = true) {
+      const mediaPreviewByFile = {};
+      const parser = new DOMParser();
+
+      // 0. Parse theme colors from ppt/theme/theme1.xml
+      const themeColors = {
+        dk1: "#11151C",
+        lt1: "#FFFFFF",
+        dk2: "#1E293B",
+        lt2: "#F1F5F9",
+        accent1: "#0284C7",
+        accent2: "#FF4D2D"
+      };
+      if (zip.file("ppt/theme/theme1.xml")) {
+        const themeXml = await zip.file("ppt/theme/theme1.xml").async("string");
+        const themeDoc = parser.parseFromString(themeXml, "application/xml");
+        const clrScheme = themeDoc.getElementsByTagNameNS("*", "clrScheme")[0];
+        if (clrScheme) {
+          for (const key of ["dk1", "lt1", "dk2", "lt2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6"]) {
+            const node = clrScheme.getElementsByTagNameNS("*", key)[0];
+            if (node) {
+              const hex = parseXmlColorHex(node, null, null);
+              if (hex) themeColors[key] = hex;
+            }
+          }
+          themeColors.tx1 = themeColors.dk1;
+          themeColors.bg1 = themeColors.lt1;
+          themeColors.tx2 = themeColors.dk2;
+          themeColors.bg2 = themeColors.lt2;
+        }
+      }
+
+      // 1. Read exact presentation slide dimensions from ppt/presentation.xml
+      let slideW_Emu = 12192000; // Default 16:9 widescreen
+      let slideH_Emu = 6858000;
+      if (zip.file("ppt/presentation.xml")) {
+        const presXml = await zip.file("ppt/presentation.xml").async("string");
+        const presDoc = parser.parseFromString(presXml, "application/xml");
+        const sldSz = presDoc.getElementsByTagNameNS("*", "sldSz")[0];
+        if (sldSz) {
+          slideW_Emu = parseInt(sldSz.getAttribute("cx") || String(slideW_Emu), 10) || slideW_Emu;
+          slideH_Emu = parseInt(sldSz.getAttribute("cy") || String(slideH_Emu), 10) || slideH_Emu;
+        }
+      }
+
+      // 2. Load/compress all media in ppt/media/*
+      const fileNames = Object.keys(zip.files);
+      for (const path of fileNames) {
+        const lower = path.toLowerCase();
+        if (lower.indexOf("ppt/media/") === 0 && /\.(png|jpg|jpeg|bmp|webp|gif|svg)$/i.test(lower)) {
+          const origBlob = await zip.file(path).async("blob");
+          const isPngFile = /\.png$/i.test(lower);
+          const { blob: slimBlob, dataUrl } = await compressImageBlobInBrowser(origBlob, 1600, 0.85, isPngFile);
+          if (dataUrl) {
+            const baseName = path.split("/").pop();
+            mediaPreviewByFile[baseName] = dataUrl;
+          }
+          if (shouldSlimMedia && !isPngFile && slimBlob && slimBlob.size < origBlob.size) {
+            zip.file(path, slimBlob);
+          }
+        }
+      }
+
+      // Helper to read _rels file for any XML part
+      async function parseRelsForPart(relsPath) {
+        const mediaMap = {};
+        let layoutTarget = "";
+        let masterTarget = "";
+        if (zip.file(relsPath)) {
+          const relXml = await zip.file(relsPath).async("string");
+          const relDoc = parser.parseFromString(relXml, "application/xml");
+          const rels = Array.from(relDoc.getElementsByTagName("Relationship"));
+          for (const r of rels) {
+            const rId = r.getAttribute("Id") || "";
+            const target = r.getAttribute("Target") || "";
+            const type = r.getAttribute("Type") || "";
+            if (rId && target.includes("media/")) {
+              const base = target.split("/").pop();
+              if (mediaPreviewByFile[base]) {
+                mediaMap[rId] = mediaPreviewByFile[base];
+              }
+            }
+            if (type.endsWith("/slideLayout") && target) {
+              layoutTarget = "ppt/" + target.replace(/^(\.\.\/)+/, "");
+            }
+            if (type.endsWith("/slideMaster") && target) {
+              masterTarget = "ppt/" + target.replace(/^(\.\.\/)+/, "");
+            }
+          }
+        }
+        return { mediaMap, layoutTarget, masterTarget };
+      }
+
+      // 3. Parse default slideMaster1
+      let defaultMasterDoc = null;
+      let defaultMasterRels = { mediaMap: {} };
+      if (zip.file("ppt/slideMasters/slideMaster1.xml")) {
+        const mXml = await zip.file("ppt/slideMasters/slideMaster1.xml").async("string");
+        defaultMasterDoc = parser.parseFromString(mXml, "application/xml");
+        defaultMasterRels = await parseRelsForPart("ppt/slideMasters/_rels/slideMaster1.xml.rels");
+      }
+
+      // 4. Extract and faithfully render each slide in numerical order (ppt/slides/slideN.xml)
+      const slidePaths = fileNames
+        .filter(p => /^ppt\/slides\/slide\d+\.xml$/i.test(p))
+        .sort((a, b) => {
+          const na = parseInt(a.match(/\d+/)[0], 10);
+          const nb = parseInt(b.match(/\d+/)[0], 10);
+          return na - nb;
+        });
+
+      const extractedSlides = [];
+
+      for (let idx = 0; idx < slidePaths.length; idx++) {
+        const sPath = slidePaths[idx];
+        const slideNum = parseInt(sPath.match(/\d+/)[0], 10);
+        const xmlText = await zip.file(sPath).async("string");
+        const doc = parser.parseFromString(xmlText, "application/xml");
+
+        const slideRels = await parseRelsForPart(`ppt/slides/_rels/slide${slideNum}.xml.rels`);
+        let layoutDoc = null;
+        let layoutRels = { mediaMap: {} };
+        let masterDoc = defaultMasterDoc;
+        let masterRels = defaultMasterRels;
+
+        if (slideRels.layoutTarget && zip.file(slideRels.layoutTarget)) {
+          const lXml = await zip.file(slideRels.layoutTarget).async("string");
+          layoutDoc = parser.parseFromString(lXml, "application/xml");
+          const lFile = slideRels.layoutTarget.split("/").pop();
+          layoutRels = await parseRelsForPart(`ppt/slideLayouts/_rels/${lFile}.rels`);
+          if (layoutRels.masterTarget && zip.file(layoutRels.masterTarget)) {
+            const mXml = await zip.file(layoutRels.masterTarget).async("string");
+            masterDoc = parser.parseFromString(mXml, "application/xml");
+            const mFile = layoutRels.masterTarget.split("/").pop();
+            masterRels = await parseRelsForPart(`ppt/slideMasters/_rels/${mFile}.rels`);
+          }
+        }
+
+        const placeholderBoxes = Object.assign(
+          {},
+          extractPlaceholdersFromXmlDoc(masterDoc),
+          extractPlaceholdersFromXmlDoc(layoutDoc)
+        );
+
+        // Extract text for search indexing
+        const pNodes = Array.from(doc.getElementsByTagNameNS("*", "p"));
+        const lines = [];
+        for (const pNode of pNodes) {
+          const tNodes = Array.from(pNode.getElementsByTagNameNS("*", "t"));
+          const line = tNodes.map(n => n.textContent || "").join("").trim();
+          if (line) lines.push(line);
+        }
+
+        const slideTitle = lines.length > 0 ? lines[0] : `Diapositive ${idx + 1}`;
+        const bullets = lines.slice(1);
+
+        // Render exact composite slide visual (preserving layout, positions, multiple images & text)
+        const composedSlideDataUrl = await renderSlideXmlToDataUrl(
+          doc,
+          slideRels.mediaMap,
+          slideW_Emu,
+          slideH_Emu,
+          {
+            themeColors,
+            layoutDoc,
+            masterDoc,
+            layoutRelMedia: layoutRels.mediaMap,
+            masterRelMedia: masterRels.mediaMap,
+            placeholderBoxes
+          }
+        );
+
+        extractedSlides.push({
+          index: idx + 1,
+          title: slideTitle,
+          stage: `Diapo ${idx + 1}`,
+          bullets: bullets.length ? bullets : [],
+          takeaway: bullets[bullets.length - 1] || "",
+          image: composedSlideDataUrl
+        });
+      }
+
+      return extractedSlides;
+    }
+
+    async function upgradeDeckSlidesFromPptxDataUrl(deck) {
+      if (!deck || !deck.pptxDataUrl || !window.JSZip) return false;
+      try {
+        const blob = dataUrlToBlob(deck.pptxDataUrl);
+        if (!blob) return false;
+        const zip = await JSZip.loadAsync(blob);
+        const extractedSlides = await extractSlidesAndSlimZip(zip, false);
+        if (!extractedSlides || !extractedSlides.length) return false;
+        deck.slides = extractedSlides;
+        deck.slideCount = extractedSlides.length;
+        deck.coverImage = extractedSlides[0].image;
+        deck.renderVersion = 3;
+        await saveCustomDeckToIdb(deck);
+        decksById[deck.id] = deck;
+        return true;
+      } catch (e) {
+        return false;
+      }
     }
 
     async function handlePptxFileSelect(event) {
@@ -2126,101 +3121,15 @@
       const dzTitle = document.getElementById("dropzoneTitle");
       const dzSub = document.getElementById("dropzoneSub");
       const submitBtn = document.getElementById("btnSubmitArchive");
-      dzTitle.textContent = "⏳ Préparation des diapos...";
+      dzTitle.textContent = "⏳ Préparation fidèle des diapos...";
       dzSub.textContent = file.name;
       if (submitBtn) submitBtn.disabled = true;
 
       try {
         const zip = await JSZip.loadAsync(file);
-        const mediaPreviewByFile = {};
+        const extractedSlides = await extractSlidesAndSlimZip(zip, true);
 
-        // 1. Compress all media in ppt/media/*
-        const fileNames = Object.keys(zip.files);
-        for (const path of fileNames) {
-          const lower = path.toLowerCase();
-          if (lower.indexOf("ppt/media/") === 0 && /\.(png|jpg|jpeg|bmp|webp)$/i.test(lower)) {
-            const origBlob = await zip.file(path).async("blob");
-            const { blob: slimBlob, dataUrl } = await compressImageBlobInBrowser(origBlob, 1360, 0.78);
-            if (dataUrl) {
-              const baseName = path.split("/").pop();
-              mediaPreviewByFile[baseName] = dataUrl;
-            }
-            if (slimBlob && slimBlob.size < origBlob.size) {
-              zip.file(path, slimBlob);
-            }
-          }
-        }
-
-        // 2. Extract slides in numerical order (ppt/slides/slideN.xml)
-        const slidePaths = fileNames
-          .filter(p => /^ppt\/slides\/slide\d+\.xml$/i.test(p))
-          .sort((a, b) => {
-            const na = parseInt(a.match(/\d+/)[0], 10);
-            const nb = parseInt(b.match(/\d+/)[0], 10);
-            return na - nb;
-          });
-
-        const parser = new DOMParser();
-        const extractedSlides = [];
-
-        for (let idx = 0; idx < slidePaths.length; idx++) {
-          const sPath = slidePaths[idx];
-          const slideNum = parseInt(sPath.match(/\d+/)[0], 10);
-          const xmlText = await zip.file(sPath).async("string");
-          const doc = parser.parseFromString(xmlText, "application/xml");
-
-          const pNodes = Array.from(doc.getElementsByTagNameNS("*", "p"));
-          const lines = [];
-          for (const pNode of pNodes) {
-            const tNodes = Array.from(pNode.getElementsByTagNameNS("*", "t"));
-            const line = tNodes.map(n => n.textContent || "").join("").trim();
-            if (line) lines.push(line);
-          }
-
-          const slideTitle = lines.length > 0 ? lines[0] : `Diapositive ${idx + 1}`;
-          const bullets = lines.slice(1);
-
-          let slideImg = "";
-          const relPath = `ppt/slides/_rels/slide${slideNum}.xml.rels`;
-          if (zip.file(relPath)) {
-            const relXml = await zip.file(relPath).async("string");
-            const relDoc = parser.parseFromString(relXml, "application/xml");
-            const rels = Array.from(relDoc.getElementsByTagName("Relationship"));
-            for (const r of rels) {
-              const target = r.getAttribute("Target") || "";
-              if (target.includes("media/")) {
-                const base = target.split("/").pop();
-                if (mediaPreviewByFile[base]) {
-                  slideImg = mediaPreviewByFile[base];
-                  break;
-                }
-              }
-            }
-          }
-
-          let notesText = "";
-          const notesPath = `ppt/notesSlides/notesSlide${slideNum}.xml`;
-          if (zip.file(notesPath)) {
-            const nXml = await zip.file(notesPath).async("string");
-            const nDoc = parser.parseFromString(nXml, "application/xml");
-            const nTokens = Array.from(nDoc.getElementsByTagNameNS("*", "t"))
-              .map(n => (n.textContent || "").trim())
-              .filter(t => t && !/^\d+$/.test(t));
-            notesText = nTokens.join(" ");
-          }
-
-          extractedSlides.push({
-            index: idx + 1,
-            title: slideTitle,
-            stage: `Diapo ${idx + 1}`,
-            bullets: bullets.length ? bullets : [],
-            takeaway: bullets[bullets.length - 1] || "",
-            notes: notesText,
-            image: slideImg
-          });
-        }
-
-        // 3. Repackage slimmed .pptx blob
+        // Repackage slimmed .pptx blob
         const slimPptxBlob = await zip.generateAsync({
           type: "blob",
           compression: "DEFLATE",
@@ -2269,6 +3178,29 @@
 
       const title = document.getElementById("formTitle").value.trim() || "Présentation";
       const category = document.getElementById("formCategory").value || "cas";
+      const internName = document.getElementById("formInternName").value.trim();
+      const semMode = document.getElementById("formSemesterMode").value || "current";
+
+      const curSem = getCurrentSemesterInfo();
+      let archiveYear = curSem.year;
+      let archiveSemester = curSem.shortLabel;
+
+      if (semMode === "past") {
+        const chosenYear = (document.getElementById("formArchiveYear").value || "").trim();
+        if (!chosenYear) {
+          document.getElementById("formArchiveYear").focus();
+          return;
+        }
+        archiveYear = chosenYear;
+        archiveSemester = `${selectedPastSeason} ${chosenYear}`;
+      }
+
+      if (internName) {
+        try {
+          localStorage.setItem(INTERN_NAME_STORAGE_KEY, internName);
+        } catch (e) {}
+      }
+
       const id = "archive-" + Date.now().toString(36);
 
       const slides = pendingExtractedPptx.slides.map((s, idx) => ({
@@ -2283,17 +3215,20 @@
         category,
         region: "",
         modality: "",
-        semester: "",
+        semester: archiveSemester,
+        year: archiveYear,
         date: new Date().toLocaleDateString("fr-FR"),
-        author: "",
+        author: internName,
+        internName,
         diagnosis: slides[slides.length - 1]?.title || title,
         clinicalContext: pendingExtractedPptx.autoSummary || "",
-        tags: [categoryLabel(category)],
+        tags: [categoryLabel(category), internName, archiveYear, archiveSemester].filter(Boolean),
         originalSizeBytes: pendingExtractedPptx.originalSizeBytes,
         slimSizeBytes: pendingExtractedPptx.slimSizeBytes,
         slideCount: slides.length,
         coverImage: slides[0].image,
         pptxDataUrl: pendingExtractedPptx.pptxDataUrl || "",
+        renderVersion: 3,
         slides
       };
 
