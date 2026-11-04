@@ -1311,6 +1311,49 @@
       margin: 0;
     }
 
+    .access-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      padding: 20px;
+    }
+    .access-gate.open { display: flex; }
+    .access-gate-card {
+      width: 100%;
+      max-width: 340px;
+      background: var(--bg-card);
+      border: 1.5px solid rgba(0,0,0,.12);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0,0,0,.12);
+    }
+    .access-gate-card h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0 0 6px;
+      font-size: 20px;
+    }
+    .access-gate-card p { margin: 0 0 16px; font-size: 13px; color: var(--ink-soft); }
+    .access-code-input {
+      width: 100%;
+      box-sizing: border-box;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      letter-spacing: 12px;
+      text-align: center;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(0,0,0,.2);
+      background: var(--bg-elevated);
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .access-gate-error { color: #c0392b; font-size: 12.5px; min-height: 18px; margin-top: 8px; }
+
     .pdf-tuto {
       border: 1.5px solid var(--border, rgba(0,0,0,.15));
       border-radius: 10px;
@@ -1759,6 +1802,17 @@
     </div>
   </div>
 
+  <!-- Code d'accès aux archives partagées (Supabase) -->
+  <div id="accessGate" class="access-gate" role="dialog" aria-modal="true" aria-labelledby="accessGateTitle">
+    <form class="access-gate-card" onsubmit="submitAccessCode(event)">
+      <h2 id="accessGateTitle">🔒 Archives des Internes</h2>
+      <p>Entrez le code d'accès</p>
+      <input id="accessCodeInput" class="access-code-input" type="password" inputmode="numeric" autocomplete="off" maxlength="12" required />
+      <button type="submit" id="btnAccessSubmit" class="btn-studio-open btn-submit-full">Entrer</button>
+      <div id="accessGateError" class="access-gate-error"></div>
+    </form>
+  </div>
+
   <!-- Embedded Archive Index & Decks (works offline & on file:// without CORS) -->
   <script src="data/embedded-archives.js"></script>
 
@@ -1770,6 +1824,164 @@
     let allArchives = [];
     let decksById = {};
     let customDecksList = [];
+    let cloudDecksList = [];
+
+    // ── Archives partagées (Supabase) — voir supabase/setup.sql et le README ──
+    const SUPABASE_URL = "https://tzceyyxeqhatdejnxwxs.supabase.co";      // ex : https://abcdefgh.supabase.co
+    const SUPABASE_ANON_KEY = "sb_publishable_3k8t5D76xyEo_pnXIfRpqg_unrKx5zF"; // clé « anon » / « publishable » (publique par nature)
+    const SUPABASE_BUCKET = "interne-archives";
+    const ACCESS_CODE_STORAGE_KEY = "cochin_archives_access_code_v1";
+    let accessCode = "";
+
+    function cloudEnabled() {
+      return Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
+    }
+
+    function supabaseHeaders(extra = {}) {
+      const h = { apikey: SUPABASE_ANON_KEY, ...extra };
+      if (!/^sb_publishable_/.test(SUPABASE_ANON_KEY)) h.Authorization = `Bearer ${SUPABASE_ANON_KEY}`;
+      return h;
+    }
+
+    async function sbRpc(fn, args) {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+        method: "POST",
+        headers: supabaseHeaders({ "Content-Type": "application/json" }),
+        body: JSON.stringify(args)
+      });
+      if (!r.ok) {
+        const body = await r.text();
+        const err = new Error(/invalid_code/.test(body) ? "Code d'accès incorrect" : `Erreur serveur (${r.status})`);
+        err.invalidCode = /invalid_code/.test(body);
+        throw err;
+      }
+      return r.status === 204 ? null : r.json();
+    }
+
+    async function sbUploadPdf(path, blob) {
+      const r = await fetch(`${SUPABASE_URL}/storage/v1/object/${SUPABASE_BUCKET}/${path}`, {
+        method: "POST",
+        headers: supabaseHeaders({ "Content-Type": "application/pdf", "x-upsert": "false" }),
+        body: blob
+      });
+      if (!r.ok) throw new Error(`Envoi du PDF refusé (${r.status})`);
+    }
+
+    function sbPublicPdfUrl(path) {
+      return `${SUPABASE_URL}/storage/v1/object/public/${SUPABASE_BUCKET}/${path}`;
+    }
+
+    function cloudRowToDeck(r) {
+      const texts = Array.isArray(r.slide_texts) ? r.slide_texts : [];
+      return {
+        id: `cloud-${r.id}`,
+        cloudId: r.id,
+        title: r.diagnosis,
+        shortTitle: r.diagnosis,
+        diagnosis: r.diagnosis,
+        category: r.category,
+        region: "",
+        modality: "",
+        internName: r.intern_name || "",
+        author: r.intern_name || "",
+        year: r.year || "",
+        semester: r.semester || "",
+        date: r.created_at ? new Date(r.created_at).toLocaleDateString("fr-FR") : "",
+        clinicalContext: r.clinical_context || "",
+        tags: [categoryLabel(r.category), r.intern_name, r.year, r.semester, r.diagnosis].filter(Boolean),
+        slideCount: r.slide_count || 1,
+        slimSizeBytes: r.size_bytes || 0,
+        coverImage: r.cover_image || "",
+        pdfUrl: sbPublicPdfUrl(r.pdf_path),
+        renderSource: "pdf",
+        renderVersion: 3,
+        slideSummaries: texts.map((t, i) => ({ index: i + 1, title: t.title || `Diapo ${i + 1}`, searchText: t.text || t.title || "" })),
+        slides: null
+      };
+    }
+
+    function allCustomDecks() {
+      return [...cloudDecksList, ...customDecksList];
+    }
+
+    // Renders the PDF pages of a shared archive on demand (progressively) when it is opened
+    function ensureCloudDeckSlides(deck) {
+      if (!deck || !deck.pdfUrl) return Promise.resolve();
+      if (deck._slidesLoaded) return Promise.resolve();
+      if (deck._loadingPromise) return deck._loadingPromise;
+      const n = deck.slideCount || 1;
+      if (!deck.slides || deck.slides.length !== n) {
+        deck.slides = Array.from({ length: n }, (_, i) => ({
+          index: i + 1,
+          title: (deck.slideSummaries && deck.slideSummaries[i] && deck.slideSummaries[i].title) || `Diapo ${i + 1}`,
+          bullets: [],
+          image: buildSlidePlaceholderSvg("Chargement…", i + 1, n)
+        }));
+      }
+      deck._loadingPromise = (async () => {
+        const resp = await fetch(deck.pdfUrl);
+        if (!resp.ok) throw new Error(`PDF introuvable (${resp.status})`);
+        const data = new Uint8Array(await resp.arrayBuffer());
+        const slides = await renderPdfPagesToSlides(data, (idx, slide) => {
+          deck.slides[idx] = { ...deck.slides[idx], image: slide.image };
+          if (currentDeck === deck && currentSlideIdx === idx) renderActiveSlide();
+        });
+        deck.slides = slides.map((sl, i) => ({ ...sl, title: (deck.slides[i] && deck.slides[i].title) || sl.title }));
+        deck.slideCount = slides.length;
+        deck._slidesLoaded = true;
+        if (currentDeck === deck) renderActiveSlide();
+      })();
+      deck._loadingPromise.catch(() => { deck._loadingPromise = null; });
+      return deck._loadingPromise;
+    }
+
+    async function loadCloudDecks() {
+      const rows = await sbRpc("interne_list_archives", { p_code: accessCode });
+      cloudDecksList = (rows || []).map(cloudRowToDeck);
+      for (const d of cloudDecksList) {
+        const prev = decksById[d.id];
+        if (prev && prev._slidesLoaded) { d.slides = prev.slides; d._slidesLoaded = true; }
+        decksById[d.id] = d;
+      }
+    }
+
+    function showAccessGate(message) {
+      document.getElementById("accessGate").classList.add("open");
+      document.getElementById("accessGateError").textContent = message || "";
+      const input = document.getElementById("accessCodeInput");
+      input.value = "";
+      setTimeout(() => input.focus(), 50);
+    }
+
+    async function submitAccessCode(event) {
+      event.preventDefault();
+      const input = document.getElementById("accessCodeInput");
+      const btn = document.getElementById("btnAccessSubmit");
+      const code = input.value.trim();
+      if (!code) return;
+      btn.disabled = true;
+      document.getElementById("accessGateError").textContent = "";
+      accessCode = code;
+      try {
+        await loadCloudDecks();
+        try { localStorage.setItem(ACCESS_CODE_STORAGE_KEY, code); } catch (e) {}
+        document.getElementById("accessGate").classList.remove("open");
+        refreshCatalogView();
+      } catch (e) {
+        accessCode = "";
+        document.getElementById("accessGateError").textContent = e.invalidCode ? "Code incorrect" : e.message;
+        input.select();
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function refreshCatalogView() {
+      const baseIndex = Array.isArray(window.COCHIN_ARCHIVES_INDEX) ? window.COCHIN_ARCHIVES_INDEX : [];
+      rebuildMergedCatalog(baseIndex, allCustomDecks());
+      renderRegionPills();
+      renderCatalog();
+    }
 
     let activeCategory = "all";
     let activeRegion = "all";
@@ -1872,11 +2084,24 @@
     async function deleteArchive(event, id) {
       event.stopPropagation();
       if (!confirm("Supprimer cette présentation des archives ?")) return;
+      const cloudDeck = cloudDecksList.find(d => d.id === id);
+      if (cloudDeck) {
+        try {
+          await sbRpc("interne_delete_archive", { p_code: accessCode, p_id: cloudDeck.cloudId });
+        } catch (e) {
+          alert("Suppression impossible : " + e.message);
+          return;
+        }
+        cloudDecksList = cloudDecksList.filter(d => d.id !== id);
+        delete decksById[id];
+        refreshCatalogView();
+        return;
+      }
       await deleteCustomDeckFromIdb(id);
       customDecksList = customDecksList.filter(d => d.id !== id);
       delete decksById[id];
       const baseIndex = Array.isArray(window.COCHIN_ARCHIVES_INDEX) ? window.COCHIN_ARCHIVES_INDEX : [];
-      rebuildMergedCatalog(baseIndex, customDecksList);
+      rebuildMergedCatalog(baseIndex, allCustomDecks());
       renderRegionPills();
       renderCatalog();
     }
@@ -1938,9 +2163,27 @@
         decksById[cd.id] = cd;
       }
 
-      rebuildMergedCatalog(baseIndex, customDecksList);
+      rebuildMergedCatalog(baseIndex, allCustomDecks());
       renderRegionPills();
       renderCatalog();
+
+      if (cloudEnabled()) {
+        try { accessCode = localStorage.getItem(ACCESS_CODE_STORAGE_KEY) || ""; } catch (e) {}
+        if (!accessCode) {
+          showAccessGate();
+        } else {
+          try {
+            await loadCloudDecks();
+            refreshCatalogView();
+          } catch (e) {
+            if (e.invalidCode) {
+              try { localStorage.removeItem(ACCESS_CODE_STORAGE_KEY); } catch (err) {}
+              accessCode = "";
+              showAccessGate("Le code d'accès a changé");
+            }
+          }
+        }
+      }
 
       // Automatically upgrade any previously saved custom deck in IndexedDB so its slides match the exact PPTX layout
       upgradeLegacyCustomDecksInBackground(baseIndex);
@@ -1955,7 +2198,7 @@
         }
       }
       if (updatedAny) {
-        rebuildMergedCatalog(baseIndex, customDecksList);
+        rebuildMergedCatalog(baseIndex, allCustomDecks());
         renderCatalog();
         if (currentDeck && decksById[currentDeck.id]) {
           currentDeck = decksById[currentDeck.id];
@@ -2089,10 +2332,10 @@
               ${allArchives.length === 0 ? "Aucune diapo déposée pour le moment" : "Aucune diapo ne correspond à cette recherche"}
             </p>
             <p style="font-size:12.5px;margin:0 0 16px">
-              Glissez un fichier PowerPoint (.pptx) ou cliquez ci-dessous pour déposer vos diapos.
+              Glissez votre présentation en PDF ou cliquez ci-dessous pour déposer vos diapos.
             </p>
             <button type="button" class="btn-studio-open" onclick="event.stopPropagation(); openStudioModal()">
-              + DÉPOSER SES DIAPOS (.PPTX)
+              + DÉPOSER SES DIAPOS (PDF)
             </button>
           </div>
         `;
@@ -2227,6 +2470,14 @@
       if (deck.pptxDataUrl && deck.renderVersion !== 3 && deck.renderSource !== "pdf") {
         await upgradeDeckSlidesFromPptxDataUrl(deck);
         renderCatalog();
+      }
+
+      if (deck.pdfUrl && !deck._slidesLoaded) {
+        ensureCloudDeckSlides(deck).catch((e) => {
+          if (currentDeck === deck) {
+            document.getElementById("pacsSlideCounter").textContent = "⚠️ " + e.message;
+          }
+        });
       }
 
       currentDeck = deck;
@@ -3287,29 +3538,15 @@
       }
     }
 
-    async function processPdfFileInBrowser(file, displayName) {
-      const fileName = displayName || file.name || "presentation.pdf";
-      const dzTitle = document.getElementById("dropzoneTitle");
-      const dzSub = document.getElementById("dropzoneSub");
-      const submitBtn = document.getElementById("btnSubmitArchive");
-      if (!window.pdfjsLib) {
-        alert("Chargement en cours, réessayez dans une seconde.");
-        return;
-      }
+    async function renderPdfPagesToSlides(data, onPage) {
+      if (!window.pdfjsLib) throw new Error("Lecteur PDF en cours de chargement, réessayez");
       window.pdfjsLib.GlobalWorkerOptions.workerSrc =
         "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-
-      dzTitle.textContent = "⏳ Lecture du PDF...";
-      dzSub.textContent = fileName;
-      if (submitBtn) submitBtn.disabled = true;
-
+      const pdf = await window.pdfjsLib.getDocument({ data }).promise;
+      const slides = [];
+      const TARGET_WIDTH = 1920;
       try {
-        const data = new Uint8Array(await file.arrayBuffer());
-        const pdf = await window.pdfjsLib.getDocument({ data }).promise;
-        const slides = [];
-        const TARGET_WIDTH = 1920;
         for (let i = 1; i <= pdf.numPages; i++) {
-          dzTitle.textContent = `⏳ Diapo ${i} / ${pdf.numPages}...`;
           const page = await pdf.getPage(i);
           const base = page.getViewport({ scale: 1 });
           const viewport = page.getViewport({ scale: TARGET_WIDTH / base.width });
@@ -3328,29 +3565,63 @@
             lines = tc.items.map(it => (it.str || "").trim()).filter(Boolean);
           } catch (e) {}
 
-          slides.push({
+          const slide = {
             index: i,
             title: lines[0] || `Diapositive ${i}`,
             stage: `Diapo ${i}`,
             bullets: lines.slice(1, 12),
             takeaway: "",
             image
-          });
+          };
+          slides.push(slide);
           page.cleanup();
           canvas.width = canvas.height = 0;
+          if (onPage) onPage(i - 1, slide, pdf.numPages);
         }
+      } finally {
         pdf.destroy();
+      }
+      return slides;
+    }
+
+    async function makeCoverThumbnail(dataUrl, maxWidth = 640) {
+      const img = await loadImgElement(dataUrl);
+      const scale = Math.min(1, maxWidth / img.naturalWidth);
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(img.naturalWidth * scale);
+      canvas.height = Math.round(img.naturalHeight * scale);
+      canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+      return canvas.toDataURL("image/jpeg", 0.75);
+    }
+
+    async function processPdfFileInBrowser(file, displayName) {
+      const fileName = displayName || file.name || "presentation.pdf";
+      const dzTitle = document.getElementById("dropzoneTitle");
+      const dzSub = document.getElementById("dropzoneSub");
+      const submitBtn = document.getElementById("btnSubmitArchive");
+
+      dzTitle.textContent = "⏳ Lecture du PDF...";
+      dzSub.textContent = fileName;
+      if (submitBtn) submitBtn.disabled = true;
+
+      try {
+        const data = new Uint8Array(await file.arrayBuffer());
+        const slides = await renderPdfPagesToSlides(data, (idx, _slide, total) => {
+          dzTitle.textContent = `⏳ Diapo ${idx + 1} / ${total}...`;
+        });
         if (!slides.length) throw new Error("PDF vide");
 
         pendingPdf = {
           slides,
-          sizeBytes: slides.reduce((sum, s) => sum + Math.round(s.image.length * 0.75), 0),
+          file,
+          sizeBytes: file.size,
           fileName
         };
         updateDropzoneStatus();
         const diagInput = document.getElementById("formDiagnosis");
         if (diagInput && !diagInput.value.trim()) diagInput.focus();
       } catch (err) {
+        pendingPdf = null;
         dzTitle.textContent = "⚠️ PDF non reconnu";
         dzSub.textContent = "Veuillez choisir l'export PDF de la présentation";
       } finally {
@@ -3488,12 +3759,60 @@
         slides
       };
 
+      if (cloudEnabled()) {
+        const submitBtn = document.getElementById("btnSubmitArchive");
+        const dzTitle = document.getElementById("dropzoneTitle");
+        const dzSub = document.getElementById("dropzoneSub");
+        if (submitBtn) submitBtn.disabled = true;
+        try {
+          dzTitle.textContent = "⏳ Mise en ligne du PDF...";
+          const pdfPath = `${crypto.randomUUID()}.pdf`;
+          await sbUploadPdf(pdfPath, pendingPdf.file);
+          dzTitle.textContent = "⏳ Enregistrement de l'archive...";
+          const row = await sbRpc("interne_add_archive", {
+            p_code: accessCode,
+            p_archive: {
+              category,
+              diagnosis,
+              intern_name: internName,
+              semester: archiveSemester,
+              year: archiveYear,
+              slide_count: slides.length,
+              cover_image: await makeCoverThumbnail(slides[0].image),
+              pdf_path: pdfPath,
+              size_bytes: pendingPdf.sizeBytes,
+              clinical_context: newDeck.clinicalContext,
+              slide_texts: slides.map(s => ({ title: s.title, text: [s.title, ...(s.bullets || [])].join(" ") }))
+            }
+          });
+          const cloudDeck = cloudRowToDeck(row);
+          cloudDeck.slides = slides;
+          cloudDeck._slidesLoaded = true;
+          cloudDecksList.unshift(cloudDeck);
+          decksById[cloudDeck.id] = cloudDeck;
+        } catch (e) {
+          dzTitle.textContent = "⚠️ Mise en ligne impossible";
+          dzSub.textContent = e.message + " — Réessayez";
+          if (e.invalidCode) {
+            try { localStorage.removeItem(ACCESS_CODE_STORAGE_KEY); } catch (err) {}
+            closeStudioModal();
+            showAccessGate("Le code d'accès a changé");
+          }
+          return;
+        } finally {
+          if (submitBtn) submitBtn.disabled = false;
+        }
+        refreshCatalogView();
+        closeStudioModal();
+        return;
+      }
+
       await saveCustomDeckToIdb(newDeck);
       customDecksList.unshift(newDeck);
       decksById[newDeck.id] = newDeck;
 
       const baseIndex = Array.isArray(window.COCHIN_ARCHIVES_INDEX) ? window.COCHIN_ARCHIVES_INDEX : [];
-      rebuildMergedCatalog(baseIndex, customDecksList);
+      rebuildMergedCatalog(baseIndex, allCustomDecks());
       renderCatalog();
       closeStudioModal();
     }
@@ -3525,7 +3844,7 @@
         }
         customDecksList = await loadCustomDecksFromIdb();
         const baseIndex = Array.isArray(window.COCHIN_ARCHIVES_INDEX) ? window.COCHIN_ARCHIVES_INDEX : [];
-        rebuildMergedCatalog(baseIndex, customDecksList);
+        rebuildMergedCatalog(baseIndex, allCustomDecks());
         renderRegionPills();
         renderCatalog();
       } catch (err) {
