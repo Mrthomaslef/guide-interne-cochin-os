@@ -1644,8 +1644,8 @@
           <button type="button" id="btnBlindMode" class="v-btn" onclick="toggleBlindMode()" title="Afficher ou masquer le diagnostic">
             👁️ Afficher le diagnostic
           </button>
-          <a id="btnDownloadPptx" href="#" download class="v-btn" title="Télécharger le fichier PowerPoint (.pptx) compressé">
-            📥 .PPTX Slim
+          <a id="btnDownloadPptx" href="#" download class="v-btn" title="Télécharger la présentation (PDF)">
+            📥 PDF
           </a>
           <a id="btnPubmedLink" href="#" target="_blank" rel="noopener" class="v-btn" style="display:none">
             🔗 PubMed / DOI ↗
@@ -1688,7 +1688,7 @@
   </div>
 
   <!-- ===================================================================== -->
-  <!-- 6. MODAL ULTRA-SIMPLE : DÉPOSER SES DIAPOS (.PPTX)                    -->
+  <!-- 6. MODAL ULTRA-SIMPLE : DÉPOSER SES DIAPOS (PDF)                      -->
   <!-- ===================================================================== -->
   <div id="studioModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="studioModalTitle">
     <div class="studio-window" onclick="event.stopPropagation()">
@@ -1700,7 +1700,7 @@
       </div>
 
       <div class="studio-body">
-        <!-- 1. Choisir le fichier .pptx -->
+        <!-- 1. Choisir le fichier PDF -->
         <div
           id="pptxDropzone"
           class="dropzone"
@@ -2419,7 +2419,11 @@
             <div class="card-footer">
               <span class="author-label">${escapeHtml(footerSummary)}</span>
               <div class="card-actions" onclick="event.stopPropagation()">
-                ${(item.pptxDataUrl || item.pptxUrl) ? `
+                ${item.pdfUrl ? `
+                  <a href="${escapeHtml(item.pdfUrl)}?download=${encodeURIComponent(dlFilename + ".pdf")}" download="${escapeHtml(dlFilename)}.pdf" class="btn-card-pptx" title="Télécharger la présentation (PDF)">
+                    📥 PDF
+                  </a>
+                ` : (item.pptxDataUrl || item.pptxUrl) ? `
                   <a href="${escapeHtml(item.pptxDataUrl || item.pptxUrl)}" download="${escapeHtml(dlFilename)}.pptx" class="btn-card-pptx" title="Télécharger le PowerPoint (.pptx)">
                     📥 .PPTX
                   </a>
@@ -2504,13 +2508,24 @@
         }
       }
 
-      // PPTX download button
+      // Download button: PDF for shared archives, legacy .pptx for older local ones
       const dlBtn = document.getElementById("btnDownloadPptx");
-      if (deck.pptxDataUrl) {
+      const dlBase = `${categoryLabel(deck.category).toLowerCase().replace(/\s+/g, "-")}-${(deck.internName || deck.author || deck.id).trim()}`;
+      if (deck.pdfUrl) {
+        dlBtn.href = `${deck.pdfUrl}?download=${encodeURIComponent(dlBase + ".pdf")}`;
+        dlBtn.download = `${dlBase}.pdf`;
+        dlBtn.innerHTML = "📥 PDF";
+        dlBtn.title = "Télécharger la présentation (PDF)";
+        dlBtn.style.display = "inline-flex";
+      } else if (deck.pptxDataUrl) {
+        dlBtn.innerHTML = "📥 .PPTX";
+        dlBtn.title = "Télécharger le fichier PowerPoint (.pptx)";
         dlBtn.href = deck.pptxDataUrl;
         dlBtn.download = `${deck.id}.pptx`;
         dlBtn.style.display = "inline-flex";
       } else if (deck.pptxUrl) {
+        dlBtn.innerHTML = "📥 .PPTX";
+        dlBtn.title = "Télécharger le fichier PowerPoint (.pptx)";
         dlBtn.href = deck.pptxUrl;
         dlBtn.download = `${deck.id}.pptx`;
         dlBtn.style.display = "inline-flex";

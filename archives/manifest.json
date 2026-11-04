@@ -1,7 +1,7 @@
 {
   "name": "Archives des Internes — COCHIN·OS",
   "short_name": "Archives Cochin",
-  "description": "Archives ultra-légères des présentations PowerPoint, cas cliniques, cours DES et bibliographies des internes de Radiologie B (Hôpital Cochin).",
+  "description": "Archives partagées des présentations (PDF) : cas cliniques, cours DES et bibliographies des internes de Radiologie B (Hôpital Cochin).",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#F2EFE9",

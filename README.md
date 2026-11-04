@@ -10,4 +10,4 @@ Portail minimaliste (« Papier Radio / Négatoscope ») donnant un accès direct
 4. **Quiz Imagerie (`04 // QUIZ FLASH`)** — [mrthomaslef.github.io/quiz-imagerie](https://mrthomaslef.github.io/quiz-imagerie/) (*1 Image, 1 Diagnostic*)
 5. **Quiz Cours (`05 // QUIZ COURS`)** — [radio-thomas-ten.vercel.app](https://radio-thomas-ten.vercel.app)
 6. **Guide Infiltrations (`06 // GESTES RADIOGUIDÉS`)** — Application dédiée dans [`./infiltrations/`](./infiltrations/index.html) (Manuel complet 213 pages, 75 fiches & chapitres : Rachis, Épaule, Coude/Poignet/Main, Hanche/Bassin, Genou/Cheville/Pied, Biopsies)
-7. **Archives des Internes (`07 // ARCHIVES PPTX SLIM`)** — Application dédiée dans [`./archives/`](./archives/index.html) (Conservation ultra-légère et visionneuse des présentations PowerPoint `.pptx`, Cas cliniques, Cours DES & Bibliographies avec compresseur `.pptx` intégré)
+7. **Archives des Internes (`07 // ARCHIVES PDF`)** — Application dédiée dans [`./archives/`](./archives/index.html) (Archives partagées des présentations en PDF, affichées à l'identique : Bone Club, Cas du mardi, Biblio du vendredi & Cours — accès par code)
