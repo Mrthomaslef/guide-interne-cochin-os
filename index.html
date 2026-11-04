@@ -748,6 +748,25 @@
   </div>
 
   <script>
+    // Auto-update: home-screen web apps (iOS) keep old pages for a long time.
+    // On open and when the app comes back to the foreground, compare with version.json and reload if newer.
+    const APP_VERSION = "2026-11-04.5";
+    function checkForNewVersion() {
+      fetch(`version.json?ts=${Date.now()}`, { cache: "no-store" })
+        .then(r => (r.ok ? r.json() : null))
+        .then(j => {
+          if (!j || !j.version || j.version === APP_VERSION) return;
+          const u = new URL(location.href);
+          if (u.searchParams.get("v") === j.version) return; // avoid reload loops
+          u.searchParams.set("v", j.version);
+          location.replace(u.toString());
+        })
+        .catch(() => {});
+    }
+    checkForNewVersion();
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") checkForNewVersion();
+    });
     const THEME_STORAGE_KEY = "cochin_os_theme_v1";
 
     function applyTheme(mode) {
