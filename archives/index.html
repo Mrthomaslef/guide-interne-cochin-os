@@ -1152,10 +1152,10 @@
       cursor: not-allowed;
     }
 
-    /* 6. STUDIO D'ARCHIVAGE & COMPRESSEUR PPTX MODAL */
+    /* 6. MODAL ULTRA-SIMPLE : DÉPOSER SES DIAPOS */
     .studio-window {
       width: 100%;
-      max-width: 820px;
+      max-width: 500px;
       max-height: 92dvh;
       background: var(--bg-card);
       border: 2px solid var(--line-heavy);
@@ -1164,6 +1164,51 @@
       flex-direction: column;
       overflow: hidden;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    }
+
+    .cat-pick-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .cat-pick-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 11px 10px;
+      border-radius: 10px;
+      border: 1.5px solid var(--line);
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+    .cat-pick-btn:hover {
+      border-color: var(--ink);
+    }
+    .cat-pick-btn.active {
+      border-color: var(--vermilion);
+      background: var(--vermilion);
+      color: #FFFFFF;
+      box-shadow: 0 2px 0 var(--ink);
+    }
+
+    .btn-submit-full {
+      width: 100%;
+      height: 46px;
+      justify-content: center;
+      font-size: 13.5px;
+      border-radius: 11px;
+    }
+    .btn-submit-full:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none !important;
     }
 
     .studio-body {
@@ -1295,7 +1340,7 @@
 
       <div class="top-actions">
         <button type="button" class="btn-studio-open" onclick="openStudioModal()">
-          <span>+ ARCHIVER / SLIM .PPTX</span>
+          <span>+ DÉPOSER SES DIAPOS</span>
         </button>
         <button type="button" class="mode-switch" onclick="toggleTheme()" title="Basculer Papier Radio / Négatoscope (Touche N)">
           <span>◐</span>
@@ -1303,34 +1348,6 @@
         </button>
       </div>
     </header>
-
-    <!-- 2. SMART-SLIM ENGINE TELEMETRY STRIP -->
-    <section class="slim-banner" aria-label="État du moteur de compression d'archives">
-      <div class="slim-left">
-        <span class="slim-pill">
-          <span class="slim-dot"></span>
-          MOTEUR SMART-SLIM PPTX
-        </span>
-        <div class="slim-metrics">
-          <span><strong id="statDeckCount">0</strong> présentations (<strong id="statSlideCount">0</strong> diapos)</span>
-          <span>•</span>
-          <span>Stockage Slim : <strong id="statSlimSize">0 Ko</strong> <span style="text-decoration:line-through;opacity:0.65" id="statRawSize"></span></span>
-          <span class="slim-saving-badge" id="statSavingPct">Compression -80% à -95%</span>
-        </div>
-      </div>
-      <div class="slim-right">
-        <button type="button" class="mini-tool-btn" onclick="openStudioModal()" title="Compresser un PowerPoint lourd et l'extraire en diapos WebP">
-          ⚡ Compresseur .PPTX
-        </button>
-        <button type="button" class="mini-tool-btn" onclick="exportArchivePack()" title="Exporter toutes les archives personnalisées en fichier léger JSON">
-          📤 Exporter Pack
-        </button>
-        <button type="button" class="mini-tool-btn" onclick="document.getElementById('importPackInput').click()" title="Importer un pack d'archives JSON">
-          📥 Importer
-        </button>
-        <input type="file" id="importPackInput" accept=".json" style="display:none" onchange="handleImportPack(event)" />
-      </div>
-    </section>
 
     <!-- 3. SEARCH & CATEGORY CONSOLE -->
     <section class="control-deck" aria-label="Recherche et filtres">
@@ -1372,10 +1389,7 @@
         </button>
       </div>
 
-      <!-- Anatomical / Sub-specialty pills -->
-      <div class="filter-pills-row">
-        <div class="region-pills" id="regionPillsContainer"></div>
-      </div>
+
     </section>
 
     <!-- 4. ARCHIVE CARDS GRID -->
@@ -1462,29 +1476,26 @@
   </div>
 
   <!-- ===================================================================== -->
-  <!-- 6. MODAL : STUDIO D'ARCHIVAGE & COMPRESSEUR .PPTX EN NAVIGATEUR       -->
+  <!-- 6. MODAL ULTRA-SIMPLE : DÉPOSER SES DIAPOS (.PPTX)                    -->
   <!-- ===================================================================== -->
   <div id="studioModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="studioModalTitle">
     <div class="studio-window" onclick="event.stopPropagation()">
       <div class="viewer-topbar">
         <div class="viewer-title-wrap">
-          <span class="type-badge type-cours">STUDIO SLIM</span>
-          <h2 id="studioModalTitle" class="viewer-title">Compresser & Archiver une Présentation (.PPTX)</h2>
+          <h2 id="studioModalTitle" class="viewer-title">Déposer ses diapos</h2>
         </div>
-        <button type="button" class="v-btn v-btn-close" onclick="closeStudioModal()">✕ FERMER</button>
+        <button type="button" class="v-btn v-btn-close" onclick="closeStudioModal()">✕</button>
       </div>
 
       <div class="studio-body">
-        <!-- Drag and drop PPTX zone -->
+        <!-- 1. Choisir le fichier .pptx -->
         <div
           id="pptxDropzone"
           class="dropzone"
           onclick="document.getElementById('pptxFileInput').click()"
         >
-          <p class="dropzone-title">📂 Glissez-déposez votre fichier PowerPoint (.pptx) ici</p>
-          <p class="dropzone-sub">
-            Extraction automatique des diapositives, textes & notes + re-compression WebP/JPEG des images lourdes (-80% à -95%) sans serveur
-          </p>
+          <p class="dropzone-title" id="dropzoneTitle">📂 Choisir ou glisser un fichier .pptx</p>
+          <p class="dropzone-sub" id="dropzoneSub">Compression et mise en ligne automatiques</p>
           <input
             type="file"
             id="pptxFileInput"
@@ -1494,72 +1505,27 @@
           />
         </div>
 
-        <!-- Live Compression Report Banner -->
-        <div id="compressionReport" class="compression-report">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
-            <strong id="compReportHeadline" style="font-family:'Space Grotesk',sans-serif;font-size:15px">✅ Fichier .PPTX optimisé avec succès !</strong>
-            <a id="btnDownloadSlimmedNow" href="#" download class="v-btn" style="background:var(--emerald);color:#fff;border-color:var(--emerald)">
-              📥 Télécharger le .PPTX allégé
-            </a>
-          </div>
-          <div id="compReportDetails" style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-soft)"></div>
-        </div>
-
-        <!-- Metadata Form to Save into Archive -->
-        <form id="archiveForm" onsubmit="handleSaveArchive(event)">
-          <div class="form-grid">
-            <div class="field-group full">
-              <label class="field-label" for="formTitle">TITRE DE LA PRÉSENTATION *</label>
-              <input type="text" id="formTitle" class="field-input" required placeholder="Ex: Bone Club — Tumeurs cartilagineuses ou Cas du mardi..." />
-            </div>
-
-            <div class="field-group">
-              <label class="field-label" for="formCategory">CATÉGORIE D'ARCHIVE *</label>
-              <select id="formCategory" class="field-select">
-                <option value="bone-club">🦴 Bone Club</option>
-                <option value="cas">🩻 Cas du mardi</option>
-                <option value="biblio">📚 Biblio du vendredi</option>
-                <option value="cours">🎓 Cours</option>
-              </select>
-            </div>
-
-            <div class="field-group">
-              <label class="field-label" for="formRegion">RÉGION / THÉMATIQUE *</label>
-              <select id="formRegion" class="field-select">
-                <option value="Rachis · Bassin · Os">Rachis · Bassin · Os</option>
-                <option value="Épaule · Humérus">Épaule · Humérus</option>
-                <option value="Genou">Genou</option>
-                <option value="Cheville · Pied">Cheville · Pied</option>
-                <option value="Parties Molles · Sarcomes">Parties Molles · Sarcomes</option>
-                <option value="RI · Douleur">RI · Douleur</option>
-              </select>
-            </div>
-
-            <div class="field-group">
-              <label class="field-label" for="formModality">MODALITÉS</label>
-              <input type="text" id="formModality" class="field-input" placeholder="Ex: IRM · TDM · Cryoablation" value="IRM · TDM" />
-            </div>
-
-            <div class="field-group">
-              <label class="field-label" for="formAuthor">INTERNE / AUTEUR & SEMESTRE</label>
-              <input type="text" id="formAuthor" class="field-input" placeholder="Ex: Thomas L. (Hiver 2026–2027)" value="Interne Radio B" />
-            </div>
-
-            <div class="field-group full">
-              <label class="field-label" for="formDiagnosis">DIAGNOSTIC FINAL OU MESSAGE PRINCIPAL *</label>
-              <input type="text" id="formDiagnosis" class="field-input" required placeholder="Ex: Chondroblastome épiphysaire H3F3B+ traité par cryoablation" />
-            </div>
-
-            <div class="field-group full">
-              <label class="field-label" for="formContext">RÉSUMÉ CLINIQUE OU POINTS CLÉS (1 PAR LIGNE SI SAISIE MANUELLE)</label>
-              <textarea id="formContext" class="field-textarea" placeholder="Contexte clinique, sémiologie IRM/TDM, technique RI ou résultats de l'article..."></textarea>
+        <!-- 2. Catégorie + Titre + 1 bouton Déposer -->
+        <form id="archiveForm" onsubmit="handleSaveArchive(event)" style="display:flex;flex-direction:column;gap:14px">
+          <div class="field-group">
+            <label class="field-label">CATÉGORIE</label>
+            <input type="hidden" id="formCategory" value="cas" />
+            <div class="cat-pick-grid">
+              <button type="button" class="cat-pick-btn" data-pick-cat="bone-club" onclick="selectUploadCategory('bone-club')">🦴 Bone Club</button>
+              <button type="button" class="cat-pick-btn active" data-pick-cat="cas" onclick="selectUploadCategory('cas')">🩻 Cas du mardi</button>
+              <button type="button" class="cat-pick-btn" data-pick-cat="biblio" onclick="selectUploadCategory('biblio')">📚 Biblio du vendredi</button>
+              <button type="button" class="cat-pick-btn" data-pick-cat="cours" onclick="selectUploadCategory('cours')">🎓 Cours</button>
             </div>
           </div>
 
-          <div style="display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:14px">
-            <button type="button" class="v-btn" onclick="closeStudioModal()">Annuler</button>
-            <button type="submit" class="btn-studio-open">💾 ENREGISTRER DANS L'ARCHIVE</button>
+          <div class="field-group">
+            <label class="field-label" for="formTitle">TITRE</label>
+            <input type="text" id="formTitle" class="field-input" required placeholder="Rempli automatiquement depuis vos diapos..." />
           </div>
+
+          <button type="submit" id="btnSubmitArchive" class="btn-studio-open btn-submit-full">
+            DÉPOSER LES DIAPOS
+          </button>
         </form>
       </div>
     </div>
@@ -1761,21 +1727,6 @@
 
     function updateStatsAndCounts() {
       const totalDecks = allArchives.length;
-      const totalSlides = allArchives.reduce((acc, a) => acc + (a.slideCount || (a.slides ? a.slides.length : 1)), 0);
-      const totalSlim = allArchives.reduce((acc, a) => acc + (a.slimSizeBytes || 0), 0);
-      const totalRaw = allArchives.reduce((acc, a) => acc + (a.originalSizeBytes || 0), 0);
-
-      document.getElementById("statDeckCount").textContent = totalDecks;
-      document.getElementById("statSlideCount").textContent = totalSlides;
-      document.getElementById("statSlimSize").textContent = formatBytes(totalSlim);
-      document.getElementById("statRawSize").textContent = totalRaw > 0 ? formatBytes(totalRaw) : "";
-      if (totalRaw > 0 && totalSlim > 0 && totalRaw > totalSlim) {
-        const pct = ((1 - totalSlim / totalRaw) * 100).toFixed(0);
-        document.getElementById("statSavingPct").textContent = `-${pct}% d'espace`;
-      } else {
-        document.getElementById("statSavingPct").textContent = "Compression -80% à -95%";
-      }
-
       document.getElementById("count-all").textContent = totalDecks;
       document.getElementById("count-bone-club").textContent = allArchives.filter(a => a.category === "bone-club").length;
       document.getElementById("count-cas").textContent = allArchives.filter(a => a.category === "cas").length;
@@ -1783,15 +1734,7 @@
       document.getElementById("count-cours").textContent = allArchives.filter(a => a.category === "cours" || a.category === "presentations").length;
     }
 
-    function renderRegionPills() {
-      const regions = ["all", ...Array.from(new Set(allArchives.map(a => a.region).filter(Boolean)))];
-      const container = document.getElementById("regionPillsContainer");
-      container.innerHTML = regions.map(r => {
-        const isActive = r === activeRegion;
-        const label = r === "all" ? "TOUTES RÉGIONS" : r.toUpperCase();
-        return `<button type="button" class="region-pill ${isActive ? "active" : ""}" onclick="setRegion('${escapeHtml(r)}')">${escapeHtml(label)}</button>`;
-      }).join("");
-    }
+    function renderRegionPills() {}
 
     function setCategory(cat) {
       activeCategory = cat;
@@ -1857,15 +1800,15 @@
 
       if (filtered.length === 0) {
         grid.innerHTML = `
-          <div class="empty-state" style="grid-column: 1 / -1">
-            <p style="font-size:16px;font-weight:800;color:var(--ink);margin:0 0 8px">
-              ${allArchives.length === 0 ? "Aucune présentation archivée pour le moment" : "Aucune archive ne correspond à ce filtre"}
+          <div class="empty-state" style="grid-column: 1 / -1; cursor: pointer" onclick="openStudioModal()">
+            <p style="font-size:17px;font-weight:800;color:var(--ink);margin:0 0 6px">
+              ${allArchives.length === 0 ? "Aucune diapo déposée pour le moment" : "Aucune diapo dans cette catégorie"}
             </p>
             <p style="font-size:12.5px;margin:0 0 16px">
-              Importez vos présentations PowerPoint (.pptx) de Bone Club, Cas du mardi, Biblio du vendredi ou Cours : elles seront automatiquement compressées et converties en diapositives légères.
+              Glissez un fichier PowerPoint (.pptx) ou cliquez ci-dessous pour déposer vos diapos.
             </p>
-            <button type="button" class="btn-studio-open" onclick="openStudioModal()">
-              + ARCHIVER / COMPRESSER UN .PPTX
+            <button type="button" class="btn-studio-open" onclick="event.stopPropagation(); openStudioModal()">
+              + DÉPOSER SES DIAPOS (.PPTX)
             </button>
           </div>
         `;
@@ -1876,7 +1819,6 @@
         const matchedSlide = normQ ? findMatchingSlide(item, normQ) : null;
         const jumpSlideIdx = matchedSlide ? Math.max(0, matchedSlide.index - 1) : 0;
         const slimKb = formatBytes(item.slimSizeBytes || 0);
-        const rawMb = formatBytes(item.originalSizeBytes || 0);
         const slideTotal = item.slideCount || (item.slides ? item.slides.length : 1);
         const cover = item.coverImage
           || (item.slides && item.slides[0] && item.slides[0].image)
@@ -1891,7 +1833,7 @@
                 <span class="slide-count-pill">${slideTotal} DIAPOS</span>
               </div>
               <div class="card-overlay-bottom">
-                <span class="slim-size-tag">⚡ ${slimKb}${rawMb !== "0 Ko" ? ` (vs ${rawMb})` : ""}</span>
+                <span class="slim-size-tag">⚡ ${slimKb}</span>
                 <div style="display:flex;gap:5px;pointer-events:auto">
                   <button
                     type="button"
@@ -1904,32 +1846,22 @@
             </div>
 
             <div class="card-body">
-              <div class="card-meta-line">
-                <span class="region-chip">${escapeHtml(item.region)}</span>
-                <span>${escapeHtml(item.modality || "")}</span>
-              </div>
-
               <h2 class="card-title">${escapeHtml(item.shortTitle || item.title)}</h2>
-              <p class="card-context">${escapeHtml(item.clinicalContext || item.diagnosis || "")}</p>
+              ${item.clinicalContext ? `<p class="card-context">${escapeHtml(item.clinicalContext)}</p>` : ""}
 
               ${matchedSlide ? `
                 <div class="slide-match-banner">
-                  <span>🎯 Trouvé dans Diapo #${matchedSlide.index} : ${escapeHtml(matchedSlide.title)}</span>
+                  <span>🎯 Diapo #${matchedSlide.index} : ${escapeHtml(matchedSlide.title)}</span>
                   <span>→</span>
                 </div>
               ` : ""}
-
-              <div class="card-tags">
-                ${(item.tags || []).slice(0, 4).map(t => `<span class="tag-chip">#${escapeHtml(t)}</span>`).join("")}
-                ${item.pmid ? `<span class="tag-chip" style="color:var(--emerald)">PMID ${escapeHtml(item.pmid)}</span>` : ""}
-              </div>
             </div>
 
             <div class="card-footer">
-              <span class="author-label">${escapeHtml(item.author || "Interne Radio B")} • ${escapeHtml(item.semester || "")}</span>
+              <span class="author-label">${escapeHtml(item.date || "")}</span>
               <div class="card-actions" onclick="event.stopPropagation()">
                 ${(item.pptxDataUrl || item.pptxUrl) ? `
-                  <a href="${escapeHtml(item.pptxDataUrl || item.pptxUrl)}" download="${escapeHtml(item.id)}.pptx" class="btn-card-pptx" title="Télécharger le PowerPoint (.pptx) allégé">
+                  <a href="${escapeHtml(item.pptxDataUrl || item.pptxUrl)}" download="${escapeHtml(item.shortTitle || item.id)}.pptx" class="btn-card-pptx" title="Télécharger le PowerPoint (.pptx)">
                     📥 .PPTX
                   </a>
                 ` : ""}
@@ -2119,16 +2051,37 @@
       applyPacsTransform();
     }
 
-    // 8. IN-BROWSER .PPTX SLIMMER & EXTRACTOR (JSZip + Canvas WebP/JPEG)
+    // 8. ULTRA-SIMPLE .PPTX DEPOSIT & AUTO-COMPRESSION
+    function selectUploadCategory(cat) {
+      document.getElementById("formCategory").value = cat;
+      document.querySelectorAll(".cat-pick-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-pick-cat") === cat);
+      });
+    }
+
     function openStudioModal() {
       pendingExtractedPptx = null;
-      document.getElementById("compressionReport").classList.remove("visible");
       document.getElementById("archiveForm").reset();
+      const fileInput = document.getElementById("pptxFileInput");
+      if (fileInput) fileInput.value = "";
+      document.getElementById("dropzoneTitle").textContent = "📂 Choisir ou glisser un fichier .pptx";
+      document.getElementById("dropzoneSub").textContent = "Compression et mise en ligne automatiques";
+      const defaultCat = (activeCategory && activeCategory !== "all") ? activeCategory : "cas";
+      selectUploadCategory(defaultCat);
       document.getElementById("studioModal").classList.add("open");
     }
 
     function closeStudioModal() {
       document.getElementById("studioModal").classList.remove("open");
+    }
+
+    function blobToDataUrl(blob) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result || "");
+        reader.onerror = () => resolve("");
+        reader.readAsDataURL(blob);
+      });
     }
 
     function compressImageBlobInBrowser(blob, maxDim = 1360, quality = 0.78) {
@@ -2166,16 +2119,16 @@
 
     async function processPptxFileInBrowser(file) {
       if (!window.JSZip) {
-        alert("Le module JSZip est en cours de chargement. Réessayez dans une seconde.");
+        alert("Chargement en cours, réessayez dans une seconde.");
         return;
       }
 
-      const reportBox = document.getElementById("compressionReport");
-      const headline = document.getElementById("compReportHeadline");
-      const details = document.getElementById("compReportDetails");
-      reportBox.classList.add("visible");
-      headline.textContent = "⏳ Analyse et re-compression du PowerPoint en cours...";
-      details.textContent = `Lecture de ${file.name} (${formatBytes(file.size)})...`;
+      const dzTitle = document.getElementById("dropzoneTitle");
+      const dzSub = document.getElementById("dropzoneSub");
+      const submitBtn = document.getElementById("btnSubmitArchive");
+      dzTitle.textContent = "⏳ Préparation des diapos...";
+      dzSub.textContent = file.name;
+      if (submitBtn) submitBtn.disabled = true;
 
       try {
         const zip = await JSZip.loadAsync(file);
@@ -2185,17 +2138,15 @@
         const fileNames = Object.keys(zip.files);
         for (const path of fileNames) {
           const lower = path.toLowerCase();
-          if (lower.startswith ? lower.startsWith("ppt/media/") : lower.indexOf("ppt/media/") === 0) {
-            if (/\.(png|jpg|jpeg|bmp|webp)$/i.test(lower)) {
-              const origBlob = await zip.file(path).async("blob");
-              const { blob: slimBlob, dataUrl } = await compressImageBlobInBrowser(origBlob, 1360, 0.78);
-              if (dataUrl) {
-                const baseName = path.split("/").pop();
-                mediaPreviewByFile[baseName] = dataUrl;
-              }
-              if (slimBlob && slimBlob.size < origBlob.size) {
-                zip.file(path, slimBlob);
-              }
+          if (lower.indexOf("ppt/media/") === 0 && /\.(png|jpg|jpeg|bmp|webp)$/i.test(lower)) {
+            const origBlob = await zip.file(path).async("blob");
+            const { blob: slimBlob, dataUrl } = await compressImageBlobInBrowser(origBlob, 1360, 0.78);
+            if (dataUrl) {
+              const baseName = path.split("/").pop();
+              mediaPreviewByFile[baseName] = dataUrl;
+            }
+            if (slimBlob && slimBlob.size < origBlob.size) {
+              zip.file(path, slimBlob);
             }
           }
         }
@@ -2218,7 +2169,6 @@
           const xmlText = await zip.file(sPath).async("string");
           const doc = parser.parseFromString(xmlText, "application/xml");
 
-          // Extract paragraphs
           const pNodes = Array.from(doc.getElementsByTagNameNS("*", "p"));
           const lines = [];
           for (const pNode of pNodes) {
@@ -2230,7 +2180,6 @@
           const slideTitle = lines.length > 0 ? lines[0] : `Diapositive ${idx + 1}`;
           const bullets = lines.slice(1);
 
-          // Check slide relationships for embedded images
           let slideImg = "";
           const relPath = `ppt/slides/_rels/slide${slideNum}.xml.rels`;
           if (zip.file(relPath)) {
@@ -2249,7 +2198,6 @@
             }
           }
 
-          // Check speaker notes
           let notesText = "";
           const notesPath = `ppt/notesSlides/notesSlide${slideNum}.xml`;
           if (zip.file(notesPath)) {
@@ -2265,7 +2213,7 @@
             index: idx + 1,
             title: slideTitle,
             stage: `Diapo ${idx + 1}`,
-            bullets: bullets.length ? bullets : ["Diapositive extraite du fichier PowerPoint."],
+            bullets: bullets.length ? bullets : [],
             takeaway: bullets[bullets.length - 1] || "",
             notes: notesText,
             image: slideImg
@@ -2279,85 +2227,73 @@
           compressionOptions: { level: 9 }
         });
 
-        const slimUrl = URL.createObjectURL(slimPptxBlob);
-        const dlBtn = document.getElementById("btnDownloadSlimmedNow");
-        const cleanStem = file.name.replace(/\.pptx$/i, "");
-        dlBtn.href = slimUrl;
-        dlBtn.download = `${cleanStem}-slim.pptx`;
+        const pptxDataUrl = await blobToDataUrl(slimPptxBlob);
+        const cleanStem = file.name.replace(/\.pptx$/i, "").replace(/[-_]+/g, " ").trim();
+        const firstSlideTitle = extractedSlides[0] && extractedSlides[0].title && !/^Diapositive 1$/i.test(extractedSlides[0].title)
+          ? extractedSlides[0].title
+          : cleanStem;
 
-        const savedPct = Math.max(0, Math.round((1 - slimPptxBlob.size / Math.max(file.size, 1)) * 100));
-        headline.textContent = `✅ ${extractedSlides.length} diapositives extraites • Poids : ${formatBytes(file.size)} → ${formatBytes(slimPptxBlob.size)} (-${savedPct}%)`;
-        details.textContent = "Les titres, textes, notes de l'orateur et images ont été extraits automatiquement ci-dessous.";
+        const titleInput = document.getElementById("formTitle");
+        if (!titleInput.value.trim()) {
+          titleInput.value = firstSlideTitle;
+        }
 
-        // Populate form fields automatically
-        const firstTitle = extractedSlides[0] ? extractedSlides[0].title : cleanStem;
-        document.getElementById("formTitle").value = firstTitle;
-        document.getElementById("formDiagnosis").value = extractedSlides[extractedSlides.length - 1]?.title || firstTitle;
-        document.getElementById("formContext").value = extractedSlides
-          .slice(0, 3)
-          .map(s => `${s.title} : ${(s.bullets || []).slice(0, 2).join(" / ")}`)
-          .join("\n");
+        dzTitle.textContent = `✅ ${extractedSlides.length} diapos prêtes`;
+        dzSub.textContent = `${file.name} (${formatBytes(slimPptxBlob.size)}) • Cliquer pour changer`;
 
         pendingExtractedPptx = {
           originalSizeBytes: file.size,
           slimSizeBytes: slimPptxBlob.size,
           slides: extractedSlides,
-          pptxDataUrl: slimUrl
+          pptxDataUrl,
+          autoSummary: extractedSlides
+            .slice(0, 2)
+            .map(s => (s.bullets || []).slice(0, 2).join(" · "))
+            .filter(Boolean)
+            .join(" — ")
         };
       } catch (err) {
-        headline.textContent = "⚠️ Impossible de lire ce fichier .pptx";
-        details.textContent = String(err.message || err);
+        dzTitle.textContent = "⚠️ Fichier .pptx non reconnu";
+        dzSub.textContent = "Veuillez choisir un fichier PowerPoint (.pptx) valide";
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
       }
     }
 
     async function handleSaveArchive(event) {
       event.preventDefault();
-      const title = document.getElementById("formTitle").value.trim();
-      const category = document.getElementById("formCategory").value;
-      const region = document.getElementById("formRegion").value;
-      const modality = document.getElementById("formModality").value.trim() || "IRM · TDM";
-      const author = document.getElementById("formAuthor").value.trim() || "Interne Radio B";
-      const diagnosis = document.getElementById("formDiagnosis").value.trim();
-      const contextRaw = document.getElementById("formContext").value.trim();
+      if (!pendingExtractedPptx || !pendingExtractedPptx.slides || !pendingExtractedPptx.slides.length) {
+        document.getElementById("pptxFileInput").click();
+        return;
+      }
 
+      const title = document.getElementById("formTitle").value.trim() || "Présentation";
+      const category = document.getElementById("formCategory").value || "cas";
       const id = "archive-" + Date.now().toString(36);
-      const fallbackCover = allArchives[0] ? allArchives[0].coverImage : "";
 
-      const slides = pendingExtractedPptx && pendingExtractedPptx.slides && pendingExtractedPptx.slides.length
-        ? pendingExtractedPptx.slides.map(s => ({
-            ...s,
-            image: s.image || fallbackCover
-          }))
-        : [
-            {
-              index: 1,
-              title: title,
-              stage: "Synthèse",
-              bullets: contextRaw ? contextRaw.split("\n").filter(Boolean) : [diagnosis],
-              takeaway: diagnosis,
-              notes: "Ajouté depuis le Studio d'Archivage COCHIN·OS.",
-              image: fallbackCover
-            }
-          ];
+      const slides = pendingExtractedPptx.slides.map((s, idx) => ({
+        ...s,
+        image: s.image || buildSlidePlaceholderSvg(s.title || title, idx + 1, pendingExtractedPptx.slides.length)
+      }));
 
       const newDeck = {
         id,
         title,
         shortTitle: title,
         category,
-        region,
-        modality,
-        semester: "Hiver 2026–2027",
-        date: new Date().toISOString().slice(0, 10),
-        author,
-        diagnosis,
-        clinicalContext: contextRaw || diagnosis,
-        tags: [categoryLabel(category), region.split("·")[0].trim(), modality.split("·")[0].trim()],
-        originalSizeBytes: pendingExtractedPptx ? pendingExtractedPptx.originalSizeBytes : 28500000,
-        slimSizeBytes: pendingExtractedPptx ? pendingExtractedPptx.slimSizeBytes : 42000,
+        region: "",
+        modality: "",
+        semester: "",
+        date: new Date().toLocaleDateString("fr-FR"),
+        author: "",
+        diagnosis: slides[slides.length - 1]?.title || title,
+        clinicalContext: pendingExtractedPptx.autoSummary || "",
+        tags: [categoryLabel(category)],
+        originalSizeBytes: pendingExtractedPptx.originalSizeBytes,
+        slimSizeBytes: pendingExtractedPptx.slimSizeBytes,
         slideCount: slides.length,
-        coverImage: slides[0].image || fallbackCover,
-        pptxDataUrl: pendingExtractedPptx ? pendingExtractedPptx.pptxDataUrl : "",
+        coverImage: slides[0].image,
+        pptxDataUrl: pendingExtractedPptx.pptxDataUrl || "",
         slides
       };
 
@@ -2367,10 +2303,8 @@
 
       const baseIndex = Array.isArray(window.COCHIN_ARCHIVES_INDEX) ? window.COCHIN_ARCHIVES_INDEX : [];
       rebuildMergedCatalog(baseIndex, customDecksList);
-      renderRegionPills();
       renderCatalog();
       closeStudioModal();
-      openViewer(newDeck.id, 0);
     }
 
     // Export / Import JSON Pack
@@ -2408,20 +2342,32 @@
       }
     }
 
-    // Drag & Drop events on dropzone
+    // Drag & Drop events on dropzone AND anywhere on the page
     (function setupDropzoneEvents() {
       const dz = document.getElementById("pptxDropzone");
-      if (!dz) return;
-      dz.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        dz.classList.add("dragover");
-      });
-      dz.addEventListener("dragleave", () => dz.classList.remove("dragover"));
-      dz.addEventListener("drop", async (e) => {
-        e.preventDefault();
-        dz.classList.remove("dragover");
+      if (dz) {
+        dz.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          dz.classList.add("dragover");
+        });
+        dz.addEventListener("dragleave", () => dz.classList.remove("dragover"));
+        dz.addEventListener("drop", async (e) => {
+          e.preventDefault();
+          dz.classList.remove("dragover");
+          const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+          if (file) await processPptxFileInBrowser(file);
+        });
+      }
+      window.addEventListener("dragover", (e) => e.preventDefault());
+      window.addEventListener("drop", async (e) => {
         const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-        if (file) await processPptxFileInBrowser(file);
+        if (file && /\.pptx$/i.test(file.name)) {
+          e.preventDefault();
+          if (!document.getElementById("studioModal").classList.contains("open")) {
+            openStudioModal();
+          }
+          await processPptxFileInBrowser(file);
+        }
       });
     })();
 
