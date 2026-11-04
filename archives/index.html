@@ -16,6 +16,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
   <!-- JSZip for in-browser OpenXML .pptx parsing & re-compression -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+  <!-- PDF.js: renders the PowerPoint PDF export pixel-perfect (strictly identical slides) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
   <style>
     :root {
       /* Mode "Papier Radio / Bone-OS" (Tactile Instrument Panel) */
@@ -1309,6 +1311,36 @@
       margin: 0;
     }
 
+    .pdf-tuto {
+      border: 1.5px solid var(--border, rgba(0,0,0,.15));
+      border-radius: 10px;
+      padding: 10px 14px;
+      background: var(--bg-well);
+      font-size: 13px;
+    }
+    .pdf-tuto summary {
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+    }
+    .pdf-tuto h4 {
+      margin: 12px 0 4px;
+      font-size: 13px;
+    }
+    .pdf-tuto ol {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.55;
+    }
+    .pdf-tuto kbd {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: var(--bg-elevated);
+      border: 1px solid rgba(0,0,0,.15);
+    }
+
     .compression-report {
       padding: 12px 14px;
       border-radius: 10px;
@@ -1500,13 +1532,23 @@
     <!-- 3. SEARCH & CATEGORY CONSOLE -->
     <section class="control-deck" aria-label="Recherche et filtres">
       <div class="search-row">
-        <div class="search-input-wrap">
+        <div id="searchModeBanner" class="search-mode-banner">
+          <div class="search-mode-info">
+            <span id="searchModeIcon">🔒</span>
+            <span id="searchModeText">Diagnostics masqués par défaut sur l'accueil</span>
+          </div>
+          <button type="button" id="btnSearchMode" class="btn-search-mode" onclick="toggleSearchMode()">
+            <span id="btnSearchModeLabel">🔍 Activer le Mode Recherche</span>
+          </button>
+        </div>
+
+        <div id="searchInputWrap" class="search-input-wrap">
           <span class="search-icon">⌕</span>
           <input
             type="search"
             id="searchInput"
             class="search-input"
-            placeholder="Rechercher un titre, prénom d'interne, année, Bone Club, Cas, Biblio, Cours..."
+            placeholder="Rechercher un diagnostic, un prénom d'interne, une année, Bone Club, Cas, Biblio, Cours..."
             autocomplete="off"
           />
           <span class="search-kbd">/</span>
@@ -1524,7 +1566,7 @@
           <span class="cat-count" id="count-bone-club">0</span>
         </button>
         <button type="button" class="cat-tab tab-cas" data-cat="cas" onclick="setCategory('cas')">
-          <span>🩺 CAS DU MARDI</span>
+          <span>🩻 CAS DU MARDI</span>
           <span class="cat-count" id="count-cas">0</span>
         </button>
         <button type="button" class="cat-tab tab-biblio" data-cat="biblio" onclick="setCategory('biblio')">
@@ -1556,8 +1598,8 @@
           <span id="viewerDossierMeta" class="dossier-year-badge" style="display:none"></span>
         </div>
         <div class="viewer-toolbar">
-          <button type="button" id="btnBlindMode" class="v-btn" onclick="toggleBlindMode()" title="Masquer la dernière diapo / diagnostic pour s'entraîner en mode Staff">
-            🙈 Mode Staff (Diag caché)
+          <button type="button" id="btnBlindMode" class="v-btn" onclick="toggleBlindMode()" title="Afficher ou masquer le diagnostic">
+            👁️ Afficher le diagnostic
           </button>
           <a id="btnDownloadPptx" href="#" download class="v-btn" title="Télécharger le fichier PowerPoint (.pptx) compressé">
             📥 .PPTX Slim
@@ -1621,37 +1663,62 @@
           class="dropzone"
           onclick="document.getElementById('pptxFileInput').click()"
         >
-          <p class="dropzone-title" id="dropzoneTitle">📂 Choisir ou glisser un fichier .pptx</p>
-          <p class="dropzone-sub" id="dropzoneSub">Compression et mise en ligne automatiques</p>
+          <p class="dropzone-title" id="dropzoneTitle">📂 Choisir ou glisser votre présentation en PDF</p>
+          <p class="dropzone-sub" id="dropzoneSub">Affichage strictement identique à vos diapos</p>
           <input
             type="file"
             id="pptxFileInput"
-            accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            accept=".pdf,application/pdf"
             style="display:none"
             onchange="handlePptxFileSelect(event)"
           />
         </div>
+        <details class="pdf-tuto" id="pdfTuto">
+          <summary>❓ Comment enregistrer ma présentation en PDF ?</summary>
+          <h4>PowerPoint (Mac)</h4>
+          <ol>
+            <li>Ouvrir la présentation</li>
+            <li><b>Fichier</b> › <b>Exporter…</b></li>
+            <li>Format de fichier : <b>PDF</b> › <b>Exporter</b></li>
+          </ol>
+          <h4>PowerPoint (Windows)</h4>
+          <ol>
+            <li>Ouvrir la présentation</li>
+            <li><b>Fichier</b> › <b>Exporter</b> › <b>Créer un document PDF/XPS</b></li>
+            <li><b>Publier</b></li>
+          </ol>
+          <h4>Keynote</h4>
+          <ol>
+            <li><b>Fichier</b> › <b>Exporter vers</b> › <b>PDF…</b> › <b>Suivant</b> › <b>Exporter</b></li>
+          </ol>
+          <h4>Google Slides</h4>
+          <ol>
+            <li><b>Fichier</b> › <b>Télécharger</b> › <b>Document PDF (.pdf)</b></li>
+          </ol>
+          <p style="margin:10px 0 0;color:var(--ink-muted)">Puis glissez le fichier <kbd>.pdf</kbd> obtenu ci-dessus.</p>
+        </details>
 
-        <!-- 2. Catégorie + Titre + Prénom + Semestre/Année + 1 bouton Déposer -->
+        <!-- 2. Catégorie + Diagnostic + Prénom + Semestre/Année + 1 bouton Déposer -->
         <form id="archiveForm" onsubmit="handleSaveArchive(event)" style="display:flex;flex-direction:column;gap:13px">
           <div class="field-group">
             <label class="field-label">CATÉGORIE</label>
             <input type="hidden" id="formCategory" value="cas" />
             <div class="cat-pick-grid">
               <button type="button" class="cat-pick-btn" data-pick-cat="bone-club" onclick="selectUploadCategory('bone-club')">🦴 Bone Club</button>
-              <button type="button" class="cat-pick-btn active" data-pick-cat="cas" onclick="selectUploadCategory('cas')">🩺 Cas du mardi</button>
+              <button type="button" class="cat-pick-btn active" data-pick-cat="cas" onclick="selectUploadCategory('cas')">🩻 Cas du mardi</button>
               <button type="button" class="cat-pick-btn" data-pick-cat="biblio" onclick="selectUploadCategory('biblio')">📚 Biblio du vendredi</button>
               <button type="button" class="cat-pick-btn" data-pick-cat="cours" onclick="selectUploadCategory('cours')">🎓 Cours</button>
             </div>
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="formTitle">TITRE DU DOSSIER</label>
-            <input type="text" id="formTitle" class="field-input" required placeholder="Rempli automatiquement depuis vos diapos..." />
+            <label class="field-label" for="formDiagnosis">DIAGNOSTIC *</label>
+            <input type="text" id="formDiagnosis" class="field-input" required placeholder="Écrire le diagnostic (ex : Ostéome ostéoïde, Chondrosarcome...)" autocomplete="off" />
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-muted)">🔒 Masqué par défaut sur la page d'accueil · Visible en activant le Mode Recherche</span>
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="formInternName">PRÉNOM DE L'INTERNE</label>
+            <label class="field-label" for="formInternName">PRÉNOM DE L'INTERNE *</label>
             <input type="text" id="formInternName" class="field-input" required placeholder="Ex : Thomas, Clara..." autocomplete="given-name" />
           </div>
 
@@ -1706,18 +1773,20 @@
 
     let activeCategory = "all";
     let activeRegion = "all";
+    let searchMode = false;
     let searchQuery = "";
 
     // Viewer state
     let currentDeck = null;
     let currentSlideIdx = 0;
-    let blindMode = false;
+    let viewerShowDiagnosis = false;
     let pacsZoom = 1;
     let pacsContrast = 100;
     let pacsInvert = false;
 
     // Pending extracted PPTX in Studio
     let pendingExtractedPptx = null;
+    let pendingPdf = null; // { slides, sizeBytes, fileName } — exact page renders from the PDF export
 
     // 1. Setup back link for embedded vs standalone mode
     (function setupBackLink() {
@@ -1880,7 +1949,7 @@
     async function upgradeLegacyCustomDecksInBackground(baseIndex) {
       let updatedAny = false;
       for (const cd of customDecksList) {
-        if (cd && cd.pptxDataUrl && cd.renderVersion !== 3) {
+        if (cd && cd.pptxDataUrl && cd.renderVersion !== 3 && cd.renderSource !== "pdf") {
           const ok = await upgradeDeckSlidesFromPptxDataUrl(cd);
           if (ok) updatedAny = true;
         }
@@ -1932,6 +2001,36 @@
       renderCatalog();
     }
 
+    function toggleSearchMode(forceState) {
+      searchMode = typeof forceState === "boolean" ? forceState : !searchMode;
+      const banner = document.getElementById("searchModeBanner");
+      const icon = document.getElementById("searchModeIcon");
+      const text = document.getElementById("searchModeText");
+      const btn = document.getElementById("btnSearchMode");
+      const btnLabel = document.getElementById("btnSearchModeLabel");
+      const inputWrap = document.getElementById("searchInputWrap");
+      const input = document.getElementById("searchInput");
+
+      if (banner) banner.classList.toggle("active", searchMode);
+      if (btn) btn.classList.toggle("active", searchMode);
+      if (inputWrap) inputWrap.classList.toggle("visible", searchMode);
+
+      if (searchMode) {
+        if (icon) icon.textContent = "🔓";
+        if (text) text.textContent = "Mode Recherche activé : diagnostics affichés sur l'accueil";
+        if (btnLabel) btnLabel.textContent = "🙈 Masquer les diagnostics";
+        if (input) setTimeout(() => input.focus(), 30);
+      } else {
+        if (icon) icon.textContent = "🔒";
+        if (text) text.textContent = "Diagnostics masqués par défaut sur l'accueil";
+        if (btnLabel) btnLabel.textContent = "🔍 Activer le Mode Recherche";
+        searchQuery = "";
+        if (input) input.value = "";
+      }
+
+      renderCatalog();
+    }
+
     // 6. Search & Deep Slide Matching
     function findMatchingSlide(archive, normQuery) {
       if (!normQuery) return null;
@@ -1950,7 +2049,7 @@
 
     function renderCatalog() {
       const grid = document.getElementById("archiveGrid");
-      const normQ = normalizeStr(searchQuery.trim());
+      const normQ = searchMode ? normalizeStr(searchQuery.trim()) : "";
 
       const filtered = allArchives.filter(item => {
         if (activeCategory !== "all") {
@@ -1964,6 +2063,7 @@
 
         if (!normQ) return true;
         const topHaystack = normalizeStr([
+          item.diagnosis,
           item.title,
           item.shortTitle,
           item.region,
@@ -1972,7 +2072,6 @@
           item.internName,
           item.year,
           item.semester,
-          item.diagnosis,
           item.clinicalContext,
           item.journal,
           item.pmid,
@@ -1987,7 +2086,7 @@
         grid.innerHTML = `
           <div class="empty-state" style="grid-column: 1 / -1; cursor: pointer" onclick="openStudioModal()">
             <p style="font-size:17px;font-weight:800;color:var(--ink);margin:0 0 6px">
-              ${allArchives.length === 0 ? "Aucune diapo déposée pour le moment" : "Aucune diapo dans cette catégorie"}
+              ${allArchives.length === 0 ? "Aucune diapo déposée pour le moment" : "Aucune diapo ne correspond à cette recherche"}
             </p>
             <p style="font-size:12.5px;margin:0 0 16px">
               Glissez un fichier PowerPoint (.pptx) ou cliquez ci-dessous pour déposer vos diapos.
@@ -2005,14 +2104,19 @@
         const jumpSlideIdx = matchedSlide ? Math.max(0, matchedSlide.index - 1) : 0;
         const slimKb = formatBytes(item.slimSizeBytes || 0);
         const slideTotal = item.slideCount || (item.slides ? item.slides.length : 1);
-        const cover = item.coverImage
-          || (item.slides && item.slides[0] && item.slides[0].image)
-          || buildSlidePlaceholderSvg(item.shortTitle || item.title, 1, slideTotal);
 
         const internFirstName = (item.internName || item.author || "").trim();
         const yearMatch = String(item.year || item.semester || item.date || "").match(/\b(20\d{2})\b/);
         const archiveYear = (item.year || (yearMatch ? yearMatch[1] : "")).trim();
         const semesterLabel = (item.semester || "").trim();
+
+        const diagText = (item.diagnosis || item.shortTitle || item.title || "Diagnostic non renseigné").trim();
+        const maskedHeading = `${categoryLabel(item.category)}${internFirstName ? " · " + internFirstName : ""}`;
+        const cardHeading = searchMode ? diagText : maskedHeading;
+
+        const cover = item.coverImage
+          || (item.slides && item.slides[0] && item.slides[0].image)
+          || buildSlidePlaceholderSvg(maskedHeading, 1, slideTotal);
 
         const footerSummaryParts = [];
         if (internFirstName) footerSummaryParts.push(internFirstName);
@@ -2020,10 +2124,12 @@
         else if (item.date) footerSummaryParts.push(item.date);
         const footerSummary = footerSummaryParts.join(" · ");
 
+        const dlFilename = searchMode ? (diagText || item.id) : `${categoryLabel(item.category).toLowerCase().replace(/\s+/g, "-")}-${internFirstName || item.id}`;
+
         return `
           <article class="archive-card" onclick="openViewer('${escapeHtml(item.id)}', ${jumpSlideIdx})">
             <div class="card-cover">
-              <img src="${cover}" alt="${escapeHtml(item.shortTitle || item.title)}" loading="lazy" />
+              <img src="${cover}" alt="${escapeHtml(cardHeading)}" loading="lazy" />
               <div class="card-overlay-top">
                 <span class="type-badge type-${escapeHtml(item.category)}">${categoryLabel(item.category)}</span>
                 <span class="slide-count-pill">${slideTotal} DIAPOS</span>
@@ -2042,14 +2148,24 @@
             </div>
 
             <div class="card-body">
-              <h2 class="card-title">${escapeHtml(item.shortTitle || item.title)}</h2>
+              ${searchMode ? `
+                <div class="diag-revealed-box">
+                  <span class="diag-revealed-tag">🎯 DIAGNOSTIC</span>
+                  <span class="diag-revealed-text">${escapeHtml(diagText)}</span>
+                </div>
+              ` : `
+                <h2 class="card-title">${escapeHtml(maskedHeading)}</h2>
+                <div class="diag-masked-box">
+                  <span>🔒 Diagnostic masqué</span>
+                  <span>Mode Recherche requis</span>
+                </div>
+              `}
               <div class="dossier-meta-badges">
                 ${internFirstName ? `<span class="dossier-intern-badge" title="Prénom de l'interne">👤 ${escapeHtml(internFirstName)}</span>` : ""}
                 ${archiveYear ? `<span class="dossier-year-badge" title="${escapeHtml(semesterLabel || archiveYear)}">📅 ${escapeHtml(archiveYear)}${semesterLabel && !semesterLabel.includes(archiveYear) ? ` · ${escapeHtml(semesterLabel)}` : (semesterLabel ? ` (${escapeHtml(semesterLabel)})` : "")}</span>` : ""}
               </div>
-              ${item.clinicalContext ? `<p class="card-context">${escapeHtml(item.clinicalContext)}</p>` : ""}
 
-              ${matchedSlide ? `
+              ${searchMode && matchedSlide ? `
                 <div class="slide-match-banner">
                   <span>🎯 Diapo #${matchedSlide.index} : ${escapeHtml(matchedSlide.title)}</span>
                   <span>→</span>
@@ -2061,7 +2177,7 @@
               <span class="author-label">${escapeHtml(footerSummary)}</span>
               <div class="card-actions" onclick="event.stopPropagation()">
                 ${(item.pptxDataUrl || item.pptxUrl) ? `
-                  <a href="${escapeHtml(item.pptxDataUrl || item.pptxUrl)}" download="${escapeHtml(item.shortTitle || item.id)}.pptx" class="btn-card-pptx" title="Télécharger le PowerPoint (.pptx)">
+                  <a href="${escapeHtml(item.pptxDataUrl || item.pptxUrl)}" download="${escapeHtml(dlFilename)}.pptx" class="btn-card-pptx" title="Télécharger le PowerPoint (.pptx)">
                     📥 .PPTX
                   </a>
                 ` : ""}
@@ -2073,6 +2189,25 @@
           </article>
         `;
       }).join("");
+    }
+
+    function updateViewerHeaderPresentation() {
+      if (!currentDeck) return;
+      const deck = currentDeck;
+      const intern = (deck.internName || deck.author || "").trim();
+      const diagText = (deck.diagnosis || deck.shortTitle || deck.title || "Diagnostic non renseigné").trim();
+      const maskedTitle = `${categoryLabel(deck.category)}${intern ? " — " + intern : ""}`;
+
+      const titleEl = document.getElementById("viewerTitle");
+      if (titleEl) {
+        titleEl.textContent = viewerShowDiagnosis ? `🎯 ${diagText}` : maskedTitle;
+      }
+
+      const blindBtn = document.getElementById("btnBlindMode");
+      if (blindBtn) {
+        blindBtn.classList.toggle("active", viewerShowDiagnosis);
+        blindBtn.textContent = viewerShowDiagnosis ? "🙈 Masquer le diagnostic" : "👁️ Afficher le diagnostic";
+      }
     }
 
     // 7. Interactive Slide Deck & PACS Viewer
@@ -2089,21 +2224,21 @@
       }
       if (!deck) return;
 
-      if (deck.pptxDataUrl && deck.renderVersion !== 3) {
+      if (deck.pptxDataUrl && deck.renderVersion !== 3 && deck.renderSource !== "pdf") {
         await upgradeDeckSlidesFromPptxDataUrl(deck);
         renderCatalog();
       }
 
       currentDeck = deck;
       currentSlideIdx = Math.max(0, Math.min((deck.slides || []).length - 1, startSlideIndex));
-      blindMode = false;
+      viewerShowDiagnosis = searchMode;
       resetPacsView();
 
       const badge = document.getElementById("viewerTypeBadge");
       badge.className = `type-badge type-${deck.category}`;
       badge.textContent = categoryLabel(deck.category);
 
-      document.getElementById("viewerTitle").textContent = deck.title;
+      updateViewerHeaderPresentation();
 
       const metaBadge = document.getElementById("viewerDossierMeta");
       if (metaBadge) {
@@ -2144,11 +2279,6 @@
         pmBtn.style.display = "none";
       }
 
-      // Blind mode button visibility
-      const blindBtn = document.getElementById("btnBlindMode");
-      blindBtn.classList.remove("active");
-      blindBtn.textContent = "🙈 Mode Staff (Diag caché)";
-
       renderActiveSlide();
       document.getElementById("viewerModal").classList.add("open");
     }
@@ -2159,10 +2289,8 @@
     }
 
     function toggleBlindMode() {
-      blindMode = !blindMode;
-      const btn = document.getElementById("btnBlindMode");
-      btn.classList.toggle("active", blindMode);
-      btn.textContent = blindMode ? "👁️ Révéler le diagnostic" : "🙈 Mode Staff (Diag caché)";
+      viewerShowDiagnosis = !viewerShowDiagnosis;
+      updateViewerHeaderPresentation();
       renderActiveSlide();
     }
 
@@ -2175,7 +2303,7 @@
 
       const imgEl = document.getElementById("viewerSlideImg");
       imgEl.src = slide.image || currentDeck.coverImage || buildSlidePlaceholderSvg(slide.title, currentSlideIdx + 1, slides.length);
-      imgEl.classList.toggle("blind-blur", blindMode && currentSlideIdx >= slides.length - 1);
+      imgEl.classList.remove("blind-blur");
 
       document.getElementById("btnPrevSlide").disabled = currentSlideIdx === 0;
       document.getElementById("btnNextSlide").disabled = currentSlideIdx === slides.length - 1;
@@ -2348,11 +2476,14 @@
 
     function openStudioModal() {
       pendingExtractedPptx = null;
+      pendingPdf = null;
       document.getElementById("archiveForm").reset();
       const fileInput = document.getElementById("pptxFileInput");
       if (fileInput) fileInput.value = "";
-      document.getElementById("dropzoneTitle").textContent = "📂 Choisir ou glisser un fichier .pptx";
-      document.getElementById("dropzoneSub").textContent = "Compression et mise en ligne automatiques";
+      document.getElementById("dropzoneTitle").textContent = "📂 Choisir ou glisser votre présentation en PDF";
+      document.getElementById("dropzoneSub").textContent = "Affichage strictement identique à vos diapos";
+      const tuto = document.getElementById("pdfTuto");
+      if (tuto) tuto.open = false;
       const defaultCat = (activeCategory && activeCategory !== "all") ? activeCategory : "cas";
       selectUploadCategory(defaultCat);
 
@@ -3088,6 +3219,7 @@
 
     async function upgradeDeckSlidesFromPptxDataUrl(deck) {
       if (!deck || !deck.pptxDataUrl || !window.JSZip) return false;
+      if (deck.renderSource === "pdf") return false;
       try {
         const blob = dataUrlToBlob(deck.pptxDataUrl);
         if (!blob) return false;
@@ -3107,9 +3239,123 @@
     }
 
     async function handlePptxFileSelect(event) {
-      const file = event.target.files && event.target.files[0];
-      if (!file) return;
-      await processPptxFileInBrowser(file);
+      const files = event.target.files ? Array.from(event.target.files) : [];
+      event.target.value = "";
+      await processUploadedFiles(files);
+    }
+
+    async function processUploadedFiles(files) {
+      const pdfFile = (files || []).find(f => /\.pdf$/i.test(f.name) || f.type === "application/pdf");
+      if (pdfFile) {
+        pendingExtractedPptx = null;
+        await processPdfFileInBrowser(pdfFile);
+        return;
+      }
+      const isPowerPoint = (files || []).some(f => /\.(pptx?|key|odp)$/i.test(f.name));
+      document.getElementById("dropzoneTitle").textContent = isPowerPoint
+        ? "⚠️ Enregistrez d'abord votre présentation en PDF"
+        : "⚠️ Format non reconnu";
+      document.getElementById("dropzoneSub").textContent = "Suivez le petit tuto ci-dessous, puis déposez le fichier .pdf";
+      const tuto = document.getElementById("pdfTuto");
+      if (tuto) tuto.open = true;
+    }
+
+
+    // Slides that will actually be displayed: PDF pages (exact) win over the reconstructed PPTX preview
+    function getPendingDisplaySlides() {
+      if (pendingPdf && pendingPdf.slides && pendingPdf.slides.length) {
+        const pptxSlides = (pendingExtractedPptx && pendingExtractedPptx.slides) || [];
+        const sameCount = pptxSlides.length === pendingPdf.slides.length;
+        return pendingPdf.slides.map((s, idx) => sameCount
+          ? { ...pptxSlides[idx], image: s.image }
+          : s);
+      }
+      return (pendingExtractedPptx && pendingExtractedPptx.slides) || [];
+    }
+
+    function updateDropzoneStatus() {
+      const dzTitle = document.getElementById("dropzoneTitle");
+      const dzSub = document.getElementById("dropzoneSub");
+      const n = getPendingDisplaySlides().length;
+      const names = [pendingExtractedPptx && pendingExtractedPptx.fileName, pendingPdf && pendingPdf.fileName].filter(Boolean).join(" + ");
+      if (pendingPdf) {
+        dzTitle.textContent = `✅ ${n} diapos — affichage identique à l'original`;
+        dzSub.textContent = `${names} • Cliquer pour changer`;
+      } else if (pendingExtractedPptx) {
+        dzTitle.textContent = `⏳ ${n} diapos lues — conversion fidèle en attente`;
+        dzSub.textContent = pendingExtractedPptx.fileName || "";
+      }
+    }
+
+    async function processPdfFileInBrowser(file, displayName) {
+      const fileName = displayName || file.name || "presentation.pdf";
+      const dzTitle = document.getElementById("dropzoneTitle");
+      const dzSub = document.getElementById("dropzoneSub");
+      const submitBtn = document.getElementById("btnSubmitArchive");
+      if (!window.pdfjsLib) {
+        alert("Chargement en cours, réessayez dans une seconde.");
+        return;
+      }
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+      dzTitle.textContent = "⏳ Lecture du PDF...";
+      dzSub.textContent = fileName;
+      if (submitBtn) submitBtn.disabled = true;
+
+      try {
+        const data = new Uint8Array(await file.arrayBuffer());
+        const pdf = await window.pdfjsLib.getDocument({ data }).promise;
+        const slides = [];
+        const TARGET_WIDTH = 1920;
+        for (let i = 1; i <= pdf.numPages; i++) {
+          dzTitle.textContent = `⏳ Diapo ${i} / ${pdf.numPages}...`;
+          const page = await pdf.getPage(i);
+          const base = page.getViewport({ scale: 1 });
+          const viewport = page.getViewport({ scale: TARGET_WIDTH / base.width });
+          const canvas = document.createElement("canvas");
+          canvas.width = Math.round(viewport.width);
+          canvas.height = Math.round(viewport.height);
+          const ctx = canvas.getContext("2d");
+          ctx.fillStyle = "#FFFFFF";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          await page.render({ canvasContext: ctx, viewport }).promise;
+          const image = canvas.toDataURL("image/jpeg", 0.9);
+
+          let lines = [];
+          try {
+            const tc = await page.getTextContent();
+            lines = tc.items.map(it => (it.str || "").trim()).filter(Boolean);
+          } catch (e) {}
+
+          slides.push({
+            index: i,
+            title: lines[0] || `Diapositive ${i}`,
+            stage: `Diapo ${i}`,
+            bullets: lines.slice(1, 12),
+            takeaway: "",
+            image
+          });
+          page.cleanup();
+          canvas.width = canvas.height = 0;
+        }
+        pdf.destroy();
+        if (!slides.length) throw new Error("PDF vide");
+
+        pendingPdf = {
+          slides,
+          sizeBytes: slides.reduce((sum, s) => sum + Math.round(s.image.length * 0.75), 0),
+          fileName
+        };
+        updateDropzoneStatus();
+        const diagInput = document.getElementById("formDiagnosis");
+        if (diagInput && !diagInput.value.trim()) diagInput.focus();
+      } catch (err) {
+        dzTitle.textContent = "⚠️ PDF non reconnu";
+        dzSub.textContent = "Veuillez choisir l'export PDF de la présentation";
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
     }
 
     async function processPptxFileInBrowser(file) {
@@ -3137,30 +3383,25 @@
         });
 
         const pptxDataUrl = await blobToDataUrl(slimPptxBlob);
-        const cleanStem = file.name.replace(/\.pptx$/i, "").replace(/[-_]+/g, " ").trim();
-        const firstSlideTitle = extractedSlides[0] && extractedSlides[0].title && !/^Diapositive 1$/i.test(extractedSlides[0].title)
-          ? extractedSlides[0].title
-          : cleanStem;
 
-        const titleInput = document.getElementById("formTitle");
-        if (!titleInput.value.trim()) {
-          titleInput.value = firstSlideTitle;
+        const diagInput = document.getElementById("formDiagnosis");
+        if (diagInput && !diagInput.value.trim()) {
+          diagInput.focus();
         }
-
-        dzTitle.textContent = `✅ ${extractedSlides.length} diapos prêtes`;
-        dzSub.textContent = `${file.name} (${formatBytes(slimPptxBlob.size)}) • Cliquer pour changer`;
 
         pendingExtractedPptx = {
           originalSizeBytes: file.size,
           slimSizeBytes: slimPptxBlob.size,
           slides: extractedSlides,
           pptxDataUrl,
+          fileName: file.name,
           autoSummary: extractedSlides
-            .slice(0, 2)
+            .slice(0, 1)
             .map(s => (s.bullets || []).slice(0, 2).join(" · "))
             .filter(Boolean)
             .join(" — ")
         };
+        updateDropzoneStatus();
       } catch (err) {
         dzTitle.textContent = "⚠️ Fichier .pptx non reconnu";
         dzSub.textContent = "Veuillez choisir un fichier PowerPoint (.pptx) valide";
@@ -3171,12 +3412,25 @@
 
     async function handleSaveArchive(event) {
       event.preventDefault();
-      if (!pendingExtractedPptx || !pendingExtractedPptx.slides || !pendingExtractedPptx.slides.length) {
-        document.getElementById("pptxFileInput").click();
+      if (!pendingPdf) {
+        if (!pendingExtractedPptx) {
+          document.getElementById("pptxFileInput").click();
+        } else {
+          document.getElementById("dropzoneTitle").textContent = "⚠️ Déposez votre présentation en PDF";
+          document.getElementById("dropzoneSub").textContent = "Voir le tuto ci-dessous";
+        }
+        return;
+      }
+      const displaySlides = getPendingDisplaySlides();
+      const pptxInfo = pendingExtractedPptx || {};
+
+      const diagnosisInput = document.getElementById("formDiagnosis");
+      const diagnosis = (diagnosisInput ? diagnosisInput.value : "").trim();
+      if (!diagnosis) {
+        if (diagnosisInput) diagnosisInput.focus();
         return;
       }
 
-      const title = document.getElementById("formTitle").value.trim() || "Présentation";
       const category = document.getElementById("formCategory").value || "cas";
       const internName = document.getElementById("formInternName").value.trim();
       const semMode = document.getElementById("formSemesterMode").value || "current";
@@ -3202,16 +3456,17 @@
       }
 
       const id = "archive-" + Date.now().toString(36);
+      const maskedTitle = `${categoryLabel(category)}${internName ? " · " + internName : ""}`;
 
-      const slides = pendingExtractedPptx.slides.map((s, idx) => ({
+      const slides = displaySlides.map((s, idx) => ({
         ...s,
-        image: s.image || buildSlidePlaceholderSvg(s.title || title, idx + 1, pendingExtractedPptx.slides.length)
+        image: s.image || buildSlidePlaceholderSvg(s.title || maskedTitle, idx + 1, displaySlides.length)
       }));
 
       const newDeck = {
         id,
-        title,
-        shortTitle: title,
+        title: diagnosis,
+        shortTitle: diagnosis,
         category,
         region: "",
         modality: "",
@@ -3220,15 +3475,16 @@
         date: new Date().toLocaleDateString("fr-FR"),
         author: internName,
         internName,
-        diagnosis: slides[slides.length - 1]?.title || title,
-        clinicalContext: pendingExtractedPptx.autoSummary || "",
-        tags: [categoryLabel(category), internName, archiveYear, archiveSemester].filter(Boolean),
-        originalSizeBytes: pendingExtractedPptx.originalSizeBytes,
-        slimSizeBytes: pendingExtractedPptx.slimSizeBytes,
+        diagnosis,
+        clinicalContext: pptxInfo.autoSummary || ((displaySlides[0] && displaySlides[0].bullets) || []).slice(0, 2).join(" · "),
+        tags: [categoryLabel(category), internName, archiveYear, archiveSemester, diagnosis].filter(Boolean),
+        originalSizeBytes: pptxInfo.originalSizeBytes || (pendingPdf ? pendingPdf.sizeBytes : 0),
+        slimSizeBytes: pptxInfo.slimSizeBytes || (pendingPdf ? pendingPdf.sizeBytes : 0),
         slideCount: slides.length,
         coverImage: slides[0].image,
-        pptxDataUrl: pendingExtractedPptx.pptxDataUrl || "",
+        pptxDataUrl: pptxInfo.pptxDataUrl || "",
         renderVersion: 3,
+        renderSource: pendingPdf ? "pdf" : "pptx",
         slides
       };
 
@@ -3289,19 +3545,20 @@
         dz.addEventListener("drop", async (e) => {
           e.preventDefault();
           dz.classList.remove("dragover");
-          const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-          if (file) await processPptxFileInBrowser(file);
+          const files = e.dataTransfer && e.dataTransfer.files ? Array.from(e.dataTransfer.files) : [];
+          if (files.length) await processUploadedFiles(files);
         });
       }
       window.addEventListener("dragover", (e) => e.preventDefault());
       window.addEventListener("drop", async (e) => {
-        const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-        if (file && /\.pptx$/i.test(file.name)) {
+        if (e.defaultPrevented) return;
+        const files = e.dataTransfer && e.dataTransfer.files ? Array.from(e.dataTransfer.files) : [];
+        if (files.some(f => /\.(pptx?|pdf|key|odp)$/i.test(f.name))) {
           e.preventDefault();
           if (!document.getElementById("studioModal").classList.contains("open")) {
             openStudioModal();
           }
-          await processPptxFileInBrowser(file);
+          await processUploadedFiles(files);
         }
       });
     })();
@@ -3343,6 +3600,7 @@
 
       if (e.key === "/") {
         e.preventDefault();
+        if (!searchMode) toggleSearchMode(true);
         document.getElementById("searchInput").focus();
       } else if (e.key.toLowerCase() === "n") {
         toggleTheme();
