@@ -726,7 +726,7 @@
         </a>
 
         <!-- 06 : GUIDE INFILTRATIONS -->
-        <a href="./infiltrations/index.html" class="app-key key-infiltrations">
+        <a href="./infiltrations/index.html?v=2026-11-04.6" class="app-key key-infiltrations">
           <div class="key-top">
             <span class="key-index">06</span>
             <span class="key-arrow">→</span>
@@ -750,7 +750,7 @@
   <script>
     // Auto-update: home-screen web apps (iOS) keep old pages for a long time.
     // On open and when the app comes back to the foreground, compare with version.json and reload if newer.
-    const APP_VERSION = "2026-11-04.5";
+    const APP_VERSION = "2026-11-04.6";
     function checkForNewVersion() {
       fetch(`version.json?ts=${Date.now()}`, { cache: "no-store" })
         .then(r => (r.ok ? r.json() : null))
@@ -837,7 +837,7 @@
       } else if (e.key === "5") {
         window.location.href = "https://radio-thomas-ten.vercel.app";
       } else if (e.key === "6") {
-        window.location.href = "./infiltrations/index.html";
+        window.location.href = "./infiltrations/index.html?v=2026-11-04.6";
       } else if (e.key === "7") {
         window.location.href = "./archives/index.html";
       }

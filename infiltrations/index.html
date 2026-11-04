@@ -213,6 +213,7 @@
       padding: 11px 14px;
       background: var(--bg-panel);
       border-bottom: 1.5px solid var(--line);
+      cursor: pointer;
     }
 
     .abord-title {
@@ -222,6 +223,13 @@
       margin: 0;
       line-height: 1.2;
       color: var(--ink);
+    }
+
+    .abord-header-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
     }
 
     .abord-region-tag {
@@ -234,6 +242,49 @@
       border-radius: 6px;
       white-space: nowrap;
       flex-shrink: 0;
+    }
+
+    .abord-pdf-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      border: none;
+      padding: 4px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .abord-pdf-pages {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--bg-panel);
+      border-top: 1.5px solid var(--line);
+    }
+
+    .abord-page-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink);
+      background: var(--bg-elevated);
+      border: 1.5px solid var(--line);
+      padding: 4px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+      box-shadow: var(--shadow-key);
+    }
+    .abord-page-pill:active,
+    .abord-pdf-btn:active {
+      transform: translateY(1px);
     }
 
     /* ORIGINAL BOOK IMAGE CROP (UNMODIFIED) */
@@ -259,6 +310,7 @@
       margin-left: -4.35%;
       transform: translateY(calc(-100% * var(--y1)));
       display: block;
+      pointer-events: none;
     }
 
     /* FULLSCREEN ZOOM LIGHTBOX */
@@ -308,6 +360,42 @@
       font-weight: 700;
       cursor: pointer;
       flex-shrink: 0;
+    }
+
+    .lb-nav-btn {
+      height: 34px;
+      padding: 0 12px;
+      border-radius: 8px;
+      border: 1px solid #2A3C52;
+      background: #16202E;
+      color: #ECF3F9;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .lb-nav-btn:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+
+    .lb-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 8px 6px 2px;
+      color: #ECF3F9;
+    }
+
+    .lb-page-indicator {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: #B2C3D4;
+      min-width: 90px;
+      text-align: center;
     }
 
     .lb-stage {
@@ -362,7 +450,12 @@
       <button type="button" class="lb-btn" onclick="closeLightbox()">✕ Fermer</button>
     </div>
     <div class="lb-stage">
-      <img id="lbImage" src="" alt="" />
+      <img id="lbImage" src="" alt="" onclick="event.stopPropagation()" />
+    </div>
+    <div class="lb-bottom" id="lbBottom" onclick="event.stopPropagation()">
+      <button type="button" class="lb-nav-btn" id="lbPrevBtn" onclick="stepLightboxPage(-1)">◀ Préc.</button>
+      <span class="lb-page-indicator" id="lbPageIndicator"></span>
+      <button type="button" class="lb-nav-btn" id="lbNextBtn" onclick="stepLightboxPage(1)">Suiv. ▶</button>
     </div>
   </div>
 
@@ -379,9 +472,29 @@
       { id: "biopsies", label: "BIOPSIES" }
     ];
 
+    const APP_VERSION = "2026-11-04.6";
+    function checkForNewVersion() {
+      fetch(`version.json?ts=${Date.now()}`, { cache: "no-store" })
+        .then(r => (r.ok ? r.json() : null))
+        .then(j => {
+          if (!j || !j.version || j.version === APP_VERSION) return;
+          const u = new URL(location.href);
+          if (u.searchParams.get("v") === j.version) return;
+          u.searchParams.set("v", j.version);
+          location.replace(u.toString());
+        })
+        .catch(() => {});
+    }
+    checkForNewVersion();
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") checkForNewVersion();
+    });
+
     const THEME_STORAGE_KEY = "cochin_os_theme_v1";
     let activeCat = "all";
     let searchQuery = "";
+    let currentLightboxItem = null;
+    let currentLightboxPage = 1;
 
     (function setupBackLink() {
       const link = document.getElementById("cochinBackLink");
@@ -411,14 +524,15 @@
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;");
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
     }
 
     function normalizeStr(str) {
       return String(str || "")
         .toLowerCase()
         .normalize("NFD")
-        .replace(/[̀-ͯ]/g, "");
+        .replace(/[\u0300-\u036f]/g, "");
     }
 
     function renderCategories() {
@@ -454,34 +568,110 @@
         return normalizeStr(`${it.title} ${it.subregion}`).includes(normQ);
       });
 
-      stream.innerHTML = filtered.map(it => `
+      stream.innerHTML = filtered.map(it => {
+        const defaultPage = (it.abordCrops[0] && it.abordCrops[0].pdfPage) || it.pdfPages[0];
+        return `
         <article class="abord-card">
-          <div class="abord-header">
+          <div class="abord-header" onclick="openItemPdf('${it.id}', ${defaultPage})">
             <h2 class="abord-title">${escapeHtml(it.title)}</h2>
-            <span class="abord-region-tag">${escapeHtml(it.subregion)}</span>
+            <div class="abord-header-right">
+              <span class="abord-region-tag">${escapeHtml(it.subregion)}</span>
+              <button type="button" class="abord-pdf-btn" onclick="event.stopPropagation(); openItemPdf('${it.id}', ${defaultPage})">
+                📄 PDF
+              </button>
+            </div>
           </div>
           <div class="abord-images-list">
             ${it.abordCrops.map(c => `
-              <div class="abord-crop-viewport" style="--y1:${c.y1}; --y2:${c.y2};" onclick="openZoom('${c.image}', '${escapeHtml(it.title).replace(/'/g, "\'")}')">
+              <div class="abord-crop-viewport" style="--y1:${c.y1}; --y2:${c.y2};" onclick="openItemPdf('${it.id}', ${c.pdfPage})">
                 <img src="${c.image}" loading="lazy" alt="${escapeHtml(it.title)}" />
               </div>
             `).join("")}
           </div>
+          <div class="abord-pdf-pages">
+            ${it.pdfPages.map(p => `
+              <button type="button" class="abord-page-pill" onclick="openItemPdf('${it.id}', ${p})">
+                🔍 Planche p.${p}
+              </button>
+            `).join("")}
+          </div>
         </article>
-      `).join("");
+      `}).join("");
+    }
+
+    function openItemPdf(itemId, pdfPage) {
+      const item = ITEMS.find(x => x.id === itemId) || null;
+      currentLightboxItem = item;
+      currentLightboxPage = pdfPage || (item && item.pdfPages[0]) || 1;
+      updateLightbox();
+      document.getElementById("lightbox").classList.add("open");
+      document.body.style.overflow = "hidden";
     }
 
     function openZoom(imgSrc, title) {
-      document.getElementById("lbImage").src = imgSrc;
-      document.getElementById("lbTitle").textContent = title;
+      const m = String(imgSrc).match(/page_(\d+)\.jpg/);
+      const pageNum = m ? parseInt(m[1], 10) : 1;
+      const item = ITEMS.find(x => x.title === title || x.pdfPages.includes(pageNum)) || null;
+      currentLightboxItem = item;
+      currentLightboxPage = pageNum;
+      updateLightbox(imgSrc, title);
       document.getElementById("lightbox").classList.add("open");
       document.body.style.overflow = "hidden";
+    }
+
+    function updateLightbox(overrideSrc, overrideTitle) {
+      const padded = String(currentLightboxPage).padStart(3, "0");
+      document.getElementById("lbImage").src = overrideSrc || `pages/page_${padded}.jpg`;
+      const titleText = overrideTitle || (currentLightboxItem ? currentLightboxItem.title : `Planche ${currentLightboxPage}`);
+      document.getElementById("lbTitle").textContent = titleText;
+
+      const pages = (currentLightboxItem && currentLightboxItem.pdfPages && currentLightboxItem.pdfPages.length > 0)
+        ? currentLightboxItem.pdfPages
+        : [currentLightboxPage];
+      const idx = pages.indexOf(currentLightboxPage);
+      const indicator = document.getElementById("lbPageIndicator");
+      const prevBtn = document.getElementById("lbPrevBtn");
+      const nextBtn = document.getElementById("lbNextBtn");
+
+      if (pages.length > 1 && idx !== -1) {
+        indicator.textContent = `P. ${currentLightboxPage} (${idx + 1}/${pages.length})`;
+        prevBtn.disabled = idx <= 0;
+        nextBtn.disabled = idx >= pages.length - 1;
+      } else {
+        indicator.textContent = `P. ${currentLightboxPage} / 213`;
+        prevBtn.disabled = currentLightboxPage <= 1;
+        nextBtn.disabled = currentLightboxPage >= 213;
+      }
+    }
+
+    function stepLightboxPage(delta) {
+      if (currentLightboxItem && currentLightboxItem.pdfPages && currentLightboxItem.pdfPages.length > 1) {
+        const pages = currentLightboxItem.pdfPages;
+        const idx = pages.indexOf(currentLightboxPage);
+        if (idx !== -1) {
+          const nextIdx = idx + delta;
+          if (nextIdx >= 0 && nextIdx < pages.length) {
+            currentLightboxPage = pages[nextIdx];
+            updateLightbox();
+          }
+          return;
+        }
+      }
+      currentLightboxPage = Math.max(1, Math.min(213, currentLightboxPage + delta));
+      updateLightbox();
     }
 
     function closeLightbox() {
       document.getElementById("lightbox").classList.remove("open");
       document.body.style.overflow = "";
     }
+
+    window.addEventListener("keydown", (e) => {
+      if (!document.getElementById("lightbox").classList.contains("open")) return;
+      if (e.key === "Escape") closeLightbox();
+      else if (e.key === "ArrowLeft") stepLightboxPage(-1);
+      else if (e.key === "ArrowRight") stepLightboxPage(1);
+    });
 
     document.getElementById("searchInput").addEventListener("input", (e) => {
       searchQuery = e.target.value;
