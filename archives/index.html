@@ -3546,7 +3546,10 @@
       const names = [pendingExtractedPptx && pendingExtractedPptx.fileName, pendingPdf && pendingPdf.fileName].filter(Boolean).join(" + ");
       if (pendingPdf) {
         dzTitle.textContent = `✅ ${n} diapos — affichage identique à l'original`;
-        dzSub.textContent = `${names} • Cliquer pour changer`;
+        const sizeInfo = pendingPdf.originalSizeBytes && pendingPdf.sizeBytes < pendingPdf.originalSizeBytes
+          ? `compressé ${formatBytes(pendingPdf.originalSizeBytes)} → ${formatBytes(pendingPdf.sizeBytes)}`
+          : formatBytes(pendingPdf.sizeBytes || 0);
+        dzSub.textContent = `${names} (${sizeInfo}) • Cliquer pour changer`;
       } else if (pendingExtractedPptx) {
         dzTitle.textContent = `⏳ ${n} diapos lues — conversion fidèle en attente`;
         dzSub.textContent = pendingExtractedPptx.fileName || "";
@@ -3572,7 +3575,7 @@
           ctx.fillStyle = "#FFFFFF";
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           await page.render({ canvasContext: ctx, viewport }).promise;
-          const image = canvas.toDataURL("image/jpeg", 0.9);
+          const image = canvas.toDataURL("image/jpeg", 0.88);
 
           let lines = [];
           try {
@@ -3582,6 +3585,8 @@
 
           const slide = {
             index: i,
+            pageWidthPt: base.width,
+            pageHeightPt: base.height,
             title: lines[0] || `Diapositive ${i}`,
             stage: `Diapo ${i}`,
             bullets: lines.slice(1, 12),
@@ -3597,6 +3602,37 @@
         pdf.destroy();
       }
       return slides;
+    }
+
+    // Lightweight PDF rebuilt from the rendered slides (one JPEG per page, original page size).
+    // Radiology decks are heavy because of uncompressed PACS captures: this typically divides the size by 5–20.
+    const MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
+
+    async function loadPdfLib() {
+      if (window.PDFLib) return window.PDFLib;
+      await new Promise((resolve, reject) => {
+        const el = document.createElement("script");
+        el.src = "https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js";
+        el.onload = resolve;
+        el.onerror = () => reject(new Error("Module de compression indisponible"));
+        document.head.appendChild(el);
+      });
+      return window.PDFLib;
+    }
+
+    async function buildCompressedPdf(slides) {
+      const { PDFDocument } = await loadPdfLib();
+      const doc = await PDFDocument.create();
+      for (const sl of slides) {
+        const bytes = new Uint8Array(await dataUrlToBlob(sl.image).arrayBuffer());
+        const img = await doc.embedJpg(bytes);
+        const w = sl.pageWidthPt || img.width;
+        const h = sl.pageHeightPt || img.height;
+        const page = doc.addPage([w, h]);
+        page.drawImage(img, { x: 0, y: 0, width: w, height: h });
+      }
+      const out = await doc.save();
+      return new Blob([out], { type: "application/pdf" });
     }
 
     async function makeCoverThumbnail(dataUrl, maxWidth = 640) {
@@ -3626,10 +3662,25 @@
         });
         if (!slides.length) throw new Error("PDF vide");
 
+        let uploadBlob = file;
+        try {
+          dzTitle.textContent = "⏳ Compression du PDF...";
+          const compressed = await buildCompressedPdf(slides);
+          if (compressed.size < file.size * 0.9) uploadBlob = compressed;
+        } catch (e) {}
+
+        if (cloudEnabled() && uploadBlob.size > MAX_UPLOAD_BYTES) {
+          pendingPdf = null;
+          dzTitle.textContent = "⚠️ PDF trop volumineux";
+          dzSub.textContent = `${formatBytes(uploadBlob.size)} après compression (max 50 Mo) — scindez la présentation en deux`;
+          return;
+        }
+
         pendingPdf = {
           slides,
-          file,
-          sizeBytes: file.size,
+          file: uploadBlob,
+          sizeBytes: uploadBlob.size,
+          originalSizeBytes: file.size,
           fileName
         };
         updateDropzoneStatus();
