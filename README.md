@@ -9,3 +9,4 @@ Portail minimaliste (« Papier Radio / Négatoscope ») donnant un accès direct
 3. **BiblioOstéo Cochin (`03 // BIBLIOGRAPHIE`)** — [mrthomaslef.github.io/biblioosteo](https://mrthomaslef.github.io/biblioosteo/)
 4. **Quiz Imagerie (`04 // QUIZ FLASH`)** — [mrthomaslef.github.io/quiz-imagerie](https://mrthomaslef.github.io/quiz-imagerie/) (*1 Image, 1 Diagnostic*)
 5. **Quiz Cochin Ostéo (`05 // QUIZ MSK`)** — [radio-thomas-ten.vercel.app](https://radio-thomas-ten.vercel.app)
+6. **Guide Infiltrations (`06 // GESTES RADIOGUIDÉS`)** — Application dédiée dans [`./infiltrations/`](./infiltrations/index.html) (Manuel complet 213 pages, 75 fiches & chapitres : Rachis, Épaule, Coude/Poignet/Main, Hanche/Bassin, Genou/Cheville/Pied, Biopsies)

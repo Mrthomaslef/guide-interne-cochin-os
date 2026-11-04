@@ -533,6 +533,20 @@
       background: var(--violet-soft);
       color: var(--violet);
     }
+    .key-infiltrations {
+      border-color: var(--xray);
+    }
+    html.negatoscope .key-infiltrations {
+      border-color: var(--xray);
+    }
+    .key-infiltrations .key-index {
+      background: var(--xray);
+      color: #fff;
+    }
+    html.negatoscope .key-infiltrations .key-index {
+      background: var(--xray);
+      color: #061018;
+    }
 
     @media (max-width: 600px) {
       .launchpad {
@@ -664,7 +678,7 @@
         </a>
 
         <!-- 03 : BIBLIO OSTÉO -->
-        <a href="https://mrthomaslef.github.io/biblioosteo/" class="app-key key-biblio span-2">
+        <a href="https://mrthomaslef.github.io/biblioosteo/" class="app-key key-biblio">
           <div class="key-top">
             <span class="key-index">03</span>
             <span class="key-arrow">↗</span>
@@ -688,6 +702,15 @@
             <span class="key-arrow">↗</span>
           </div>
           <h2 class="key-title">Quiz Cochin Ostéo</h2>
+        </a>
+
+        <!-- 06 : GUIDE INFILTRATIONS -->
+        <a href="./infiltrations/index.html" class="app-key key-infiltrations">
+          <div class="key-top">
+            <span class="key-index">06</span>
+            <span class="key-arrow">→</span>
+          </div>
+          <h2 class="key-title">Guide Infiltrations</h2>
         </a>
       </main>
     </div>
@@ -763,6 +786,8 @@
         window.location.href = "https://mrthomaslef.github.io/quiz-imagerie/";
       } else if (e.key === "5") {
         window.location.href = "https://radio-thomas-ten.vercel.app";
+      } else if (e.key === "6") {
+        window.location.href = "./infiltrations/index.html";
       }
     });
 

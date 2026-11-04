@@ -1,0 +1,17 @@
+{
+  "name": "Guide Infiltrations & Gestes Radioguidés — Cochin Radio B",
+  "short_name": "Infiltrations",
+  "description": "Manuel complet des infiltrations, arthrographies et biopsies ostéo-articulaires radioguidées (213 pages).",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F2EFE9",
+  "theme_color": "#11151C",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
