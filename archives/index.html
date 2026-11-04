@@ -456,18 +456,18 @@
       color: #061018;
       border-color: var(--xray);
     }
+    .cat-tab.active.tab-bone-club {
+      background: var(--amber);
+      color: #FFFFFF;
+      border-color: var(--amber);
+    }
+    html.negatoscope .cat-tab.active.tab-bone-club {
+      color: #140B00;
+    }
     .cat-tab.active.tab-cas {
       background: var(--vermilion);
       color: #FFFFFF;
       border-color: var(--vermilion);
-    }
-    .cat-tab.active.tab-presentations {
-      background: var(--xray);
-      color: #FFFFFF;
-      border-color: var(--xray);
-    }
-    html.negatoscope .cat-tab.active.tab-presentations {
-      color: #061018;
     }
     .cat-tab.active.tab-biblio {
       background: var(--emerald);
@@ -476,6 +476,16 @@
     }
     html.negatoscope .cat-tab.active.tab-biblio {
       color: #041311;
+    }
+    .cat-tab.active.tab-cours,
+    .cat-tab.active.tab-presentations {
+      background: var(--xray);
+      color: #FFFFFF;
+      border-color: var(--xray);
+    }
+    html.negatoscope .cat-tab.active.tab-cours,
+    html.negatoscope .cat-tab.active.tab-presentations {
+      color: #061018;
     }
 
     .cat-count {
@@ -598,9 +608,10 @@
       color: #FFFFFF;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
     }
+    .type-bone-club { background: #D97706; }
     .type-cas { background: #FF4D2D; }
-    .type-presentations { background: #0284C7; }
     .type-biblio { background: #0D9488; }
+    .type-cours, .type-presentations { background: #0284C7; }
 
     .slide-count-pill {
       font-family: 'JetBrains Mono', monospace;
@@ -1278,7 +1289,7 @@
         </div>
         <div class="brand-titles">
           <h1 class="brand-title">ARCHIVES INTERNES</h1>
-          <span class="brand-sub">07 // CAS CLINIQUES · PRÉSENTATIONS DES · BIBLIO</span>
+          <span class="brand-sub">07 // BONE CLUB · CAS DU MARDI · BIBLIO DU VENDREDI · COURS</span>
         </div>
       </div>
 
@@ -1330,34 +1341,34 @@
             type="search"
             id="searchInput"
             class="search-input"
-            placeholder="Rechercher un cas, cours, article, diagnostic ou texte dans une diapo (ex: talus, USP6, Buford, cryo, G5%)..."
+            placeholder="Rechercher un Bone Club, Cas du mardi, Biblio du vendredi, Cours ou texte dans une diapo..."
             autocomplete="off"
           />
           <span class="search-kbd">/</span>
         </div>
       </div>
 
-      <!-- 3 Main Archive Categories + All + Favorites -->
+      <!-- Archive Categories: Toutes, Bone Club, Cas du mardi, Biblio du vendredi, Cours (tout à droite) -->
       <div class="category-tabs" role="tablist">
         <button type="button" class="cat-tab active" data-cat="all" onclick="setCategory('all')">
           <span>TOUTES LES ARCHIVES</span>
           <span class="cat-count" id="count-all">0</span>
         </button>
+        <button type="button" class="cat-tab tab-bone-club" data-cat="bone-club" onclick="setCategory('bone-club')">
+          <span>🦴 BONE CLUB</span>
+          <span class="cat-count" id="count-bone-club">0</span>
+        </button>
         <button type="button" class="cat-tab tab-cas" data-cat="cas" onclick="setCategory('cas')">
-          <span>🩻 CAS CLINIQUES</span>
+          <span>🩻 CAS DU MARDI</span>
           <span class="cat-count" id="count-cas">0</span>
         </button>
-        <button type="button" class="cat-tab tab-presentations" data-cat="presentations" onclick="setCategory('presentations')">
-          <span>🎓 PRÉSENTATIONS & COURS</span>
-          <span class="cat-count" id="count-presentations">0</span>
-        </button>
         <button type="button" class="cat-tab tab-biblio" data-cat="biblio" onclick="setCategory('biblio')">
-          <span>📚 BIBLIO / JOURNAL CLUB</span>
+          <span>📚 BIBLIO DU VENDREDI</span>
           <span class="cat-count" id="count-biblio">0</span>
         </button>
-        <button type="button" class="cat-tab" data-cat="fav" onclick="setCategory('fav')">
-          <span>⭐ FAVORIS</span>
-          <span class="cat-count" id="count-fav">0</span>
+        <button type="button" class="cat-tab tab-cours" data-cat="cours" onclick="setCategory('cours')">
+          <span>🎓 COURS</span>
+          <span class="cat-count" id="count-cours">0</span>
         </button>
       </div>
 
@@ -1378,7 +1389,7 @@
     <div class="viewer-window" onclick="event.stopPropagation()">
       <div class="viewer-topbar">
         <div class="viewer-title-wrap">
-          <span id="viewerTypeBadge" class="type-badge type-cas">CAS</span>
+          <span id="viewerTypeBadge" class="type-badge type-cas">CAS DU MARDI</span>
           <h2 id="viewerTitle" class="viewer-title">Titre de la présentation</h2>
         </div>
         <div class="viewer-toolbar">
@@ -1457,7 +1468,7 @@
     <div class="studio-window" onclick="event.stopPropagation()">
       <div class="viewer-topbar">
         <div class="viewer-title-wrap">
-          <span class="type-badge type-presentations">STUDIO SLIM</span>
+          <span class="type-badge type-cours">STUDIO SLIM</span>
           <h2 id="studioModalTitle" class="viewer-title">Compresser & Archiver une Présentation (.PPTX)</h2>
         </div>
         <button type="button" class="v-btn v-btn-close" onclick="closeStudioModal()">✕ FERMER</button>
@@ -1498,16 +1509,17 @@
         <form id="archiveForm" onsubmit="handleSaveArchive(event)">
           <div class="form-grid">
             <div class="field-group full">
-              <label class="field-label" for="formTitle">TITRE DE LA PRÉSENTATION / DU CAS / DE LA BIBLIO *</label>
-              <input type="text" id="formTitle" class="field-input" required placeholder="Ex: Staff du Jeudi — Ostéome ostéoïde du col du talus & RF" />
+              <label class="field-label" for="formTitle">TITRE DE LA PRÉSENTATION *</label>
+              <input type="text" id="formTitle" class="field-input" required placeholder="Ex: Bone Club — Tumeurs cartilagineuses ou Cas du mardi..." />
             </div>
 
             <div class="field-group">
               <label class="field-label" for="formCategory">CATÉGORIE D'ARCHIVE *</label>
               <select id="formCategory" class="field-select">
-                <option value="cas">🩻 Cas Clinique / Dossier Staff</option>
-                <option value="presentations">🎓 Présentation / Cours DES</option>
-                <option value="biblio">📚 Bibliographie / Journal Club</option>
+                <option value="bone-club">🦴 Bone Club</option>
+                <option value="cas">🩻 Cas du mardi</option>
+                <option value="biblio">📚 Biblio du vendredi</option>
+                <option value="cours">🎓 Cours</option>
               </select>
             </div>
 
@@ -1558,14 +1570,12 @@
 
   <script>
     const THEME_STORAGE_KEY = "cochin_os_theme_v1";
-    const FAV_STORAGE_KEY = "cochin_archives_favs_v1";
     const IDB_NAME = "cochin_archives_idb_v1";
     const IDB_STORE = "custom_decks";
 
     let allArchives = [];
     let decksById = {};
     let customDecksList = [];
-    let favIds = new Set();
 
     let activeCategory = "all";
     let activeRegion = "all";
@@ -1710,9 +1720,10 @@
     }
 
     function categoryLabel(cat) {
-      if (cat === "cas") return "CAS CLINIQUE";
-      if (cat === "presentations") return "COURS / STAFF";
-      if (cat === "biblio") return "BIBLIO";
+      if (cat === "bone-club") return "BONE CLUB";
+      if (cat === "cas") return "CAS DU MARDI";
+      if (cat === "biblio") return "BIBLIO DU VENDREDI";
+      if (cat === "cours" || cat === "presentations") return "COURS";
       return "ARCHIVE";
     }
 
@@ -1721,11 +1732,6 @@
       try {
         const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
         if (savedTheme) applyTheme(savedTheme);
-      } catch (e) {}
-
-      try {
-        const savedFavs = JSON.parse(localStorage.getItem(FAV_STORAGE_KEY) || "[]");
-        if (Array.isArray(savedFavs)) favIds = new Set(savedFavs);
       } catch (e) {}
 
       const baseIndex = Array.isArray(window.COCHIN_ARCHIVES_INDEX) ? window.COCHIN_ARCHIVES_INDEX : [];
@@ -1771,10 +1777,10 @@
       }
 
       document.getElementById("count-all").textContent = totalDecks;
+      document.getElementById("count-bone-club").textContent = allArchives.filter(a => a.category === "bone-club").length;
       document.getElementById("count-cas").textContent = allArchives.filter(a => a.category === "cas").length;
-      document.getElementById("count-presentations").textContent = allArchives.filter(a => a.category === "presentations").length;
       document.getElementById("count-biblio").textContent = allArchives.filter(a => a.category === "biblio").length;
-      document.getElementById("count-fav").textContent = allArchives.filter(a => favIds.has(a.id)).length;
+      document.getElementById("count-cours").textContent = allArchives.filter(a => a.category === "cours" || a.category === "presentations").length;
     }
 
     function renderRegionPills() {
@@ -1801,17 +1807,6 @@
       renderCatalog();
     }
 
-    function toggleFavorite(event, id) {
-      event.stopPropagation();
-      if (favIds.has(id)) favIds.delete(id);
-      else favIds.add(id);
-      try {
-        localStorage.setItem(FAV_STORAGE_KEY, JSON.stringify(Array.from(favIds)));
-      } catch (e) {}
-      updateStatsAndCounts();
-      renderCatalog();
-    }
-
     // 6. Search & Deep Slide Matching
     function findMatchingSlide(archive, normQuery) {
       if (!normQuery) return null;
@@ -1833,8 +1828,13 @@
       const normQ = normalizeStr(searchQuery.trim());
 
       const filtered = allArchives.filter(item => {
-        if (activeCategory === "fav" && !favIds.has(item.id)) return false;
-        if (activeCategory !== "all" && activeCategory !== "fav" && item.category !== activeCategory) return false;
+        if (activeCategory !== "all") {
+          if (activeCategory === "cours") {
+            if (item.category !== "cours" && item.category !== "presentations") return false;
+          } else if (item.category !== activeCategory) {
+            return false;
+          }
+        }
         if (activeRegion !== "all" && item.region !== activeRegion) return false;
 
         if (!normQ) return true;
@@ -1862,7 +1862,7 @@
               ${allArchives.length === 0 ? "Aucune présentation archivée pour le moment" : "Aucune archive ne correspond à ce filtre"}
             </p>
             <p style="font-size:12.5px;margin:0 0 16px">
-              Importez vos présentations PowerPoint (.pptx) de Cas Cliniques, Cours DES ou Bibliographies : elles seront automatiquement compressées et converties en diapositives légères.
+              Importez vos présentations PowerPoint (.pptx) de Bone Club, Cas du mardi, Biblio du vendredi ou Cours : elles seront automatiquement compressées et converties en diapositives légères.
             </p>
             <button type="button" class="btn-studio-open" onclick="openStudioModal()">
               + ARCHIVER / COMPRESSER UN .PPTX
@@ -1875,7 +1875,6 @@
       grid.innerHTML = filtered.map(item => {
         const matchedSlide = normQ ? findMatchingSlide(item, normQ) : null;
         const jumpSlideIdx = matchedSlide ? Math.max(0, matchedSlide.index - 1) : 0;
-        const isFav = favIds.has(item.id);
         const slimKb = formatBytes(item.slimSizeBytes || 0);
         const rawMb = formatBytes(item.originalSizeBytes || 0);
         const slideTotal = item.slideCount || (item.slides ? item.slides.length : 1);
@@ -1894,12 +1893,6 @@
               <div class="card-overlay-bottom">
                 <span class="slim-size-tag">⚡ ${slimKb}${rawMb !== "0 Ko" ? ` (vs ${rawMb})` : ""}</span>
                 <div style="display:flex;gap:5px;pointer-events:auto">
-                  <button
-                    type="button"
-                    class="fav-btn ${isFav ? "active" : ""}"
-                    onclick="toggleFavorite(event, '${escapeHtml(item.id)}')"
-                    title="Ajouter aux favoris"
-                  >★</button>
                   <button
                     type="button"
                     class="fav-btn"
