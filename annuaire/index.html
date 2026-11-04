@@ -63,6 +63,8 @@
       color: var(--ink);
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       min-height: 100dvh;
+      overflow-y: auto;
+      overflow-x: hidden;
       transition: background-color 0.18s ease, color 0.18s ease;
     }
 
@@ -1030,6 +1032,21 @@
           }
         })
         .catch(() => {});
+    })();
+
+    // Défilement horizontal fluide à la molette ou au trackpad sur les onglets de catégories
+    (function initDesktopWheelScroll() {
+      window.addEventListener("wheel", (e) => {
+        if (e.ctrlKey || e.metaKey) return;
+        const dy = e.deltaY || 0;
+        const dx = e.deltaX || 0;
+        if (!dy && !dx) return;
+        const horiz = e.target && e.target.closest ? e.target.closest(".cat-tabs, #catTabs") : null;
+        if (horiz && horiz.scrollWidth > horiz.clientWidth && Math.abs(dy) > Math.abs(dx)) {
+          horiz.scrollLeft += dy;
+          e.preventDefault();
+        }
+      }, { passive: false });
     })();
   </script>
 </body>
