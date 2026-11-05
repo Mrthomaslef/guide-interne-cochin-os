@@ -978,6 +978,10 @@
       display: flex;
     }
 
+    button, a, .v-btn, .pacs-mini-btn, .nav-arrow-btn, .slide-dot-btn, .viewer-window, .pacs-viewport {
+      touch-action: manipulation;
+    }
+
     .viewer-window {
       width: 100%;
       max-width: 1180px;
@@ -989,6 +993,8 @@
       flex-direction: column;
       overflow: hidden;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     .viewer-topbar {
@@ -1043,6 +1049,8 @@
       cursor: pointer;
       text-decoration: none;
       white-space: nowrap;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .v-btn:hover {
       border-color: var(--xray);
@@ -1065,11 +1073,6 @@
       min-height: 0;
       overflow: hidden;
     }
-    @media (max-width: 860px) {
-      .viewer-window {
-        height: 96dvh;
-      }
-    }
 
     /* Fullscreen Faithful Slide Stage + PACS Windowing */
     .slide-stage-col {
@@ -1078,7 +1081,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 320px;
+      min-height: 240px;
       position: relative;
       overflow: hidden;
     }
@@ -1090,11 +1093,28 @@
       justify-content: center;
       overflow: hidden;
       position: relative;
-      cursor: grab;
+      cursor: pointer;
       padding: 14px;
+      touch-action: pan-y;
     }
-    .pacs-viewport:active {
-      cursor: grabbing;
+
+    /* Invisible fast-tap zones on left (32%) and right (68%) of the slide */
+    .slide-tap-zone {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 4;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .slide-tap-prev {
+      left: 0;
+      width: 32%;
+    }
+    .slide-tap-next {
+      right: 0;
+      width: 68%;
     }
 
     .pacs-slide-img {
@@ -1107,7 +1127,9 @@
       box-shadow: 0 12px 38px rgba(0, 0, 0, 0.65);
       transition: filter 0.1s ease;
       user-select: none;
+      -webkit-user-select: none;
       -webkit-user-drag: none;
+      pointer-events: none;
     }
 
     .pacs-controls-bar {
@@ -1141,6 +1163,8 @@
       padding: 4px 8px;
       border-radius: 5px;
       cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .pacs-mini-btn:hover {
       border-color: #38BDF8;
@@ -1171,6 +1195,13 @@
       gap: 6px;
       overflow-x: auto;
       padding: 2px 0;
+      flex: 1;
+      min-width: 0;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .slide-dots::-webkit-scrollbar {
+      display: none;
     }
 
     .slide-dot-btn {
@@ -1185,6 +1216,9 @@
       background: var(--bg-card);
       color: var(--ink-soft);
       cursor: pointer;
+      flex-shrink: 0;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .slide-dot-btn.active {
       background: var(--xray);
@@ -1198,21 +1232,80 @@
     .nav-arrow-btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-      height: 34px;
-      padding: 0 13px;
-      border-radius: 8px;
+      height: 38px;
+      padding: 0 14px;
+      border-radius: 9px;
       border: 1.5px solid var(--ink);
       background: var(--bg-card);
       color: var(--ink);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11.5px;
+      font-size: 12px;
       font-weight: 800;
       cursor: pointer;
+      flex-shrink: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .nav-arrow-btn:active:not(:disabled) {
+      transform: scale(0.96);
+      background: var(--xray);
+      color: #FFFFFF;
+      border-color: var(--xray);
     }
     .nav-arrow-btn:disabled {
-      opacity: 0.4;
+      opacity: 0.35;
       cursor: not-allowed;
+    }
+
+    @media (max-width: 760px) {
+      #viewerModal.modal-backdrop {
+        padding: 0;
+      }
+      .viewer-window {
+        height: 100dvh;
+        max-height: 100dvh;
+        border-radius: 0;
+        border: none;
+      }
+      .viewer-topbar {
+        padding: calc(env(safe-area-inset-top, 0px) + 8px) 10px 8px;
+        gap: 6px;
+      }
+      .viewer-title {
+        font-size: 13.5px;
+      }
+      .v-btn {
+        height: 30px;
+        padding: 0 8px;
+        font-size: 10.5px;
+      }
+      .pacs-viewport {
+        padding: 4px;
+      }
+      .pacs-controls-bar {
+        padding: 5px 10px;
+        font-size: 10px;
+      }
+      .viewer-bottombar {
+        padding: 8px 10px calc(env(safe-area-inset-bottom, 0px) + 10px);
+        gap: 8px;
+      }
+      .nav-arrow-btn {
+        height: 44px;
+        min-width: 58px;
+        padding: 0 14px;
+        font-size: 15px;
+      }
+      .nav-arrow-btn .nav-btn-label {
+        display: none;
+      }
+      .slide-dot-btn {
+        min-width: 36px;
+        height: 36px;
+        font-size: 11.5px;
+      }
     }
 
     /* 6. MODAL ULTRA-SIMPLE : DÉPOSER SES DIAPOS */
@@ -1660,7 +1753,9 @@
         <!-- Full-stage slide viewer: exact PowerPoint slide aspect ratio & layout -->
         <div class="slide-stage-col">
           <div class="pacs-viewport" id="pacsViewport">
-            <img id="viewerSlideImg" class="pacs-slide-img" src="" alt="Diapositive" onclick="this.classList.remove('blind-blur')" />
+            <div class="slide-tap-zone slide-tap-prev" onclick="stepSlide(-1)" title="Diapo précédente"></div>
+            <img id="viewerSlideImg" class="pacs-slide-img" src="" alt="Diapositive" />
+            <div class="slide-tap-zone slide-tap-next" onclick="stepSlide(1)" title="Diapo suivante"></div>
           </div>
           <div class="pacs-controls-bar">
             <span id="pacsSlideCounter">DIAPO 1 / 5</span>
@@ -1676,12 +1771,12 @@
       </div>
 
       <div class="viewer-bottombar">
-        <button type="button" class="nav-arrow-btn" id="btnPrevSlide" onclick="stepSlide(-1)">
-          ← PRÉCÉDENTE
+        <button type="button" class="nav-arrow-btn" id="btnPrevSlide" onclick="stepSlide(-1)" aria-label="Diapo précédente">
+          <span>←</span><span class="nav-btn-label">PRÉCÉDENTE</span>
         </button>
         <div class="slide-dots" id="viewerSlideDots"></div>
-        <button type="button" class="nav-arrow-btn" id="btnNextSlide" onclick="stepSlide(1)">
-          SUIVANTE →
+        <button type="button" class="nav-arrow-btn" id="btnNextSlide" onclick="stepSlide(1)" aria-label="Diapo suivante">
+          <span class="nav-btn-label">SUIVANTE</span><span>→</span>
         </button>
       </div>
     </div>
@@ -1755,9 +1850,9 @@
           </div>
 
           <div class="field-group">
-            <label class="field-label" for="formDiagnosis">DIAGNOSTIC *</label>
-            <input type="text" id="formDiagnosis" class="field-input" required placeholder="Écrire le diagnostic (ex : Ostéome ostéoïde, Chondrosarcome...)" autocomplete="off" />
-            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-muted)">🔒 Masqué par défaut sur la page d'accueil · Visible en activant le Mode Recherche</span>
+            <label class="field-label" id="formDiagnosisLabel" for="formDiagnosis">DIAGNOSTIC *</label>
+            <input type="text" id="formDiagnosis" class="field-input" required placeholder="Écrire le diagnostic (ex : Ostéome ostéoïde, Chondrosarcome...)" autocomplete="off" oninput="this.setCustomValidity('')" />
+            <span id="formDiagnosisHint" style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-muted)">🔒 Masqué par défaut sur la page d'accueil · Visible en activant le Mode Recherche</span>
           </div>
 
           <div class="field-group">
@@ -1858,13 +1953,32 @@
       return r.status === 204 ? null : r.json();
     }
 
-    async function sbUploadPdf(path, blob) {
-      const r = await fetch(`${SUPABASE_URL}/storage/v1/object/${SUPABASE_BUCKET}/${path}`, {
-        method: "POST",
-        headers: supabaseHeaders({ "Content-Type": "application/pdf", "x-upsert": "false" }),
-        body: blob
+    function sbUploadPdf(path, blob, onProgress, signalObj) {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        if (signalObj) signalObj.abort = () => { try { xhr.abort(); } catch (e) {} };
+        xhr.open("POST", `${SUPABASE_URL}/storage/v1/object/${SUPABASE_BUCKET}/${path}`, true);
+        const headers = supabaseHeaders({ "Content-Type": "application/pdf", "x-upsert": "false" });
+        for (const [k, v] of Object.entries(headers)) xhr.setRequestHeader(k, v);
+        if (xhr.upload && onProgress) {
+          xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable && e.total > 0) {
+              onProgress(Math.min(99, Math.round((e.loaded / e.total) * 100)));
+            }
+          };
+        }
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            if (onProgress) onProgress(100);
+            resolve();
+          } else {
+            reject(new Error(`Envoi du PDF refusé (${xhr.status})`));
+          }
+        };
+        xhr.onerror = () => reject(new Error("Erreur réseau lors de l'envoi du PDF"));
+        xhr.onabort = () => reject(new Error("Envoi annulé"));
+        xhr.send(blob);
       });
-      if (!r.ok) throw new Error(`Envoi du PDF refusé (${r.status})`);
     }
 
     function sbPublicPdfUrl(path) {
@@ -1906,7 +2020,7 @@
 
     // Renders the PDF pages of a shared archive on demand (progressively) when it is opened
     function ensureCloudDeckSlides(deck) {
-      if (!deck || !deck.pdfUrl) return Promise.resolve();
+      if (!deck || (!deck.pdfUrl && !deck._pdfBlob)) return Promise.resolve();
       if (deck._slidesLoaded) return Promise.resolve();
       if (deck._loadingPromise) return deck._loadingPromise;
       const n = deck.slideCount || 1;
@@ -1915,17 +2029,23 @@
           index: i + 1,
           title: (deck.slideSummaries && deck.slideSummaries[i] && deck.slideSummaries[i].title) || `Diapo ${i + 1}`,
           bullets: [],
-          image: buildSlidePlaceholderSvg("Chargement…", i + 1, n)
+          image: (i === 0 && deck.coverImage) ? deck.coverImage : buildSlidePlaceholderSvg("Chargement…", i + 1, n)
         }));
       }
       deck._loadingPromise = (async () => {
-        const resp = await fetch(deck.pdfUrl);
-        if (!resp.ok) throw new Error(`PDF introuvable (${resp.status})`);
-        const data = new Uint8Array(await resp.arrayBuffer());
+        let buf;
+        if (deck._pdfBlob) {
+          buf = await deck._pdfBlob.arrayBuffer();
+        } else {
+          const resp = await fetch(deck.pdfUrl);
+          if (!resp.ok) throw new Error(`PDF introuvable (${resp.status})`);
+          buf = await resp.arrayBuffer();
+        }
+        const data = new Uint8Array(buf);
         const slides = await renderPdfPagesToSlides(data, (idx, slide) => {
           deck.slides[idx] = { ...deck.slides[idx], image: slide.image };
           if (currentDeck === deck && currentSlideIdx === idx) renderActiveSlide();
-        });
+        }, { skipText: true });
         deck.slides = slides.map((sl, i) => ({ ...sl, title: (deck.slides[i] && deck.slides[i].title) || sl.title }));
         deck.slideCount = slides.length;
         deck._slidesLoaded = true;
@@ -1999,10 +2119,11 @@
     // Pending extracted PPTX in Studio
     let pendingExtractedPptx = null;
     let pendingPdf = null; // { slides, sizeBytes, fileName } — exact page renders from the PDF export
+    let pendingPdfTask = null;
 
     // Auto-update: home-screen web apps (iOS) keep old pages for a long time.
     // On open and when the app comes back to the foreground, compare with version.json and reload if newer.
-    const APP_VERSION = "2026-11-04.6";
+    const APP_VERSION = "2026-11-05.1";
     function checkForNewVersion() {
       fetch(`version.json?ts=${Date.now()}`, { cache: "no-store" })
         .then(r => (r.ok ? r.json() : null))
@@ -2373,9 +2494,13 @@
         const archiveYear = (item.year || (yearMatch ? yearMatch[1] : "")).trim();
         const semesterLabel = (item.semester || "").trim();
 
-        const diagText = (item.diagnosis || item.shortTitle || item.title || "Diagnostic non renseigné").trim();
+        const isCaseCategory = item.category === "cas" || item.category === "bone-club";
+        const isBiblio = item.category === "biblio";
+        const diagText = (item.diagnosis || item.shortTitle || item.title || (isBiblio ? "Article non renseigné" : isCaseCategory ? "Diagnostic non renseigné" : "Titre non renseigné")).trim();
         const maskedHeading = `${categoryLabel(item.category)}${internFirstName ? " · " + internFirstName : ""}`;
-        const cardHeading = searchMode ? diagText : maskedHeading;
+        const showRevealedBox = !isCaseCategory || searchMode;
+        const cardHeading = showRevealedBox ? diagText : maskedHeading;
+        const revealedTagLabel = isBiblio ? "📚 ARTICLE" : (isCaseCategory ? "🎯 DIAGNOSTIC" : "🎓 COURS");
 
         const cover = item.coverImage
           || (item.slides && item.slides[0] && item.slides[0].image)
@@ -2387,7 +2512,7 @@
         else if (item.date) footerSummaryParts.push(item.date);
         const footerSummary = footerSummaryParts.join(" · ");
 
-        const dlFilename = searchMode ? (diagText || item.id) : `${categoryLabel(item.category).toLowerCase().replace(/\s+/g, "-")}-${internFirstName || item.id}`;
+        const dlFilename = showRevealedBox ? (diagText || item.id) : `${categoryLabel(item.category).toLowerCase().replace(/\s+/g, "-")}-${internFirstName || item.id}`;
 
         return `
           <article class="archive-card" onclick="openViewer('${escapeHtml(item.id)}', ${jumpSlideIdx})">
@@ -2411,9 +2536,9 @@
             </div>
 
             <div class="card-body">
-              ${searchMode ? `
+              ${showRevealedBox ? `
                 <div class="diag-revealed-box">
-                  <span class="diag-revealed-tag">🎯 DIAGNOSTIC</span>
+                  <span class="diag-revealed-tag">${revealedTagLabel}</span>
                   <span class="diag-revealed-text">${escapeHtml(diagText)}</span>
                 </div>
               ` : `
@@ -2462,18 +2587,29 @@
       if (!currentDeck) return;
       const deck = currentDeck;
       const intern = (deck.internName || deck.author || "").trim();
-      const diagText = (deck.diagnosis || deck.shortTitle || deck.title || "Diagnostic non renseigné").trim();
+      const isCaseCategory = deck.category === "cas" || deck.category === "bone-club";
+      const isBiblio = deck.category === "biblio";
+      const diagText = (deck.diagnosis || deck.shortTitle || deck.title || (isBiblio ? "Article non renseigné" : isCaseCategory ? "Diagnostic non renseigné" : "Titre non renseigné")).trim();
       const maskedTitle = `${categoryLabel(deck.category)}${intern ? " — " + intern : ""}`;
 
       const titleEl = document.getElementById("viewerTitle");
       if (titleEl) {
-        titleEl.textContent = viewerShowDiagnosis ? `🎯 ${diagText}` : maskedTitle;
+        if (!isCaseCategory) {
+          titleEl.textContent = isBiblio ? `📚 ${diagText}` : diagText;
+        } else {
+          titleEl.textContent = viewerShowDiagnosis ? `🎯 ${diagText}` : maskedTitle;
+        }
       }
 
       const blindBtn = document.getElementById("btnBlindMode");
       if (blindBtn) {
-        blindBtn.classList.toggle("active", viewerShowDiagnosis);
-        blindBtn.textContent = viewerShowDiagnosis ? "🙈 Masquer le diagnostic" : "👁️ Afficher le diagnostic";
+        if (!isCaseCategory) {
+          blindBtn.style.display = "none";
+        } else {
+          blindBtn.style.display = "inline-flex";
+          blindBtn.classList.toggle("active", viewerShowDiagnosis);
+          blindBtn.textContent = viewerShowDiagnosis ? "🙈 Masquer le diagnostic" : "👁️ Afficher le diagnostic";
+        }
       }
     }
 
@@ -2565,6 +2701,7 @@
         pmBtn.style.display = "none";
       }
 
+      renderViewerSlideDots(deck);
       renderActiveSlide();
       document.getElementById("viewerModal").classList.add("open");
     }
@@ -2580,6 +2717,26 @@
       renderActiveSlide();
     }
 
+    let renderedDotsDeckId = null;
+    let renderedDotsCount = 0;
+
+    function renderViewerSlideDots(deck) {
+      const dotsContainer = document.getElementById("viewerSlideDots");
+      if (!dotsContainer || !deck || !deck.slides) return;
+      const slides = deck.slides;
+      dotsContainer.innerHTML = slides.map((s, idx) => `
+        <button
+          type="button"
+          class="slide-dot-btn ${idx === currentSlideIdx ? "active" : ""}"
+          data-slide-idx="${idx}"
+          onclick="goToSlide(${idx})"
+          title="${escapeHtml(s.title || `Diapo ${idx + 1}`)}"
+        >${idx + 1}</button>
+      `).join("");
+      renderedDotsDeckId = deck.id;
+      renderedDotsCount = slides.length;
+    }
+
     function renderActiveSlide() {
       if (!currentDeck || !currentDeck.slides || !currentDeck.slides.length) return;
       const slides = currentDeck.slides;
@@ -2591,22 +2748,40 @@
       imgEl.src = slide.image || currentDeck.coverImage || buildSlidePlaceholderSvg(slide.title, currentSlideIdx + 1, slides.length);
       imgEl.classList.remove("blind-blur");
 
+      // Preload adjacent slides into browser image cache for instant rapid tapping
+      for (const offset of [1, 2, -1]) {
+        const adj = slides[currentSlideIdx + offset];
+        if (adj && adj.image && !adj._preloaded) {
+          const pre = new Image();
+          pre.src = adj.image;
+          adj._preloaded = true;
+        }
+      }
+
       document.getElementById("btnPrevSlide").disabled = currentSlideIdx === 0;
       document.getElementById("btnNextSlide").disabled = currentSlideIdx === slides.length - 1;
 
       const dotsContainer = document.getElementById("viewerSlideDots");
-      dotsContainer.innerHTML = slides.map((s, idx) => `
-        <button
-          type="button"
-          class="slide-dot-btn ${idx === currentSlideIdx ? "active" : ""}"
-          onclick="goToSlide(${idx})"
-          title="${escapeHtml(s.title || `Diapo ${idx + 1}`)}"
-        >${idx + 1}</button>
-      `).join("");
+      if (renderedDotsDeckId !== currentDeck.id || renderedDotsCount !== slides.length) {
+        renderViewerSlideDots(currentDeck);
+      } else if (dotsContainer) {
+        const prevActive = dotsContainer.querySelector(".slide-dot-btn.active");
+        if (prevActive) prevActive.classList.remove("active");
+        const nextActive = dotsContainer.children[currentSlideIdx];
+        if (nextActive) nextActive.classList.add("active");
+      }
+
+      if (dotsContainer) {
+        const activeBtn = dotsContainer.children[currentSlideIdx];
+        if (activeBtn) {
+          const targetLeft = activeBtn.offsetLeft - (dotsContainer.clientWidth / 2) + (activeBtn.offsetWidth / 2);
+          dotsContainer.scrollLeft = Math.max(0, targetLeft);
+        }
+      }
     }
 
     function stepSlide(delta) {
-      if (!currentDeck) return;
+      if (!currentDeck || !currentDeck.slides) return;
       const next = currentSlideIdx + delta;
       if (next >= 0 && next < currentDeck.slides.length) {
         currentSlideIdx = next;
@@ -2615,8 +2790,8 @@
     }
 
     function goToSlide(idx) {
-      if (!currentDeck) return;
-      currentSlideIdx = idx;
+      if (!currentDeck || !currentDeck.slides) return;
+      currentSlideIdx = Math.max(0, Math.min(currentDeck.slides.length - 1, idx));
       renderActiveSlide();
     }
 
@@ -2758,14 +2933,50 @@
       document.querySelectorAll(".cat-pick-btn").forEach(btn => {
         btn.classList.toggle("active", btn.getAttribute("data-pick-cat") === cat);
       });
+      const labelEl = document.getElementById("formDiagnosisLabel");
+      const inputEl = document.getElementById("formDiagnosis");
+      const hintEl = document.getElementById("formDiagnosisHint");
+      if (!labelEl || !inputEl) return;
+      inputEl.setCustomValidity("");
+
+      if (cat === "biblio") {
+        labelEl.textContent = "TITRE DE L'ARTICLE *";
+        inputEl.placeholder = "Écrire le titre de l'article présenté...";
+        inputEl.required = true;
+        if (hintEl) {
+          hintEl.textContent = "📚 Obligatoire · Titre de l'article de la biblio du vendredi";
+        }
+      } else if (cat === "cours") {
+        labelEl.textContent = "TITRE DU COURS";
+        inputEl.placeholder = "Écrire le titre ou sujet du cours (optionnel)...";
+        inputEl.required = false;
+        if (hintEl) {
+          hintEl.textContent = "🎓 Optionnel · Si laissé vide, le titre de la 1re diapo sera utilisé";
+        }
+      } else {
+        // Cas du mardi ('cas') et Bone Club ('bone-club') : diagnostic obligatoire
+        labelEl.textContent = "DIAGNOSTIC *";
+        inputEl.placeholder = "Écrire le diagnostic (ex : Ostéome ostéoïde, Chondrosarcome...)";
+        inputEl.required = true;
+        if (hintEl) {
+          hintEl.textContent = "🔒 Obligatoire · Masqué par défaut sur la page d'accueil · Visible en activant le Mode Recherche";
+        }
+      }
     }
 
     function openStudioModal() {
+      if (pendingPdf && pendingPdf.abortUpload && !pendingPdf.saved) pendingPdf.abortUpload();
       pendingExtractedPptx = null;
       pendingPdf = null;
+      pendingPdfTask = null;
       document.getElementById("archiveForm").reset();
       const fileInput = document.getElementById("pptxFileInput");
       if (fileInput) fileInput.value = "";
+      const submitBtn = document.getElementById("btnSubmitArchive");
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "DÉPOSER LES DIAPOS";
+      }
       document.getElementById("dropzoneTitle").textContent = "📂 Choisir ou glisser votre présentation en PDF";
       document.getElementById("dropzoneSub").textContent = "Affichage strictement identique à vos diapos";
       const tuto = document.getElementById("pdfTuto");
@@ -3569,39 +3780,73 @@
         const sizeInfo = pendingPdf.originalSizeBytes && pendingPdf.sizeBytes < pendingPdf.originalSizeBytes
           ? `compressé ${formatBytes(pendingPdf.originalSizeBytes)} → ${formatBytes(pendingPdf.sizeBytes)}`
           : formatBytes(pendingPdf.sizeBytes || 0);
-        dzSub.textContent = `${names} (${sizeInfo}) • Cliquer pour changer`;
+        const uploadState = pendingPdf.uploaded
+          ? " • Prêt"
+          : (typeof pendingPdf.uploadPct === "number" && pendingPdf.uploadPct > 0 && pendingPdf.uploadPct < 100
+              ? ` • Pré-envoi ${pendingPdf.uploadPct}%`
+              : "");
+        dzSub.textContent = `${names} (${sizeInfo}${uploadState}) • Cliquer pour changer`;
       } else if (pendingExtractedPptx) {
         dzTitle.textContent = `⏳ ${n} diapos lues — conversion fidèle en attente`;
         dzSub.textContent = pendingExtractedPptx.fileName || "";
       }
     }
 
-    async function renderPdfPagesToSlides(data, onPage) {
+    function openPdfDocument(data) {
       if (!window.pdfjsLib) throw new Error("Lecteur PDF en cours de chargement, réessayez");
       window.pdfjsLib.GlobalWorkerOptions.workerSrc =
         "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-      const pdf = await window.pdfjsLib.getDocument({ data }).promise;
+      return window.pdfjsLib.getDocument({
+        data,
+        cMapUrl: "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/",
+        cMapPacked: true,
+        standardFontDataUrl: "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/standard_fonts/"
+      }).promise;
+    }
+
+    async function extractPageTextLines(page) {
+      try {
+        const tc = await page.getTextContent();
+        return tc.items.map(it => (it.str || "").trim()).filter(Boolean);
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function canvasToJpegBlob(canvas, quality = 0.82) {
+      return new Promise((resolve) => {
+        if (canvas.toBlob) {
+          canvas.toBlob((b) => resolve(b), "image/jpeg", quality);
+        } else {
+          resolve(dataUrlToBlob(canvas.toDataURL("image/jpeg", quality)));
+        }
+      });
+    }
+
+    async function renderPdfPagesToSlides(data, onPage, opts = {}) {
+      const pdf = await openPdfDocument(data);
       const slides = [];
-      const TARGET_WIDTH = 1920;
+      const TARGET_WIDTH = opts.targetWidth || 1600;
+      const quality = opts.quality || 0.85;
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d", { alpha: false });
       try {
         for (let i = 1; i <= pdf.numPages; i++) {
           const page = await pdf.getPage(i);
           const base = page.getViewport({ scale: 1 });
-          const viewport = page.getViewport({ scale: TARGET_WIDTH / base.width });
-          const canvas = document.createElement("canvas");
-          canvas.width = Math.round(viewport.width);
-          canvas.height = Math.round(viewport.height);
-          const ctx = canvas.getContext("2d");
+          const viewport = page.getViewport({ scale: Math.min(2.5, TARGET_WIDTH / Math.max(base.width, 1)) });
+          canvas.width = Math.max(1, Math.round(viewport.width));
+          canvas.height = Math.max(1, Math.round(viewport.height));
           ctx.fillStyle = "#FFFFFF";
           ctx.fillRect(0, 0, canvas.width, canvas.height);
-          await page.render({ canvasContext: ctx, viewport }).promise;
-          const image = canvas.toDataURL("image/jpeg", 0.88);
 
-          let lines = [];
-          try {
-            const tc = await page.getTextContent();
-            lines = tc.items.map(it => (it.str || "").trim()).filter(Boolean);
-          } catch (e) {}
+          const [, lines] = await Promise.all([
+            page.render({ canvasContext: ctx, viewport }).promise,
+            opts.skipText ? Promise.resolve([]) : extractPageTextLines(page)
+          ]);
+
+          const blob = await canvasToJpegBlob(canvas, quality);
+          const image = blob ? URL.createObjectURL(blob) : canvas.toDataURL("image/jpeg", quality);
 
           const slide = {
             index: i,
@@ -3615,54 +3860,124 @@
           };
           slides.push(slide);
           page.cleanup();
-          canvas.width = canvas.height = 0;
           if (onPage) onPage(i - 1, slide, pdf.numPages);
         }
       } finally {
+        canvas.width = canvas.height = 0;
         pdf.destroy();
       }
       return slides;
     }
 
-    // Lightweight PDF rebuilt from the rendered slides (one JPEG per page, original page size).
-    // Radiology decks are heavy because of uncompressed PACS captures: this typically divides the size by 5–20.
+    // Lightweight PDF rebuilt directly from JPEG byte streams (zero external library, < 5ms).
+    // Radiology decks are heavy because of uncompressed PACS captures: this typically divides the size by 10–30.
     const MAX_UPLOAD_BYTES = 50 * 1024 * 1024;
+    const COMPRESS_THRESHOLD_BYTES = 250 * 1024; // Compress any PDF above 250 KB for maximum storage & upload savings
 
-    async function loadPdfLib() {
-      if (window.PDFLib) return window.PDFLib;
-      await new Promise((resolve, reject) => {
-        const el = document.createElement("script");
-        el.src = "https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js";
-        el.onload = resolve;
-        el.onerror = () => reject(new Error("Module de compression indisponible"));
-        document.head.appendChild(el);
-      });
-      return window.PDFLib;
-    }
+    function buildPdfFromJpegs(pages) {
+      const enc = new TextEncoder();
+      const parts = [];
+      let offset = 0;
+      const offsets = [0];
+      const pushStr = (s) => { const b = enc.encode(s); parts.push(b); offset += b.byteLength; };
+      const pushBytes = (b) => { parts.push(b); offset += b.byteLength; };
 
-    async function buildCompressedPdf(slides) {
-      const { PDFDocument } = await loadPdfLib();
-      const doc = await PDFDocument.create();
-      for (const sl of slides) {
-        const bytes = new Uint8Array(await dataUrlToBlob(sl.image).arrayBuffer());
-        const img = await doc.embedJpg(bytes);
-        const w = sl.pageWidthPt || img.width;
-        const h = sl.pageHeightPt || img.height;
-        const page = doc.addPage([w, h]);
-        page.drawImage(img, { x: 0, y: 0, width: w, height: h });
+      pushStr("%PDF-1.4\n%\xFF\xFF\xFF\xFF\n");
+      const n = pages.length;
+      const kids = pages.map((_, i) => `${3 + i * 3} 0 R`).join(" ");
+
+      offsets[1] = offset;
+      pushStr(`1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n`);
+
+      offsets[2] = offset;
+      pushStr(`2 0 obj\n<< /Type /Pages /Count ${n} /Kids [ ${kids} ] >>\nendobj\n`);
+
+      for (let i = 0; i < n; i++) {
+        const p = pages[i];
+        const pageObj = 3 + i * 3;
+        const contentObj = 4 + i * 3;
+        const imgObj = 5 + i * 3;
+        const wPt = Number((p.widthPt || p.widthPx).toFixed(2));
+        const hPt = Number((p.heightPt || p.heightPx).toFixed(2));
+        const cmd = `q ${wPt} 0 0 ${hPt} 0 0 cm /Im0 Do Q`;
+
+        offsets[pageObj] = offset;
+        pushStr(`${pageObj} 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${wPt} ${hPt}] /Resources << /XObject << /Im0 ${imgObj} 0 R >> >> /Contents ${contentObj} 0 R >>\nendobj\n`);
+
+        offsets[contentObj] = offset;
+        pushStr(`${contentObj} 0 obj\n<< /Length ${cmd.length} >>\nstream\n${cmd}\nendstream\nendobj\n`);
+
+        offsets[imgObj] = offset;
+        pushStr(`${imgObj} 0 obj\n<< /Type /XObject /Subtype /Image /Width ${p.widthPx} /Height ${p.heightPx} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${p.jpgBytes.byteLength} >>\nstream\n`);
+        pushBytes(p.jpgBytes);
+        pushStr(`\nendstream\nendobj\n`);
       }
-      const out = await doc.save();
-      return new Blob([out], { type: "application/pdf" });
+
+      const totalObjs = 3 + n * 3;
+      const xrefOffset = offset;
+      let xref = `xref\n0 ${totalObjs}\n0000000000 65535 f \n`;
+      for (let id = 1; id < totalObjs; id++) {
+        xref += `${String(offsets[id]).padStart(10, "0")} 00000 n \n`;
+      }
+      xref += `trailer\n<< /Size ${totalObjs} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF\n`;
+      pushStr(xref);
+      return new Blob(parts, { type: "application/pdf" });
     }
 
-    async function makeCoverThumbnail(dataUrl, maxWidth = 640) {
+    function makeCoverThumbnailFromCanvas(sourceCanvas, maxWidth = 480) {
+      const scale = Math.min(1, maxWidth / Math.max(sourceCanvas.width, 1));
+      const thumb = document.createElement("canvas");
+      thumb.width = Math.max(1, Math.round(sourceCanvas.width * scale));
+      thumb.height = Math.max(1, Math.round(sourceCanvas.height * scale));
+      const tctx = thumb.getContext("2d", { alpha: false });
+      tctx.imageSmoothingEnabled = true;
+      tctx.imageSmoothingQuality = "high";
+      tctx.drawImage(sourceCanvas, 0, 0, thumb.width, thumb.height);
+      const dataUrl = thumb.toDataURL("image/jpeg", 0.65);
+      thumb.width = thumb.height = 0;
+      return dataUrl;
+    }
+
+    async function makeCoverThumbnail(dataUrl, maxWidth = 480) {
+      if (!dataUrl) return "";
       const img = await loadImgElement(dataUrl);
-      const scale = Math.min(1, maxWidth / img.naturalWidth);
+      if (!img) return "";
+      const scale = Math.min(1, maxWidth / Math.max(img.naturalWidth, 1));
       const canvas = document.createElement("canvas");
-      canvas.width = Math.round(img.naturalWidth * scale);
-      canvas.height = Math.round(img.naturalHeight * scale);
-      canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
-      return canvas.toDataURL("image/jpeg", 0.75);
+      canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
+      canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+      const cctx = canvas.getContext("2d", { alpha: false });
+      cctx.imageSmoothingEnabled = true;
+      cctx.imageSmoothingQuality = "high";
+      cctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      return canvas.toDataURL("image/jpeg", 0.65);
+    }
+
+    function startBackgroundPdfUpload(pdfState) {
+      if (!cloudEnabled() || !pdfState || !pdfState.file) return;
+      pdfState.pdfPath = `${crypto.randomUUID()}.pdf`;
+      pdfState.uploadPct = 0;
+      pdfState.uploaded = false;
+      pdfState.uploadError = null;
+      const sig = {};
+      pdfState.abortUpload = () => { if (sig.abort) sig.abort(); };
+      pdfState.uploadPromise = sbUploadPdf(
+        pdfState.pdfPath,
+        pdfState.file,
+        (pct) => {
+          pdfState.uploadPct = pct;
+          if (pdfState.onProgress) pdfState.onProgress(pct);
+          if (pendingPdf === pdfState && !pdfState.submitting) updateDropzoneStatus();
+        },
+        sig
+      ).then(() => {
+        pdfState.uploaded = true;
+        pdfState.uploadPct = 100;
+        if (pendingPdf === pdfState && !pdfState.submitting) updateDropzoneStatus();
+      }).catch((err) => {
+        pdfState.uploadError = err;
+        pdfState.uploadPromise = null;
+      });
     }
 
     async function processPdfFileInBrowser(file, displayName) {
@@ -3671,23 +3986,140 @@
       const dzSub = document.getElementById("dropzoneSub");
       const submitBtn = document.getElementById("btnSubmitArchive");
 
+      if (pendingPdf && pendingPdf.abortUpload && !pendingPdf.saved) {
+        pendingPdf.abortUpload();
+      }
+      pendingPdf = null;
+
       dzTitle.textContent = "⏳ Lecture du PDF...";
       dzSub.textContent = fileName;
-      if (submitBtn) submitBtn.disabled = true;
 
-      try {
-        const data = new Uint8Array(await file.arrayBuffer());
-        const slides = await renderPdfPagesToSlides(data, (idx, _slide, total) => {
-          dzTitle.textContent = `⏳ Diapo ${idx + 1} / ${total}...`;
-        });
-        if (!slides.length) throw new Error("PDF vide");
+      const task = (async () => {
+        const rawBuf = await file.arrayBuffer();
+        const pdf = await openPdfDocument(new Uint8Array(rawBuf.slice(0)));
+        const numPages = pdf.numPages;
+        if (!numPages) {
+          pdf.destroy();
+          throw new Error("PDF vide");
+        }
+
+        const shouldCompress = !cloudEnabled() || file.size > COMPRESS_THRESHOLD_BYTES;
+        const slides = [];
+        const jpgPages = [];
+        let coverImage = "";
+        let slidesFullyRendered = false;
+
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d", { alpha: false });
+
+        try {
+          if (!shouldCompress) {
+            // Ultra-small PDF (< 250 KB): only render page 1 thumbnail (480px) + extract text
+            const firstPage = await pdf.getPage(1);
+            const base1 = firstPage.getViewport({ scale: 1 });
+            const vp1 = firstPage.getViewport({ scale: Math.min(2, 480 / Math.max(base1.width, 1)) });
+            canvas.width = Math.max(1, Math.round(vp1.width));
+            canvas.height = Math.max(1, Math.round(vp1.height));
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            await firstPage.render({ canvasContext: ctx, viewport: vp1 }).promise;
+            coverImage = canvas.toDataURL("image/jpeg", 0.65);
+            const firstLines = await extractPageTextLines(firstPage);
+            firstPage.cleanup();
+
+            slides.push({
+              index: 1,
+              pageWidthPt: base1.width,
+              pageHeightPt: base1.height,
+              title: firstLines[0] || "Diapositive 1",
+              stage: "Diapo 1",
+              bullets: firstLines.slice(1, 12),
+              takeaway: "",
+              image: coverImage
+            });
+
+            // Extract text from remaining pages without rendering pixels
+            for (let i = 2; i <= numPages; i++) {
+              const page = await pdf.getPage(i);
+              const base = page.getViewport({ scale: 1 });
+              const lines = await extractPageTextLines(page);
+              page.cleanup();
+              slides.push({
+                index: i,
+                pageWidthPt: base.width,
+                pageHeightPt: base.height,
+                title: lines[0] || `Diapositive ${i}`,
+                stage: `Diapo ${i}`,
+                bullets: lines.slice(1, 12),
+                takeaway: "",
+                image: ""
+              });
+            }
+          } else {
+            // Maximum readable compression: 1280px HD @ JPEG 0.68 (~35–60 KB/slide, sharp text & radiology)
+            const TARGET_WIDTH = 1280;
+            const JPG_QUALITY = 0.68;
+            for (let i = 1; i <= numPages; i++) {
+              dzTitle.textContent = `⏳ Compression diapo ${i} / ${numPages}...`;
+              const page = await pdf.getPage(i);
+              const base = page.getViewport({ scale: 1 });
+              const viewport = page.getViewport({ scale: Math.min(2.2, TARGET_WIDTH / Math.max(base.width, 1)) });
+              canvas.width = Math.max(1, Math.round(viewport.width));
+              canvas.height = Math.max(1, Math.round(viewport.height));
+              ctx.imageSmoothingEnabled = true;
+              ctx.imageSmoothingQuality = "high";
+              ctx.fillStyle = "#FFFFFF";
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+              const [, lines] = await Promise.all([
+                page.render({ canvasContext: ctx, viewport }).promise,
+                extractPageTextLines(page)
+              ]);
+
+              if (i === 1) {
+                coverImage = makeCoverThumbnailFromCanvas(canvas, 480);
+              }
+
+              const blob = await canvasToJpegBlob(canvas, JPG_QUALITY);
+              const jpgBytes = new Uint8Array(await blob.arrayBuffer());
+              jpgPages.push({
+                widthPt: base.width,
+                heightPt: base.height,
+                widthPx: canvas.width,
+                heightPx: canvas.height,
+                jpgBytes
+              });
+
+              const image = cloudEnabled()
+                ? URL.createObjectURL(blob)
+                : await blobToDataUrl(blob);
+
+              slides.push({
+                index: i,
+                pageWidthPt: base.width,
+                pageHeightPt: base.height,
+                title: lines[0] || `Diapositive ${i}`,
+                stage: `Diapo ${i}`,
+                bullets: lines.slice(1, 12),
+                takeaway: "",
+                image
+              });
+              page.cleanup();
+            }
+            slidesFullyRendered = true;
+          }
+        } finally {
+          canvas.width = canvas.height = 0;
+          pdf.destroy();
+        }
 
         let uploadBlob = file;
-        try {
-          dzTitle.textContent = "⏳ Compression du PDF...";
-          const compressed = await buildCompressedPdf(slides);
-          if (compressed.size < file.size * 0.9) uploadBlob = compressed;
-        } catch (e) {}
+        if (shouldCompress && jpgPages.length) {
+          try {
+            const compressed = buildPdfFromJpegs(jpgPages);
+            if (compressed.size < file.size * 0.95) uploadBlob = compressed;
+          } catch (e) {}
+        }
 
         if (cloudEnabled() && uploadBlob.size > MAX_UPLOAD_BYTES) {
           pendingPdf = null;
@@ -3698,20 +4130,34 @@
 
         pendingPdf = {
           slides,
+          slidesFullyRendered,
+          coverImage: coverImage || (slides[0] && slides[0].image) || "",
           file: uploadBlob,
           sizeBytes: uploadBlob.size,
           originalSizeBytes: file.size,
           fileName
         };
         updateDropzoneStatus();
+        // Start uploading to Supabase Storage immediately in the background while the user fills the form
+        startBackgroundPdfUpload(pendingPdf);
+
         const diagInput = document.getElementById("formDiagnosis");
         if (diagInput && !diagInput.value.trim()) diagInput.focus();
+      })();
+
+      pendingPdfTask = task;
+      try {
+        await task;
       } catch (err) {
         pendingPdf = null;
         dzTitle.textContent = "⚠️ PDF non reconnu";
         dzSub.textContent = "Veuillez choisir l'export PDF de la présentation";
       } finally {
-        if (submitBtn) submitBtn.disabled = false;
+        if (pendingPdfTask === task) pendingPdfTask = null;
+        if (submitBtn && (!pendingPdf || !pendingPdf.submitting)) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "DÉPOSER LES DIAPOS";
+        }
       }
     }
 
@@ -3769,26 +4215,69 @@
 
     async function handleSaveArchive(event) {
       event.preventDefault();
+      const submitBtn = document.getElementById("btnSubmitArchive");
+      const dzTitle = document.getElementById("dropzoneTitle");
+      const dzSub = document.getElementById("dropzoneSub");
+
+      // If the PDF is still being analyzed/compressed, wait for it automatically instead of ignoring the click
+      if (pendingPdfTask) {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "⏳ PRÉPARATION DU PDF…";
+        }
+        try {
+          await pendingPdfTask;
+        } catch (e) {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "DÉPOSER LES DIAPOS";
+          }
+          return;
+        }
+      }
+
       if (!pendingPdf) {
         if (!pendingExtractedPptx) {
           document.getElementById("pptxFileInput").click();
         } else {
-          document.getElementById("dropzoneTitle").textContent = "⚠️ Déposez votre présentation en PDF";
-          document.getElementById("dropzoneSub").textContent = "Voir le tuto ci-dessous";
+          dzTitle.textContent = "⚠️ Déposez votre présentation en PDF";
+          dzSub.textContent = "Voir le tuto ci-dessous";
         }
         return;
       }
       const displaySlides = getPendingDisplaySlides();
       const pptxInfo = pendingExtractedPptx || {};
 
+      const category = document.getElementById("formCategory").value || "cas";
       const diagnosisInput = document.getElementById("formDiagnosis");
-      const diagnosis = (diagnosisInput ? diagnosisInput.value : "").trim();
-      if (!diagnosis) {
-        if (diagnosisInput) diagnosisInput.focus();
+      let diagnosis = (diagnosisInput ? diagnosisInput.value : "").trim();
+      const isDiagMandatory = category === "cas" || category === "bone-club";
+      const isArticleMandatory = category === "biblio";
+
+      if ((isDiagMandatory || isArticleMandatory) && !diagnosis) {
+        if (diagnosisInput) {
+          diagnosisInput.setCustomValidity(
+            isArticleMandatory
+              ? "Veuillez renseigner le titre de l'article."
+              : "Veuillez renseigner le diagnostic (obligatoire pour Cas du mardi et Bone Club)."
+          );
+          diagnosisInput.reportValidity();
+          diagnosisInput.focus();
+        }
         return;
       }
 
-      const category = document.getElementById("formCategory").value || "cas";
+      if (!diagnosis) {
+        const firstSlideTitle = displaySlides[0] && displaySlides[0].title && !/^Diapositive 1$/i.test(displaySlides[0].title)
+          ? displaySlides[0].title.trim()
+          : "";
+        const cleanFileStem = ((pendingPdf && pendingPdf.fileName) || "")
+          .replace(/\.pdf$/i, "")
+          .replace(/[-_]+/g, " ")
+          .trim();
+        diagnosis = firstSlideTitle || cleanFileStem || categoryLabel(category);
+      }
+
       const internName = document.getElementById("formInternName").value.trim();
       const semMode = document.getElementById("formSemesterMode").value || "current";
 
@@ -3820,6 +4309,8 @@
         image: s.image || buildSlidePlaceholderSvg(s.title || maskedTitle, idx + 1, displaySlides.length)
       }));
 
+      const coverImage = pendingPdf.coverImage || await makeCoverThumbnail(slides[0].image);
+
       const newDeck = {
         id,
         title: diagnosis,
@@ -3838,7 +4329,7 @@
         originalSizeBytes: pptxInfo.originalSizeBytes || (pendingPdf ? pendingPdf.sizeBytes : 0),
         slimSizeBytes: pptxInfo.slimSizeBytes || (pendingPdf ? pendingPdf.sizeBytes : 0),
         slideCount: slides.length,
-        coverImage: slides[0].image,
+        coverImage: coverImage || slides[0].image,
         pptxDataUrl: pptxInfo.pptxDataUrl || "",
         renderVersion: 3,
         renderSource: pendingPdf ? "pdf" : "pptx",
@@ -3846,15 +4337,28 @@
       };
 
       if (cloudEnabled()) {
-        const submitBtn = document.getElementById("btnSubmitArchive");
-        const dzTitle = document.getElementById("dropzoneTitle");
-        const dzSub = document.getElementById("dropzoneSub");
+        pendingPdf.submitting = true;
         if (submitBtn) submitBtn.disabled = true;
+        const showProgress = (pct) => {
+          const label = typeof pct === "number" ? ` (${pct}%)` : "";
+          dzTitle.textContent = `⏳ Mise en ligne du PDF${label}...`;
+          if (submitBtn) submitBtn.textContent = `⏳ ENVOI DU PDF${label}…`;
+        };
         try {
-          dzTitle.textContent = "⏳ Mise en ligne du PDF...";
-          const pdfPath = `${crypto.randomUUID()}.pdf`;
-          await sbUploadPdf(pdfPath, pendingPdf.file);
+          if (!pendingPdf.uploaded) {
+            showProgress(pendingPdf.uploadPct || 0);
+            pendingPdf.onProgress = showProgress;
+            if (pendingPdf.uploadPromise) {
+              await pendingPdf.uploadPromise;
+            }
+            if (!pendingPdf.uploaded) {
+              pendingPdf.pdfPath = `${crypto.randomUUID()}.pdf`;
+              await sbUploadPdf(pendingPdf.pdfPath, pendingPdf.file, showProgress);
+              pendingPdf.uploaded = true;
+            }
+          }
           dzTitle.textContent = "⏳ Enregistrement de l'archive...";
+          if (submitBtn) submitBtn.textContent = "⏳ ENREGISTREMENT…";
           const row = await sbRpc("interne_add_archive", {
             p_code: accessCode,
             p_archive: {
@@ -3864,19 +4368,24 @@
               semester: archiveSemester,
               year: archiveYear,
               slide_count: slides.length,
-              cover_image: await makeCoverThumbnail(slides[0].image),
-              pdf_path: pdfPath,
+              cover_image: coverImage,
+              pdf_path: pendingPdf.pdfPath,
               size_bytes: pendingPdf.sizeBytes,
               clinical_context: newDeck.clinicalContext,
               slide_texts: slides.map(s => ({ title: s.title, text: [s.title, ...(s.bullets || [])].join(" ") }))
             }
           });
+          pendingPdf.saved = true;
           const cloudDeck = cloudRowToDeck(row);
-          cloudDeck.slides = slides;
-          cloudDeck._slidesLoaded = true;
+          cloudDeck._pdfBlob = pendingPdf.file;
+          if (pendingPdf.slidesFullyRendered) {
+            cloudDeck.slides = slides;
+            cloudDeck._slidesLoaded = true;
+          }
           cloudDecksList.unshift(cloudDeck);
           decksById[cloudDeck.id] = cloudDeck;
         } catch (e) {
+          pendingPdf.submitting = false;
           dzTitle.textContent = "⚠️ Mise en ligne impossible";
           dzSub.textContent = e.message + " — Réessayez";
           if (e.invalidCode) {
@@ -3886,7 +4395,11 @@
           }
           return;
         } finally {
-          if (submitBtn) submitBtn.disabled = false;
+          if (pendingPdf) pendingPdf.onProgress = null;
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "DÉPOSER LES DIAPOS";
+          }
         }
         refreshCatalogView();
         closeStudioModal();
@@ -4011,6 +4524,51 @@
         toggleTheme();
       }
     });
+
+    // Fast mobile touch navigation (swipe left/right + zero double-tap zoom)
+    (function setupViewerTouchNavigation() {
+      const modal = document.getElementById("viewerModal");
+      const vp = document.getElementById("pacsViewport");
+      if (!modal || !vp) return;
+
+      // Block Safari/iOS double-click / double-tap zoom inside the viewer
+      modal.addEventListener("dblclick", (e) => {
+        e.preventDefault();
+      }, { passive: false });
+
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchStartTime = 0;
+      let swiped = false;
+
+      vp.addEventListener("touchstart", (e) => {
+        if (e.touches.length !== 1) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+        swiped = false;
+      }, { passive: true });
+
+      vp.addEventListener("touchend", (e) => {
+        if (!currentDeck || e.changedTouches.length !== 1) return;
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+        const dt = Date.now() - touchStartTime;
+        if (dt < 500 && Math.abs(dx) > 36 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+          swiped = true;
+          stepSlide(dx < 0 ? 1 : -1);
+        }
+      }, { passive: true });
+
+      // Prevent tap zone click from firing a second time right after a swipe
+      vp.addEventListener("click", (e) => {
+        if (swiped) {
+          e.stopPropagation();
+          e.preventDefault();
+          swiped = false;
+        }
+      }, true);
+    })();
 
     initApp();
   </script>
