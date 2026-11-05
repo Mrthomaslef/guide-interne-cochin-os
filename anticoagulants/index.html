@@ -86,6 +86,11 @@
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation; /* pas de zoom au double-tap (le pincer reste possible) */
+    }
+    button, .m-med-cell, .badge-cell {
+      -webkit-user-select: none;
+      user-select: none;
     }
 
     html, body {
