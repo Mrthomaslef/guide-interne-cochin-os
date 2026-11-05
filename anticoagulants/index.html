@@ -458,6 +458,202 @@
       color: #041019;
     }
 
+    /* =================================================================
+       DATE DE L'INTERVENTION (CALENDRIER MOIS + PLANNING DATÉ)
+       ================================================================= */
+    .date-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .date-card.has-date { border-color: var(--xray); }
+    .date-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .date-head-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin: 0;
+      color: var(--ink);
+    }
+    .date-optional {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      text-transform: none;
+      margin-left: 4px;
+    }
+    .date-summary {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .date-summary-value {
+      flex: 1;
+      min-width: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+    .date-summary-value::first-letter { text-transform: uppercase; }
+    .date-ghost-btn {
+      border: 1.5px solid var(--line);
+      background: var(--bg-elevated);
+      color: var(--ink);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 8px 11px;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .cal-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .cal-month {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--ink);
+      text-transform: capitalize;
+    }
+    .cal-arrow {
+      width: 40px;
+      height: 36px;
+      border-radius: 9px;
+      border: 1.5px solid var(--line);
+      background: var(--bg-elevated);
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 4px;
+    }
+    .cal-dow {
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 800;
+      color: var(--ink-muted);
+      padding: 2px 0;
+    }
+    .cal-day {
+      position: relative;
+      height: 40px;
+      border-radius: 9px;
+      border: 1.5px solid var(--line);
+      background: var(--bg-elevated);
+      color: var(--ink);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0;
+    }
+    .cal-day.weekend { background: var(--bg-well); color: var(--ink-soft); }
+    .cal-day.past { opacity: 0.4; }
+    .cal-day.today { border: 2px solid var(--ink); }
+    .cal-day.selected {
+      background: var(--xray);
+      border-color: var(--xray);
+      color: #fff;
+      opacity: 1;
+    }
+    html.negatoscope .cal-day.selected { color: #041019; }
+    .cal-day.mk-stop { box-shadow: inset 0 -4px 0 var(--arret); }
+    .cal-day.mk-reprise { box-shadow: inset 0 -4px 0 var(--poursuite); }
+    .cal-empty { height: 40px; }
+    .cal-legend {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--ink-soft);
+    }
+    .cal-legend i {
+      display: inline-block;
+      width: 14px;
+      height: 4px;
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-right: 4px;
+    }
+
+    .plan-box {
+      background: var(--bg-elevated);
+      border: 1.5px solid var(--xray);
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .plan-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-muted);
+    }
+    .plan-row {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
+      gap: 10px;
+      align-items: baseline;
+    }
+    .plan-date {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    .plan-date small {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink-muted);
+    }
+    .plan-text { font-size: 13.5px; line-height: 1.35; color: var(--ink); }
+    .plan-row.stop .plan-date { color: var(--arret); }
+    .plan-row.reprise .plan-date { color: var(--poursuite); }
+    .plan-copy-btn {
+      border: 2px solid var(--ink);
+      background: var(--ink);
+      color: var(--bg-card);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: var(--key-shadow);
+    }
+    html.negatoscope .plan-copy-btn { background: var(--xray); border-color: var(--xray); color: #041019; }
+    .plan-copy-btn.done { background: var(--poursuite); border-color: var(--poursuite); }
+
     /* SIMPLE PICKER CARDS */
     .picker-card {
       background: var(--bg-card);
@@ -908,6 +1104,9 @@
          ONGLET 1 : ASSISTANT DÉCISIONNEL SIMPLIFIÉ (RÉSULTAT EN HAUT + 2 CLICS)
          ================================================================= -->
     <section id="view-assistant" class="view-panel active">
+      <!-- DATE DE L'INTERVENTION (FACULTATIVE) -->
+      <div class="date-card" id="dateCard"></div>
+
       <!-- CONDUITE À TENIR EN PREMIER PLAN -->
       <div id="decisionResultContainer"></div>
 
@@ -1445,6 +1644,76 @@
       }
     ];
 
+    // Planning daté : [décalage début, décalage fin, texte, type] (J0 = jour du geste)
+    const DATED = {
+      aspirine: {
+        arret: [[-3, -3, "Dernière prise d'Aspirine", "stop"]],
+        reprise: [[0, 0, "Reprise de l'Aspirine à H+6 après le geste", "reprise"]]
+      },
+      clopidogrel: {
+        adaptation: [[-5, -5, "Arrêt Plavix® / Brilique® — relais par Aspirine seule", "stop"]],
+        arret: [[-5, -5, "Dernière prise de Plavix® / Brilique®", "stop"]],
+        reprise: [[0, 0, "Aspirine à H+6 après le geste", "reprise"], [1, 1, "Reprise du traitement habituel", "reprise"]]
+      },
+      prasugrel: {
+        adaptation: [[-7, -7, "Arrêt Efient® — relais par Aspirine seule", "stop"]],
+        arret: [[-7, -7, "Dernière prise d'Efient®", "stop"]],
+        reprise: [[0, 0, "Aspirine à H+6 après le geste", "reprise"], [1, 1, "Reprise d'Efient®", "reprise"]]
+      },
+      bitherapie_aap: {
+        adaptation: [[-5, -5, "Arrêt du 2e antiagrégant — maintien de l'Aspirine seule", "stop"]],
+        arret: [[-5, -5, "Dernière prise (Aspirine + 2e AAP) — avec accord du cardiologue", "stop"]],
+        reprise: [[0, 0, "Aspirine à H+6 après le geste", "reprise"], [1, 1, "Reprise du traitement complet", "reprise"]]
+      },
+      aod_xaban: {
+        adaptation: [[-1, -1, "Pas de prise le soir (veille du geste)", "stop"], [0, 0, "Pas de prise le matin du geste", "stop"]],
+        arretByDfg: {
+          gt50: [[-3, -3, "Dernière prise (DFG ≥ 30)", "stop"]],
+          "30to50": [[-3, -3, "Dernière prise (DFG ≥ 30)", "stop"]],
+          lt30: [[-5, -5, "Dernière prise (DFG < 30)", "stop"]]
+        },
+        repriseAdaptation: [[0, 0, "Reprise ≥ 6 h après la fin du geste, aux doses habituelles", "reprise"]],
+        repriseArret: [[0, 1, "Reprise à dose préventive, 12 à 24 h après le geste", "reprise"], [2, 3, "Reprise à dose curative, 48 à 72 h après le geste", "reprise"]]
+      },
+      dabigatran: {
+        adaptation: [[-1, -1, "Pas de prise le soir (veille du geste)", "stop"], [0, 0, "Pas de prise le matin du geste", "stop"]],
+        arretByDfg: {
+          gt50: [[-3, -3, "Dernière prise (DFG ≥ 50)", "stop"]],
+          "30to50": [[-5, -5, "Dernière prise (30 ≤ DFG < 50)", "stop"]],
+          lt30: [[-5, -5, "Dernière prise au plus tard (DFG < 30 — avis spécialisé)", "stop"]]
+        },
+        repriseAdaptation: [[0, 0, "Reprise ≥ 6 h après la fin du geste", "reprise"]],
+        repriseArret: [[0, 1, "Reprise à dose préventive, 12 à 24 h après le geste", "reprise"], [2, 3, "Reprise à dose curative, 48 à 72 h après le geste", "reprise"]]
+      },
+      warfarine: {
+        arret: [[-6, -6, "Dernière prise de Coumadine®", "stop"], [-1, 0, "Contrôle de l'INR avant le geste", "info"]],
+        reprise: [[1, 1, "Reprise de Coumadine®", "reprise"]]
+      },
+      fluindione: {
+        arret: [[-5, -5, "Dernière prise de Préviscan®", "stop"], [-1, 0, "Contrôle de l'INR avant le geste", "info"]],
+        reprise: [[1, 1, "Reprise de Préviscan®", "reprise"]]
+      },
+      acenocoumarol: {
+        arret: [[-4, -4, "Dernière prise de Sintrom®", "stop"], [-1, 0, "Contrôle de l'INR avant le geste", "info"]],
+        reprise: [[1, 1, "Reprise de Sintrom®", "reprise"]]
+      },
+      hbpm: {
+        adaptation: [[-1, -1, "Dernière injection ≥ 24 h avant le geste (H-24)", "stop"]],
+        arret: [[-1, -1, "Dernière injection ≥ 24 h avant le geste (H-24)", "stop"]],
+        reprise: [[0, 0, "Reprise à H+6 à dose préventive", "reprise"], [2, 2, "Si besoin, reprise à dose curative (J2)", "reprise"]]
+      },
+      hnf_sc: {
+        adaptation: [[-1, 0, "Dernière injection 8 à 12 h avant le geste (H-12 / H-8)", "stop"]],
+        arret: [[-1, 0, "Dernière injection 8 à 12 h avant le geste (H-12 / H-8)", "stop"]],
+        reprise: [[0, 0, "Reprise à H+6 à dose préventive", "reprise"], [2, 2, "Si besoin, reprise à dose curative (J2)", "reprise"]]
+      },
+      hnf_ivse: {
+        adaptation: [[0, 0, "Arrêt de la seringue électrique 4 à 6 h avant le geste", "stop"]],
+        arret: [[0, 0, "Arrêt de la seringue électrique 4 à 6 h avant le geste", "stop"]],
+        reprise: [[0, 0, "Reprise à H+6 à dose préventive", "reprise"], [2, 2, "Si besoin, reprise à dose curative (J2)", "reprise"]]
+      }
+    };
+
     const CATEGORIES = ["Tous", "Périphérique & PRP", "Rachis", "Cimento & Vissage", "Biopsies", "Ablations"];
 
     let selectedProcId = "epidurale_lombaire_basse";
@@ -1453,6 +1722,9 @@
     let matrixCat = "Tous";
     let selectedDfg = "gt50";
     let currentCrText = "";
+    let procDate = null;          // Date (minuit local) ou null
+    let calOpen = true;
+    let calMonth = (() => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), 1); })();
 
     const THEME_STORAGE_KEY = "cochin_os_theme_v1";
 
@@ -1603,7 +1875,13 @@
       const proc = PROCEDURES.find(p => p.id === selectedProcId) || PROCEDURES[0];
       const med = MEDICATIONS.find(m => m.id === selectedMedId) || MEDICATIONS[0];
       const g = computeGuidance(proc, med, selectedDfg);
-      currentCrText = g.crText;
+      const plan = buildDatedPlan(proc, med, selectedDfg, g);
+      currentCrText = plan ? buildDatedText(proc, med, g, plan) : g.crText;
+      const planRows = arr => arr.map(s => `
+        <div class="plan-row ${s.kind}">
+          <div class="plan-date">${stepDateHtml(s)}</div>
+          <div class="plan-text">${s.text}</div>
+        </div>`).join("");
 
       const container = document.getElementById("decisionResultContainer");
       container.innerHTML = `
@@ -1642,17 +1920,189 @@
               ${g.afterSub ? `<div class="ba-sub">${g.afterSub}</div>` : ''}
             </div>
           </div>
+
+          ${plan ? `
+            <div class="plan-box">
+              <span class="plan-kicker">Planning daté — geste le ${fmtDayLong(procDate)}</span>
+              ${plan.before.length ? planRows(plan.before) : ''}
+              ${plan.after.length ? planRows(plan.after) : ''}
+              <button type="button" class="plan-copy-btn" onclick="copyCurrentCr(this)">📋 Copier le texte avec les dates</button>
+            </div>
+          ` : ''}
         </div>
       `;
+      renderDateCard();
+    }
+
+    // =================================================================
+    // DATE DE L'INTERVENTION
+    // =================================================================
+    function todayMidnight() { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+    function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
+    function sameDay(a, b) { return a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
+    function fmtLong(d) { return d.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" }); }
+    function fmtDay(d) { return d.toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" }); }
+    function fmtDayLong(d) { return d.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" }); }
+    function relLabel(o) { return o === 0 ? "J0" : (o > 0 ? `J+${o}` : `J${o}`); }
+
+    // Renvoie { before: [...], after: [...] } avec dates absolues, ou null
+    function buildDatedPlan(proc, med, dfg, g) {
+      if (!procDate) return null;
+      const d = DATED[med.id] || {};
+      const raw = proc.cells[med.colKey];
+      let before = [], after = [];
+      if (raw === "poursuite") {
+        before = [[0, 0, "Poursuite du traitement sans interruption", "info"]];
+      } else if (raw === "adaptation" || raw === "poursuite_ou_adaptation") {
+        before = d.adaptation || [[0, 0, "Poursuite du traitement sans interruption", "info"]];
+        after = d.adaptation ? (d.repriseAdaptation || d.reprise || []) : [];
+        if (raw === "poursuite_ou_adaptation") {
+          const cond = proc.id === "genou" ? "lavage" : "capsulodistension";
+          before = [[0, 0, `Infiltration simple : poursuite du traitement`, "info"]]
+            .concat(before.map(s => [s[0], s[1], `Si ${cond} : ${s[2].charAt(0).toLowerCase()}${s[2].slice(1)}`, s[3]]));
+          after = after.map(s => [s[0], s[1], `Si ${cond} : ${s[2].charAt(0).toLowerCase()}${s[2].slice(1)}`, s[3]]);
+        }
+      } else if (raw === "arret") {
+        before = d.arretByDfg ? d.arretByDfg[dfg] : (d.arret || []);
+        after = d.repriseArret || d.reprise || [];
+      }
+      const mk = s => ({ from: addDays(procDate, s[0]), to: addDays(procDate, s[1]), o1: s[0], o2: s[1], text: s[2], kind: s[3] });
+      return { before: before.map(mk), after: after.map(mk) };
+    }
+
+    function stepDateHtml(s) {
+      if (s.o1 === s.o2) return `${fmtDay(s.from)}<small>${relLabel(s.o1)}</small>`;
+      return `${fmtDay(s.from)} → ${fmtDay(s.to)}<small>${relLabel(s.o1)} / ${relLabel(s.o2)}</small>`;
+    }
+    function stepDateText(s) {
+      if (s.o1 === s.o2) return `${fmtDayLong(s.from)} (${relLabel(s.o1)})`;
+      return `${fmtDayLong(s.from)} ou ${fmtDayLong(s.to)} (${relLabel(s.o1)} / ${relLabel(s.o2)})`;
+    }
+
+    function buildDatedText(proc, med, g, plan) {
+      const lines = [];
+      lines.push(`Geste : ${proc.title} (${proc.subtitle}) — prévu le ${fmtLong(procDate)}`);
+      lines.push(`Traitement : ${med.title} (${med.brands})${g.showDfg ? ` — DFG ${({ gt50: "≥ 50", "30to50": "30–49", lt30: "< 30" })[selectedDfg]} mL/min` : ""}`);
+      lines.push(`Conduite : ${g.statusLabel}`);
+      if (plan.before.length) {
+        lines.push("", "Avant le geste :");
+        plan.before.forEach(s => lines.push(`• ${stepDateText(s)} : ${s.text}`));
+      }
+      if (plan.after.length) {
+        lines.push("", "Après le geste :");
+        plan.after.forEach(s => lines.push(`• ${stepDateText(s)} : ${s.text}`));
+      }
+      lines.push("", "Protocole Anticoagulants & AAP — Cochin Radio B (RFE GIHP / SFAR).");
+      return lines.join("\n");
+    }
+
+    function renderDateCard() {
+      const card = document.getElementById("dateCard");
+      card.classList.toggle("has-date", !!procDate);
+      const head = `
+        <div class="date-head">
+          <h2 class="date-head-title">📅 Date du geste<span class="date-optional">facultatif</span></h2>
+          ${procDate && calOpen ? `<button type="button" class="date-ghost-btn" onclick="toggleCal(false)">Fermer</button>` : ""}
+        </div>`;
+
+      if (procDate && !calOpen) {
+        card.innerHTML = head + `
+          <div class="date-summary">
+            <span class="date-summary-value">${fmtLong(procDate)}</span>
+            <button type="button" class="date-ghost-btn" onclick="toggleCal(true)">Modifier</button>
+            <button type="button" class="date-ghost-btn" onclick="clearProcDate()" aria-label="Effacer la date">✕</button>
+          </div>`;
+        return;
+      }
+
+      // Repères à afficher sur le calendrier
+      const marks = {};
+      const proc = PROCEDURES.find(p => p.id === selectedProcId) || PROCEDURES[0];
+      const med = MEDICATIONS.find(m => m.id === selectedMedId) || MEDICATIONS[0];
+      const plan = procDate ? buildDatedPlan(proc, med, selectedDfg, computeGuidance(proc, med, selectedDfg)) : null;
+      if (plan) {
+        plan.before.concat(plan.after).forEach(s => {
+          if (s.kind === "info" || s.o1 === 0) return;
+          marks[s.from.toDateString()] = s.kind;
+        });
+      }
+
+      const y = calMonth.getFullYear(), m = calMonth.getMonth();
+      const first = new Date(y, m, 1);
+      const lead = (first.getDay() + 6) % 7; // lundi = 0
+      const nDays = new Date(y, m + 1, 0).getDate();
+      const today = todayMidnight();
+      let cells = ["L", "M", "M", "J", "V", "S", "D"].map(x => `<div class="cal-dow">${x}</div>`).join("");
+      for (let i = 0; i < lead; i++) cells += `<div class="cal-empty"></div>`;
+      for (let day = 1; day <= nDays; day++) {
+        const d = new Date(y, m, day);
+        const dow = (d.getDay() + 6) % 7;
+        const cls = ["cal-day"];
+        if (dow >= 5) cls.push("weekend");
+        if (d < today) cls.push("past");
+        if (sameDay(d, today)) cls.push("today");
+        if (sameDay(d, procDate)) cls.push("selected");
+        const mk = marks[d.toDateString()];
+        if (mk === "stop") cls.push("mk-stop");
+        if (mk === "reprise") cls.push("mk-reprise");
+        cells += `<button type="button" class="${cls.join(" ")}" onclick="pickProcDate(${y},${m},${day})">${day}</button>`;
+      }
+
+      card.innerHTML = head + `
+        <div class="cal-nav">
+          <button type="button" class="cal-arrow" onclick="shiftCalMonth(-1)" aria-label="Mois précédent">‹</button>
+          <span class="cal-month">${calMonth.toLocaleDateString("fr-FR", { month: "long", year: "numeric" })}</span>
+          <button type="button" class="cal-arrow" onclick="shiftCalMonth(1)" aria-label="Mois suivant">›</button>
+        </div>
+        <div class="cal-grid">${cells}</div>
+        ${procDate ? `<div class="cal-legend"><span><i style="background:var(--arret)"></i>Arrêt / dernière prise</span><span><i style="background:var(--poursuite)"></i>Reprise</span></div>` : ""}`;
+    }
+
+    function shiftCalMonth(n) {
+      calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() + n, 1);
+      renderDateCard();
+    }
+    function toggleCal(open) {
+      calOpen = open;
+      if (open && procDate) calMonth = new Date(procDate.getFullYear(), procDate.getMonth(), 1);
+      renderDateCard();
+    }
+    function pickProcDate(y, m, d) {
+      procDate = new Date(y, m, d);
+      calOpen = false;
+      renderDecisionResult();
+    }
+    function clearProcDate() {
+      procDate = null;
+      calOpen = true;
+      calMonth = (() => { const d = todayMidnight(); return new Date(d.getFullYear(), d.getMonth(), 1); })();
+      renderDecisionResult();
     }
 
     function copyCurrentCr(btn) {
       if (!currentCrText) return;
-      navigator.clipboard.writeText(currentCrText).then(() => {
+      const done = () => {
         const old = btn.textContent;
         btn.textContent = "✓ Copié";
-        setTimeout(() => { btn.textContent = old; }, 1500);
-      }).catch(() => {});
+        btn.classList.add("done");
+        setTimeout(() => { btn.textContent = old; btn.classList.remove("done"); }, 1500);
+      };
+      const fallback = () => {
+        const ta = document.createElement("textarea");
+        ta.value = currentCrText;
+        ta.setAttribute("readonly", "");
+        ta.style.cssText = "position:fixed;top:0;left:0;opacity:0;";
+        document.body.appendChild(ta);
+        ta.select();
+        ta.setSelectionRange(0, ta.value.length);
+        try { document.execCommand("copy"); done(); } catch (e) {}
+        document.body.removeChild(ta);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(currentCrText).then(done).catch(fallback);
+      } else {
+        fallback();
+      }
     }
 
     // =================================================================
