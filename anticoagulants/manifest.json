@@ -1,0 +1,17 @@
+{
+  "name": "Anticoagulants — COCHIN·OS Radio B",
+  "short_name": "Anticoag RI",
+  "description": "Protocole officiel de gestion des anticoagulants et antiplaquettaires — Service de Radiologie B, Hôpital Cochin (RFE GIHP / SFAR / FRI / SFR 2026)",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F2EFE9",
+  "theme_color": "#F2EFE9",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

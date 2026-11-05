@@ -569,6 +569,17 @@
     "building": "Bâtiment Hardy (B1 / 1er sous-sol)"
   },
   {
+    "id": "tel-dermato-kramkimel",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Service de Dermatologie & Oncologie Cutanée (Dr Nora KRAMKIMEL)",
+    "role": "IDE Parcours HDJ : 11868 • RDV CS : 11919 • Secr. CS : Mme Valérie Bruandet",
+    "poste": "11868 / 11919",
+    "phone": "01 58 41 18 68",
+    "fax": "",
+    "email": "nora.kramkimel@aphp.fr / ideparcours.dermato.cch@aphp.fr / valerie.bruandet@aphp.fr",
+    "building": "Site Port-Royal — Bâtiment Copernic"
+  },
+  {
     "id": "tel-rcp-meta-os",
     "category": "RCP & Staffs Multidisciplinaires Cochin",
     "name": "RCP Métastases Osseuses (Méta-Os) — Lundi 12h00 (Visio Teams)",
@@ -751,7 +762,7 @@
     "id": "tel-macsf-rcp",
     "category": "Laboratoires, Pharmacie & Administration (DAM)",
     "name": "MACSF — Assurance RCP & Protection Juridique (Contrat n° 7485615)",
-    "role": "Assurance RCP Hospitalier + Remplacements libéraux • Conseillère : Julie ERARD • Agence Paris 12",
+    "role": "Assurance RCP Hospitalier + Remplacements libéraux • Référent : Tony TAHIRI / Julie ERARD • Agence Paris 12",
     "poste": "3233 / Dossier 7485615",
     "phone": "3233",
     "fax": "",
