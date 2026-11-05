@@ -311,7 +311,7 @@
     "id": "tel-costea",
     "category": "Radiologie B — Équipe Médicale (Chefs & Seniors)",
     "name": "Dr Adina COSTEA",
-    "role": "Praticien Hospitalier — Radiologie B",
+    "role": "Assistante Spécialiste (partagée CH Gonesse) — Radiologie B (Jeudi & Vendredi)",
     "poste": "12483",
     "phone": "01 58 41 24 83",
     "fax": "",
@@ -361,8 +361,8 @@
     "id": "tel-ortho-biau",
     "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
     "name": "Chirurgie Orthopédique & Oncologique — Pr David BIAU (Mme A. Tison)",
-    "role": "Secrétariat Pr Biau (Sarcomes & Tumeurs osseuses)",
-    "poste": "13037",
+    "role": "Secrétariat Pr Biau (13037) • Bureau : 18764 • DECT : 14052",
+    "poste": "13037 / 18764 / DECT 14052",
     "phone": "01 58 41 30 37",
     "fax": "01 58 41 30 60",
     "building": "Bâtiment Ollier"
@@ -498,6 +498,109 @@
     "building": "Pavillon Copernic"
   },
   {
+    "id": "tel-onco-dig",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Oncologie Digestive & Hépato-Gastro-Entérologie (Dr Anna PELLAT)",
+    "role": "Oncologie Digestive Cochin — DECT Dr A. Pellat : 15046",
+    "poste": "DECT 15046",
+    "phone": "01 58 41 50 46",
+    "fax": "",
+    "building": "Hôpital Cochin"
+  },
+  {
+    "id": "tel-mpr-nguyen",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Service MPR — Rééducation & Pathologies du Rachis (Pr Christelle NGUYEN)",
+    "role": "Secrétariat MPR Hardy B1 (Laëtitia) • Dr Alexandre Luc • Staffs Rachis & MPR",
+    "poste": "12945",
+    "phone": "01 58 41 29 45",
+    "fax": "01 58 41 25 38",
+    "building": "Bâtiment Hardy (B1 / 1er sous-sol)"
+  },
+  {
+    "id": "tel-rcp-meta-os",
+    "category": "RCP & Staffs Multidisciplinaires Cochin",
+    "name": "RCP Métastases Osseuses (Méta-Os) — Lundi 12h00 (Visio Teams)",
+    "role": "Référent Radio B : Dr Thomas LEFÈVRE (DECT 12489) • Inscriptions & Lien Teams : Aurélie TISON (Secr. Pr D. Biau : 13037) • Onco HEGP : Dr C. Thibault / Pr J. Medioni",
+    "poste": "13037 / DECT 12489",
+    "phone": "01 58 41 30 37",
+    "fax": "01 58 41 30 60",
+    "building": "Visio Teams / Bureau Radio B (Albarran -1)",
+    "pinnedDefault": true
+  },
+  {
+    "id": "tel-rcp-cirtal-ewing",
+    "category": "RCP & Staffs Multidisciplinaires Cochin",
+    "name": "RCP CIRTAL / Tumeurs Osseuses & Sarcomes d'Ewing — Lundi Après-midi",
+    "role": "Référent Radio B : Dr Hippolyte MONNIER (DECT 12503 / 12404) • Coord. Chirurgie Ortho : Pr David BIAU (Secr. Mme A. Tison : 13037)",
+    "poste": "DECT 12503 / 13037",
+    "phone": "01 58 41 25 03",
+    "fax": "01 58 41 30 60",
+    "building": "Bâtiment Ollier / Albarran",
+    "pinnedDefault": true
+  },
+  {
+    "id": "tel-rcp-sarcomes",
+    "category": "RCP & Staffs Multidisciplinaires Cochin",
+    "name": "RCP Sarcomes (Os & Tissus Mous) — Mardi 17h00",
+    "role": "Référents Radio B : Dr Amandine LAPORTE (DECT 11399) & Chefs • Ortho : Pr D. BIAU / Pr P. ANRACT (13037) • Onco Méd. Port-Royal : Pr F. GOLDWASSER / Dr J. NOËL (Secr. V. Solovieff : 11454)",
+    "poste": "13037 / 11454 / DECT 11399",
+    "phone": "01 58 41 30 37",
+    "fax": "01 58 41 30 60",
+    "building": "Salle de Staff Ollier (3e étage)",
+    "pinnedDefault": true
+  },
+  {
+    "id": "tel-rcp-rachis",
+    "category": "RCP & Staffs Multidisciplinaires Cochin",
+    "name": "RCP Rachis & Staff Rhumatologie Osseuse — Mercredi 14h30",
+    "role": "Référente Radio B : Dr Malika YANG (Secr. 12483) • MPR Rachis : Pr C. NGUYEN (12945) • Rhumatologie : 12606",
+    "poste": "12945 / 12606 / 12483",
+    "phone": "01 58 41 29 45",
+    "fax": "01 58 41 25 38",
+    "building": "Salle de Staff MPR — Bâtiment Hardy (1er sous-sol)"
+  },
+  {
+    "id": "tel-rcp-maladies-osseuses",
+    "category": "RCP & Staffs Multidisciplinaires Cochin",
+    "name": "RCP Maladies Osseuses Constitutionnelles & Métaboliques — Mercredi 16h30",
+    "role": "Rhumatologie & Métabolisme Osseux (Secr. 12606 / 12619) • Radio B (Dr M. Yang / Pr A. Feydy : 12483)",
+    "poste": "12606 / 12619 / 12483",
+    "phone": "01 58 41 26 06",
+    "fax": "01 58 41 40 97",
+    "building": "Salle de Staff — Bâtiment Hardy A (RDC)"
+  },
+  {
+    "id": "tel-staff-protheses-sport",
+    "category": "RCP & Staffs Multidisciplinaires Cochin",
+    "name": "Staff Prothèse Douloureuse (Ven. 11h30) & Staff Sport Membre Sup (Ven. 14h00)",
+    "role": "Mensuels (1 fois/mois) • Référent Radio B : Dr Henri GUERINI (DECT 18987) • MPR & Ortho",
+    "poste": "DECT 18987 / 12945",
+    "phone": "01 58 41 89 87",
+    "fax": "",
+    "building": "Salle de Staff MPR — Bâtiment Hardy (1er sous-sol)"
+  },
+  {
+    "id": "tel-staff-mpr-rhumato",
+    "category": "RCP & Staffs Multidisciplinaires Cochin",
+    "name": "Staffs Radio / MPR (1er Ven. 15h30) & Radio / Rhumato (3e Ven. 15h30)",
+    "role": "Référente Radio B : Dr Fadila MIHOUBI BOUVIER (DECT 12480) • Organisation : Anne-Marie FORTIN (12483) • Salle Staff Albarran : 12508",
+    "poste": "12508 / DECT 12480 / 12483",
+    "phone": "01 58 41 25 08",
+    "fax": "01 58 41 24 55",
+    "building": "Salle de Staff Radio B — Pavillon Albarran (1er sous-sol)"
+  },
+  {
+    "id": "tel-staff-cra-boneclub",
+    "category": "RCP & Staffs Multidisciplinaires Cochin",
+    "name": "CRA (Confrontations Radio-Anapath — Ven. 14h15) & Bone Club (Mer. 18h00)",
+    "role": "CRA : Radio B & Anapath (Dr F. Larousserie / Dr V. Audard : 13542) en Salle Staff Albarran (12508) • Bone Club : Amphi Luton • Secr. Enseignement : S. Camblong (12481)",
+    "poste": "12508 / 12481 / 13542",
+    "phone": "01 58 41 24 81",
+    "fax": "01 58 41 21 51",
+    "building": "Salle de Staff Albarran -1 / Amphithéâtre Luton"
+  },
+  {
     "id": "tel-hemostase",
     "category": "Laboratoires, Pharmacie & Administration (DAM)",
     "name": "Consultation & Laboratoire d'Hémostase / Hématologie Biologique",
@@ -576,5 +679,15 @@
     "phone": "01 58 41 10 00",
     "fax": "",
     "building": "Hôpital Cochin"
+  },
+  {
+    "id": "tel-macsf-rcp",
+    "category": "Laboratoires, Pharmacie & Administration (DAM)",
+    "name": "MACSF — Assurance RCP & Protection Juridique (Contrat n° 7485615)",
+    "role": "Assurance RCP Hospitalier + Remplacements libéraux • Conseillère : Julie ERARD • Agence Paris 12",
+    "poste": "3233 / Dossier 7485615",
+    "phone": "3233",
+    "fax": "",
+    "building": "275 rue du Faubourg Saint-Antoine, 75012 Paris"
   }
 ]
