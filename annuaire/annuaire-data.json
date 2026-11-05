@@ -7,6 +7,7 @@
     "poste": "12163 / DECT 12404",
     "phone": "01 58 41 21 63",
     "fax": "",
+    "email": "secretariat.radiob.cch@aphp.fr",
     "building": "Bâtiment Ollier / Achard",
     "pinnedDefault": true
   },
@@ -18,6 +19,7 @@
     "poste": "14612 / 12476",
     "phone": "01 58 41 46 12",
     "fax": "01 58 41 24 55",
+    "email": "secretariat.radiob.cch@aphp.fr",
     "building": "Bâtiment Ollier",
     "pinnedDefault": true
   },
@@ -29,6 +31,7 @@
     "poste": "12483 / 13788",
     "phone": "01 58 41 24 83",
     "fax": "01 58 41 24 55",
+    "email": "anne-marie.fortin@aphp.fr",
     "building": "Albarran / Ollier",
     "pinnedDefault": true
   },
@@ -40,6 +43,7 @@
     "poste": "12360 / 12350 / 19135",
     "phone": "01 58 41 23 60",
     "fax": "01 58 41 24 49",
+    "email": "rdv.radiob.cch@aphp.fr / secretariat.radiob.cch@aphp.fr",
     "building": "Bâtiment Ollier (1er sous-sol)",
     "pinnedDefault": true
   },
@@ -51,6 +55,7 @@
     "poste": "12684",
     "phone": "01 58 41 26 84",
     "fax": "01 58 41 24 55",
+    "email": "gysleve.mouyoungui@aphp.fr",
     "building": "Bâtiment Ollier"
   },
   {
@@ -61,6 +66,7 @@
     "poste": "11788",
     "phone": "01 58 41 17 88",
     "fax": "01 58 41 24 55",
+    "email": "mariana.gameirojorge@aphp.fr",
     "building": "Bâtiment Ollier"
   },
   {
@@ -71,6 +77,7 @@
     "poste": "12502",
     "phone": "01 58 41 25 02",
     "fax": "01 58 41 21 51",
+    "email": "ania.dworak@aphp.fr / secretariat.drape.cch@aphp.fr",
     "building": "Bâtiment Ollier"
   },
   {
@@ -81,6 +88,7 @@
     "poste": "12481 / 12507",
     "phone": "01 58 41 24 81",
     "fax": "01 58 41 21 51",
+    "email": "sandrine.camblong@aphp.fr / christelle.pouget@aphp.fr",
     "building": "Bâtiment Ollier / Albarran"
   },
   {
@@ -91,6 +99,7 @@
     "poste": "DECT 12484",
     "phone": "01 58 41 24 84",
     "fax": "",
+    "email": "isabelle.menage-marache@aphp.fr",
     "building": "Bâtiment Ollier (1er sous-sol)"
   },
   {
@@ -101,6 +110,7 @@
     "poste": "DECT 13424 / 12284 / 14752",
     "phone": "01 58 41 34 24",
     "fax": "",
+    "email": "catherine.fischer@aphp.fr / veronique.nitsche@aphp.fr / karine.pretzner@aphp.fr",
     "building": "Bâtiment Ollier"
   },
   {
@@ -111,6 +121,7 @@
     "poste": "DECT 12197",
     "phone": "01 58 41 21 97",
     "fax": "",
+    "email": "laila.sellami@aphp.fr",
     "building": "Imagerie Cochin",
     "pinnedDefault": true
   },
@@ -122,6 +133,7 @@
     "poste": "DECT 12183 / 12984",
     "phone": "01 58 41 21 83",
     "fax": "",
+    "email": "olivier.peaudecerf@aphp.fr / david.vannifterik@aphp.fr",
     "building": "Radiologie B"
   },
   {
@@ -132,6 +144,7 @@
     "poste": "DECT 14782 / 11267",
     "phone": "01 58 41 47 82",
     "fax": "",
+    "email": "",
     "building": "Hôpital Cochin"
   },
   {
@@ -142,6 +155,7 @@
     "poste": "12266 / 18383 / 12285",
     "phone": "01 58 41 22 66",
     "fax": "",
+    "email": "",
     "building": "Ollier / Achard",
     "pinnedDefault": true
   },
@@ -153,6 +167,7 @@
     "poste": "12492 / 12798 / 18715",
     "phone": "01 58 41 24 92",
     "fax": "",
+    "email": "",
     "building": "Imagerie Cochin"
   },
   {
@@ -163,6 +178,7 @@
     "poste": "13510 / 18599 / DECT 12504",
     "phone": "01 58 41 35 10",
     "fax": "",
+    "email": "",
     "building": "Bâtiment Ollier"
   },
   {
@@ -173,6 +189,7 @@
     "poste": "12498 / 12508",
     "phone": "01 58 41 24 98",
     "fax": "",
+    "email": "",
     "building": "Ollier / Albarran"
   },
   {
@@ -183,6 +200,7 @@
     "poste": "DECT 12621 / 15314",
     "phone": "01 58 41 26 21",
     "fax": "",
+    "email": "",
     "building": "Hôpital Cochin"
   },
   {
@@ -193,6 +211,7 @@
     "poste": "14254 / 12463 / 19146",
     "phone": "01 58 41 42 54",
     "fax": "01 58 41 28 74",
+    "email": "rdv.radioa.cch@aphp.fr / radio.vasculaire.cch@aphp.fr",
     "building": "Radiologie A"
   },
   {
@@ -203,6 +222,7 @@
     "poste": "12488 / 12489",
     "phone": "01 58 41 24 88",
     "fax": "",
+    "email": "",
     "building": "Bâtiment Albarran / Ollier",
     "pinnedDefault": true
   },
@@ -214,6 +234,7 @@
     "poste": "DECT 12487 / Secr. 12483 & 12481",
     "phone": "01 58 41 24 83",
     "fax": "01 58 41 24 55",
+    "email": "antoine.feydy@aphp.fr",
     "building": "Albarran / Ollier"
   },
   {
@@ -224,6 +245,7 @@
     "poste": "DECT 12494 / Secr. 12502 & 12480",
     "phone": "01 58 41 25 02",
     "fax": "01 58 41 21 51",
+    "email": "jean-luc.drape@aphp.fr / secretariat.drape.cch@aphp.fr",
     "building": "Albarran / Ollier"
   },
   {
@@ -234,6 +256,7 @@
     "poste": "DECT 12489 / Salle RI 12163",
     "phone": "01 58 41 24 89",
     "fax": "",
+    "email": "thomas-jean.lefevre@aphp.fr",
     "building": "Albarran / Ollier / Achard",
     "pinnedDefault": true
   },
@@ -245,6 +268,7 @@
     "poste": "DECT 12489",
     "phone": "01 58 41 24 89",
     "fax": "",
+    "email": "marie.talabard@aphp.fr",
     "building": "Albarran / Ollier"
   },
   {
@@ -255,6 +279,7 @@
     "poste": "DECT 12504 / 12404",
     "phone": "01 58 41 25 04",
     "fax": "",
+    "email": "macil.hamadouche@aphp.fr",
     "building": "Albarran / Ollier"
   },
   {
@@ -265,6 +290,7 @@
     "poste": "DECT 12503 / 12404 / 12488",
     "phone": "01 58 41 25 03",
     "fax": "",
+    "email": "hippolyte.monnier@aphp.fr",
     "building": "Albarran / Ollier"
   },
   {
@@ -275,6 +301,7 @@
     "poste": "DECT 12488",
     "phone": "01 58 41 24 88",
     "fax": "",
+    "email": "stefano.lusi@aphp.fr",
     "building": "Albarran / Ollier"
   },
   {
@@ -285,6 +312,7 @@
     "poste": "DECT 12404 / 12488",
     "phone": "01 58 41 24 04",
     "fax": "",
+    "email": "yazid.allel@aphp.fr",
     "building": "Albarran / Ollier"
   },
   {
@@ -295,6 +323,7 @@
     "poste": "DECT 11399 / Secr. 12483",
     "phone": "01 58 41 13 99",
     "fax": "",
+    "email": "amandine.laporte@aphp.fr",
     "building": "Albarran / Ollier"
   },
   {
@@ -305,6 +334,7 @@
     "poste": "DECT 12480 / Secr. 12483",
     "phone": "01 58 41 24 80",
     "fax": "",
+    "email": "fadila.mihoubibouvier@aphp.fr",
     "building": "Albarran / Ollier"
   },
   {
@@ -315,6 +345,7 @@
     "poste": "12483",
     "phone": "01 58 41 24 83",
     "fax": "",
+    "email": "secretariat.radiob.cch@aphp.fr",
     "building": "Albarran / Ollier"
   },
   {
@@ -325,6 +356,7 @@
     "poste": "12483",
     "phone": "01 58 41 24 83",
     "fax": "",
+    "email": "secretariat.radiob.cch@aphp.fr",
     "building": "Albarran / Ollier"
   },
   {
@@ -335,6 +367,7 @@
     "poste": "DECT 18987 / 11339",
     "phone": "01 58 41 89 87",
     "fax": "",
+    "email": "henri.guerini@aphp.fr / fabrice.thevenin@aphp.fr",
     "building": "Bâtiment Ollier / Albarran"
   },
   {
@@ -345,6 +378,7 @@
     "poste": "12488 / 13101",
     "phone": "01 58 41 24 88",
     "fax": "",
+    "email": "robert.burns@aphp.fr / louis.idier@aphp.fr",
     "building": "Hôpital Cochin"
   },
   {
@@ -355,6 +389,7 @@
     "poste": "12490 / 14612",
     "phone": "01 58 41 24 90",
     "fax": "",
+    "email": "anthony.dohan@aphp.fr / maxime.barat@aphp.fr / marie.masson@aphp.fr",
     "building": "Hôpital Cochin"
   },
   {
@@ -365,6 +400,7 @@
     "poste": "13037 / 18764 / DECT 14052",
     "phone": "01 58 41 30 37",
     "fax": "01 58 41 30 60",
+    "email": "secretariat.biau.cch@aphp.fr / david.biau@aphp.fr",
     "building": "Bâtiment Ollier"
   },
   {
@@ -375,6 +411,7 @@
     "poste": "13130 / 13082 / 13107",
     "phone": "01 58 41 31 30",
     "fax": "01 58 41 30 60",
+    "email": "khaoula.rahmani@aphp.fr / adjopatricia.bitty@aphp.fr / laurence.guedj@aphp.fr",
     "building": "Bâtiment Ollier"
   },
   {
@@ -385,6 +422,7 @@
     "poste": "13077 / 13041 / 13104",
     "phone": "01 58 41 30 77",
     "fax": "",
+    "email": "peter.maalouf@aphp.fr / alexandra.villard2@aphp.fr",
     "building": "Bâtiment Ollier"
   },
   {
@@ -395,6 +433,7 @@
     "poste": "12606 / 12619",
     "phone": "01 58 41 26 06",
     "fax": "01 58 41 40 97",
+    "email": "yannick.allanore@aphp.fr",
     "building": "Bâtiment Achard / Hardy"
   },
   {
@@ -405,6 +444,7 @@
     "poste": "11563 / 11566 / 11528 / 13691",
     "phone": "01 58 41 15 63",
     "fax": "",
+    "email": "",
     "building": "Hôpital Cochin"
   },
   {
@@ -415,6 +455,7 @@
     "poste": "14022 / 13691",
     "phone": "01 58 41 40 22",
     "fax": "",
+    "email": "sandra.azzopardi@aphp.fr",
     "building": "Bâtiment Port-Royal"
   },
   {
@@ -425,6 +466,7 @@
     "poste": "12412",
     "phone": "01 58 41 24 12",
     "fax": "",
+    "email": "elisabeth.vaugenot@aphp.fr",
     "building": "Bâtiment Achard"
   },
   {
@@ -435,6 +477,7 @@
     "poste": "13542 / 14719",
     "phone": "01 58 41 35 42",
     "fax": "",
+    "email": "leslie.chanat@aphp.fr / frederique.larousserie@aphp.fr",
     "building": "Hôpital Cochin"
   },
   {
@@ -445,6 +488,7 @@
     "poste": "13040 / 12704",
     "phone": "01 58 41 30 40",
     "fax": "",
+    "email": "corinne.taliercio@aphp.fr / serge.perrot@aphp.fr",
     "building": "Hôpital Cochin"
   },
   {
@@ -455,6 +499,7 @@
     "poste": "14091",
     "phone": "01 58 41 40 91",
     "fax": "",
+    "email": "francois.lecomte@aphp.fr",
     "building": "Urgences / HUCD Cochin"
   },
   {
@@ -465,6 +510,7 @@
     "poste": "DECT 14352 / 12349 / 13099",
     "phone": "01 58 41 23 49",
     "fax": "01 58 41 23 85",
+    "email": "",
     "building": "Hôpital Cochin"
   },
   {
@@ -475,6 +521,7 @@
     "poste": "12103 / DECT 18184",
     "phone": "01 58 41 21 03",
     "fax": "01 58 41 15 79",
+    "email": "",
     "building": "Hôpital Cochin"
   },
   {
@@ -485,6 +532,7 @@
     "poste": "12110 / 13919",
     "phone": "01 58 41 21 10",
     "fax": "",
+    "email": "",
     "building": "Hôpital Cochin"
   },
   {
@@ -495,6 +543,7 @@
     "poste": "11878 / 11888 / 13940",
     "phone": "01 58 41 18 88",
     "fax": "01 58 41 18 10",
+    "email": "",
     "building": "Pavillon Copernic"
   },
   {
@@ -505,6 +554,7 @@
     "poste": "DECT 15046",
     "phone": "01 58 41 50 46",
     "fax": "",
+    "email": "anna.pellat@aphp.fr",
     "building": "Hôpital Cochin"
   },
   {
@@ -515,6 +565,7 @@
     "poste": "12945",
     "phone": "01 58 41 29 45",
     "fax": "01 58 41 25 38",
+    "email": "reeducation.hardyb1.cch@aphp.fr / christelle.nguyen2@aphp.fr",
     "building": "Bâtiment Hardy (B1 / 1er sous-sol)"
   },
   {
@@ -525,6 +576,7 @@
     "poste": "13037 / DECT 12489",
     "phone": "01 58 41 30 37",
     "fax": "01 58 41 30 60",
+    "email": "secretariat.biau.cch@aphp.fr / thomas-jean.lefevre@aphp.fr / jacques.medioni@aphp.fr",
     "building": "Visio Teams / Bureau Radio B (Albarran -1)",
     "pinnedDefault": true
   },
@@ -536,6 +588,7 @@
     "poste": "DECT 12503 / 13037",
     "phone": "01 58 41 25 03",
     "fax": "01 58 41 30 60",
+    "email": "secretariat.biau.cch@aphp.fr / hippolyte.monnier@aphp.fr / david.biau@aphp.fr",
     "building": "Bâtiment Ollier / Albarran",
     "pinnedDefault": true
   },
@@ -547,6 +600,7 @@
     "poste": "13037 / 11454 / DECT 11399",
     "phone": "01 58 41 30 37",
     "fax": "01 58 41 30 60",
+    "email": "violaine.solovieff@aphp.fr / secretariat.biau.cch@aphp.fr / amandine.laporte@aphp.fr",
     "building": "Salle de Staff Ollier (3e étage)",
     "pinnedDefault": true
   },
@@ -558,6 +612,7 @@
     "poste": "12945 / 12606 / 12483",
     "phone": "01 58 41 29 45",
     "fax": "01 58 41 25 38",
+    "email": "reeducation.hardyb1.cch@aphp.fr / christelle.nguyen2@aphp.fr / anne-marie.fortin@aphp.fr",
     "building": "Salle de Staff MPR — Bâtiment Hardy (1er sous-sol)"
   },
   {
@@ -568,6 +623,7 @@
     "poste": "12606 / 12619 / 12483",
     "phone": "01 58 41 26 06",
     "fax": "01 58 41 40 97",
+    "email": "yannick.allanore@aphp.fr / antoine.feydy@aphp.fr",
     "building": "Salle de Staff — Bâtiment Hardy A (RDC)"
   },
   {
@@ -578,6 +634,7 @@
     "poste": "DECT 18987 / 12945",
     "phone": "01 58 41 89 87",
     "fax": "",
+    "email": "henri.guerini@aphp.fr / reeducation.hardyb1.cch@aphp.fr",
     "building": "Salle de Staff MPR — Bâtiment Hardy (1er sous-sol)"
   },
   {
@@ -588,6 +645,7 @@
     "poste": "12508 / DECT 12480 / 12483",
     "phone": "01 58 41 25 08",
     "fax": "01 58 41 24 55",
+    "email": "fadila.mihoubibouvier@aphp.fr / anne-marie.fortin@aphp.fr",
     "building": "Salle de Staff Radio B — Pavillon Albarran (1er sous-sol)"
   },
   {
@@ -598,6 +656,7 @@
     "poste": "12508 / 12481 / 13542",
     "phone": "01 58 41 24 81",
     "fax": "01 58 41 21 51",
+    "email": "enseignement.radiob.cch@aphp.fr / sandrine.camblong@aphp.fr / frederique.larousserie@aphp.fr",
     "building": "Salle de Staff Albarran -1 / Amphithéâtre Luton"
   },
   {
@@ -608,6 +667,7 @@
     "poste": "13445 / 14141 / 13520",
     "phone": "01 58 41 34 45",
     "fax": "",
+    "email": "",
     "building": "Bâtiment Jean Dausset"
   },
   {
@@ -618,6 +678,7 @@
     "poste": "14146 / 11547",
     "phone": "01 58 41 41 46",
     "fax": "",
+    "email": "",
     "building": "Bâtiment Jean Dausset"
   },
   {
@@ -628,6 +689,7 @@
     "poste": "14275 / 12314 / 12982",
     "phone": "01 58 41 42 75",
     "fax": "01 58 41 18 84",
+    "email": "marie-laure.brandely-piat@aphp.fr / hugo.palisson@aphp.fr",
     "building": "Service Pharmacie Cochin"
   },
   {
@@ -638,6 +700,7 @@
     "poste": "12632",
     "phone": "01 58 41 26 32",
     "fax": "",
+    "email": "lea.meyer@aphp.fr",
     "building": "Hôpital Cochin"
   },
   {
@@ -648,6 +711,7 @@
     "poste": "12700",
     "phone": "01 58 41 27 00",
     "fax": "",
+    "email": "",
     "building": "Cochin / La Santé"
   },
   {
@@ -658,6 +722,7 @@
     "poste": "12295 / 11014 / 11071",
     "phone": "01 58 41 22 95",
     "fax": "",
+    "email": "aminata.ndiaye3@aphp.fr / magalie.lambert@aphp.fr / isabelle.parrain@aphp.fr / cindy.besacier@aphp.fr",
     "building": "Port-Royal — Pavillon de Chasse"
   },
   {
@@ -668,6 +733,7 @@
     "poste": "*75 / 11276",
     "phone": "01 58 41 12 76",
     "fax": "",
+    "email": "",
     "building": "Hôpital Cochin"
   },
   {
@@ -678,6 +744,7 @@
     "poste": "11000 / 9",
     "phone": "01 58 41 10 00",
     "fax": "",
+    "email": "",
     "building": "Hôpital Cochin"
   },
   {
@@ -688,6 +755,7 @@
     "poste": "3233 / Dossier 7485615",
     "phone": "3233",
     "fax": "",
+    "email": "contact@macsf.fr / societaire@macsf.fr",
     "building": "275 rue du Faubourg Saint-Antoine, 75012 Paris"
   }
 ]
