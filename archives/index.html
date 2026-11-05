@@ -578,8 +578,20 @@
       justify-content: space-between;
       gap: 8px;
       flex-wrap: wrap;
-      padding-top: 4px;
-      border-top: 1px dashed var(--line);
+      padding-top: 8px;
+      border-top: 1.5px dashed var(--line);
+    }
+
+    .sem-filter-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 800;
+      color: var(--ink-muted);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .region-pills {
@@ -589,24 +601,47 @@
       overflow-x: auto;
       max-width: 100%;
       padding-bottom: 2px;
+      flex: 1;
     }
 
     .region-pill {
-      border: 1px solid var(--line);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1.5px solid var(--line);
       background: var(--bg-well);
       color: var(--ink-soft);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 4px 9px;
-      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 5px 10px;
+      border-radius: 7px;
       cursor: pointer;
       white-space: nowrap;
+      transition: all 0.12s ease;
+    }
+    .region-pill:hover {
+      border-color: var(--ink);
+      color: var(--ink);
     }
     .region-pill.active {
-      background: var(--xray-soft);
-      color: var(--xray);
+      background: var(--xray);
+      color: #FFFFFF;
       border-color: var(--xray);
+      box-shadow: 0 2px 0 var(--ink);
+    }
+    html.negatoscope .region-pill.active {
+      color: #061018;
+    }
+    .region-pill .cat-count {
+      font-size: 9.5px;
+      padding: 1px 5px;
+      border-radius: 999px;
+      background: rgba(128, 128, 128, 0.2);
+    }
+    .region-pill.active .cat-count {
+      background: rgba(0, 0, 0, 0.22);
+      color: inherit;
     }
 
     /* 4. ARCHIVE CARDS GRID */
@@ -1247,8 +1282,10 @@
       flex-shrink: 0;
       user-select: none;
       -webkit-user-select: none;
+      -webkit-touch-callout: none;
     }
-    .nav-arrow-btn:active:not(:disabled) {
+    .nav-arrow-btn:active:not(:disabled),
+    .nav-arrow-btn.is-holding:not(:disabled) {
       transform: scale(0.96);
       background: var(--xray);
       color: #FFFFFF;
@@ -1715,7 +1752,11 @@
         </button>
       </div>
 
-
+      <!-- Semester Filter Row: Semestre en cours par défaut sur l'accueil -->
+      <div class="filter-pills-row" id="semesterFilterRow">
+        <span class="sem-filter-label">📅 SEMESTRE :</span>
+        <div class="region-pills" id="semesterPills" role="tablist" aria-label="Filtrer par semestre"></div>
+      </div>
     </section>
 
     <!-- 4. ARCHIVE CARDS GRID -->
@@ -2105,6 +2146,7 @@
 
     let activeCategory = "all";
     let activeRegion = "all";
+    let activeSemesterFilter = "current";
     let searchMode = false;
     let searchQuery = "";
 
@@ -2123,7 +2165,7 @@
 
     // Auto-update: home-screen web apps (iOS) keep old pages for a long time.
     // On open and when the app comes back to the foreground, compare with version.json and reload if newer.
-    const APP_VERSION = "2026-11-05.1";
+    const APP_VERSION = "2026-11-05.2";
     function checkForNewVersion() {
       fetch(`version.json?ts=${Date.now()}`, { cache: "no-store" })
         .then(r => (r.ok ? r.json() : null))
@@ -2360,16 +2402,108 @@
       updateStatsAndCounts();
     }
 
-    function updateStatsAndCounts() {
-      const totalDecks = allArchives.length;
-      document.getElementById("count-all").textContent = totalDecks;
-      document.getElementById("count-bone-club").textContent = allArchives.filter(a => a.category === "bone-club").length;
-      document.getElementById("count-cas").textContent = allArchives.filter(a => a.category === "cas").length;
-      document.getElementById("count-biblio").textContent = allArchives.filter(a => a.category === "biblio").length;
-      document.getElementById("count-cours").textContent = allArchives.filter(a => a.category === "cours" || a.category === "presentations").length;
+    function getItemSemesterLabel(item) {
+      const sem = String((item && item.semester) || "").trim();
+      if (sem) return sem;
+      const yr = String((item && item.year) || "").trim();
+      return yr;
     }
 
-    function renderRegionPills() {}
+    function isCurrentSemesterArchive(item) {
+      const curSem = getCurrentSemesterInfo();
+      const sem = normalizeStr(getItemSemesterLabel(item));
+      const curShort = normalizeStr(curSem.shortLabel);
+      const curFull = normalizeStr(curSem.label);
+      if (!sem) return false;
+      return sem === curShort || sem === curFull;
+    }
+
+    function matchesActiveSemester(item) {
+      if (activeSemesterFilter === "all") return true;
+      if (activeSemesterFilter === "current") return isCurrentSemesterArchive(item);
+      return normalizeStr(getItemSemesterLabel(item)) === normalizeStr(activeSemesterFilter);
+    }
+
+    function updateStatsAndCounts() {
+      const semPool = allArchives.filter(matchesActiveSemester);
+      const totalDecks = semPool.length;
+      document.getElementById("count-all").textContent = totalDecks;
+      document.getElementById("count-bone-club").textContent = semPool.filter(a => a.category === "bone-club").length;
+      document.getElementById("count-cas").textContent = semPool.filter(a => a.category === "cas").length;
+      document.getElementById("count-biblio").textContent = semPool.filter(a => a.category === "biblio").length;
+      document.getElementById("count-cours").textContent = semPool.filter(a => a.category === "cours" || a.category === "presentations").length;
+    }
+
+    function parseSemesterSortKey(label) {
+      const s = String(label || "");
+      const m = s.match(/\b(20\d{2})\b/);
+      const year = m ? parseInt(m[1], 10) : 0;
+      const isWinter = /hiver/i.test(s) ? 1 : 0;
+      return year * 10 + isWinter;
+    }
+
+    function renderRegionPills() {
+      const container = document.getElementById("semesterPills");
+      if (!container) return;
+      const curSem = getCurrentSemesterInfo();
+      const currentCount = allArchives.filter(isCurrentSemesterArchive).length;
+      const totalCount = allArchives.length;
+
+      // Collect past semesters present in allArchives
+      const pastCounts = new Map();
+      const pastDisplayLabels = new Map();
+      for (const item of allArchives) {
+        if (isCurrentSemesterArchive(item)) continue;
+        const rawLabel = getItemSemesterLabel(item);
+        if (!rawLabel) continue;
+        const norm = normalizeStr(rawLabel);
+        pastCounts.set(norm, (pastCounts.get(norm) || 0) + 1);
+        if (!pastDisplayLabels.has(norm)) pastDisplayLabels.set(norm, rawLabel);
+      }
+
+      const sortedPastNorms = Array.from(pastDisplayLabels.keys()).sort((a, b) => {
+        return parseSemesterSortKey(pastDisplayLabels.get(b)) - parseSemesterSortKey(pastDisplayLabels.get(a));
+      });
+
+      // If activeSemesterFilter points to a specific past semester that no longer exists, reset to current
+      if (
+        activeSemesterFilter !== "current" &&
+        activeSemesterFilter !== "all" &&
+        !pastDisplayLabels.has(normalizeStr(activeSemesterFilter))
+      ) {
+        activeSemesterFilter = "current";
+      }
+
+      const pillsHtml = [
+        `<button type="button" class="region-pill ${activeSemesterFilter === "current" ? "active" : ""}" onclick="setSemesterFilter('current')">
+          <span>✨ Semestre en cours (${escapeHtml(curSem.shortLabel)})</span>
+          <span class="cat-count">${currentCount}</span>
+        </button>`,
+        `<button type="button" class="region-pill ${activeSemesterFilter === "all" ? "active" : ""}" onclick="setSemesterFilter('all')">
+          <span>🗂️ Tous les semestres</span>
+          <span class="cat-count">${totalCount}</span>
+        </button>`,
+        ...sortedPastNorms.map(norm => {
+          const label = pastDisplayLabels.get(norm);
+          const count = pastCounts.get(norm) || 0;
+          const isActive = normalizeStr(activeSemesterFilter) === norm;
+          const icon = /hiver/i.test(label) ? "❄️" : (/ete|été/i.test(label) ? "☀️" : "📅");
+          return `<button type="button" class="region-pill ${isActive ? "active" : ""}" data-sem-filter="${escapeHtml(label)}" onclick="setSemesterFilter(this.getAttribute('data-sem-filter'))">
+            <span>${icon} ${escapeHtml(label)}</span>
+            <span class="cat-count">${count}</span>
+          </button>`;
+        })
+      ];
+
+      container.innerHTML = pillsHtml.join("");
+    }
+
+    function setSemesterFilter(semFilter) {
+      activeSemesterFilter = semFilter || "current";
+      updateStatsAndCounts();
+      renderRegionPills();
+      renderCatalog();
+    }
 
     function setCategory(cat) {
       activeCategory = cat;
@@ -2434,8 +2568,10 @@
     function renderCatalog() {
       const grid = document.getElementById("archiveGrid");
       const normQ = searchMode ? normalizeStr(searchQuery.trim()) : "";
+      const curSem = getCurrentSemesterInfo();
 
       const filtered = allArchives.filter(item => {
+        if (!matchesActiveSemester(item)) return false;
         if (activeCategory !== "all") {
           if (activeCategory === "cours") {
             if (item.category !== "cours" && item.category !== "presentations") return false;
@@ -2467,17 +2603,29 @@
       });
 
       if (filtered.length === 0) {
+        const isCurrentSemEmpty = activeSemesterFilter === "current" && !normQ && activeCategory === "all";
+        const pastCount = allArchives.length;
+        const emptyHeading = isCurrentSemEmpty
+          ? `Aucun dossier déposé pour le semestre en cours (${escapeHtml(curSem.shortLabel)})`
+          : (allArchives.length === 0 ? "Aucune diapo déposée pour le moment" : "Aucune diapo ne correspond à ce filtre");
         grid.innerHTML = `
           <div class="empty-state" style="grid-column: 1 / -1; cursor: pointer" onclick="openStudioModal()">
             <p style="font-size:17px;font-weight:800;color:var(--ink);margin:0 0 6px">
-              ${allArchives.length === 0 ? "Aucune diapo déposée pour le moment" : "Aucune diapo ne correspond à cette recherche"}
+              ${emptyHeading}
             </p>
             <p style="font-size:12.5px;margin:0 0 16px">
-              Glissez votre présentation en PDF ou cliquez ci-dessous pour déposer vos diapos.
+              Glissez votre présentation en PDF ou cliquez ci-dessous pour déposer un dossier des internes du semestre ${escapeHtml(curSem.shortLabel)}.
             </p>
-            <button type="button" class="btn-studio-open" onclick="event.stopPropagation(); openStudioModal()">
-              + DÉPOSER SES DIAPOS (PDF)
-            </button>
+            <div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap">
+              <button type="button" class="btn-studio-open" onclick="event.stopPropagation(); openStudioModal()">
+                + DÉPOSER SES DIAPOS (PDF)
+              </button>
+              ${activeSemesterFilter !== "all" && pastCount > 0 ? `
+                <button type="button" class="mode-switch" onclick="event.stopPropagation(); setSemesterFilter('all')">
+                  🗂️ Voir les anciens semestres (${pastCount})
+                </button>
+              ` : ""}
+            </div>
           </div>
         `;
         return;
@@ -2748,8 +2896,8 @@
       imgEl.src = slide.image || currentDeck.coverImage || buildSlidePlaceholderSvg(slide.title, currentSlideIdx + 1, slides.length);
       imgEl.classList.remove("blind-blur");
 
-      // Preload adjacent slides into browser image cache for instant rapid tapping
-      for (const offset of [1, 2, -1]) {
+      // Preload adjacent slides into browser image cache for instant rapid tapping & hold-to-scroll
+      for (const offset of [1, 2, 3, 4, -1, -2]) {
         const adj = slides[currentSlideIdx + offset];
         if (adj && adj.image && !adj._preloaded) {
           const pre = new Image();
@@ -2781,12 +2929,14 @@
     }
 
     function stepSlide(delta) {
-      if (!currentDeck || !currentDeck.slides) return;
+      if (!currentDeck || !currentDeck.slides) return false;
       const next = currentSlideIdx + delta;
       if (next >= 0 && next < currentDeck.slides.length) {
         currentSlideIdx = next;
         renderActiveSlide();
+        return true;
       }
+      return false;
     }
 
     function goToSlide(idx) {
@@ -4401,6 +4551,7 @@
             submitBtn.textContent = "DÉPOSER LES DIAPOS";
           }
         }
+        activeSemesterFilter = semMode === "current" ? "current" : archiveSemester;
         refreshCatalogView();
         closeStudioModal();
         return;
@@ -4410,8 +4561,10 @@
       customDecksList.unshift(newDeck);
       decksById[newDeck.id] = newDeck;
 
+      activeSemesterFilter = semMode === "current" ? "current" : archiveSemester;
       const baseIndex = Array.isArray(window.COCHIN_ARCHIVES_INDEX) ? window.COCHIN_ARCHIVES_INDEX : [];
       rebuildMergedCatalog(baseIndex, allCustomDecks());
+      renderRegionPills();
       renderCatalog();
       closeStudioModal();
     }
@@ -4525,16 +4678,119 @@
       }
     });
 
-    // Fast mobile touch navigation (swipe left/right + zero double-tap zoom)
+    // Fast mobile touch navigation (swipe left/right + press-and-hold auto-scroll + zero double-tap zoom)
     (function setupViewerTouchNavigation() {
       const modal = document.getElementById("viewerModal");
       const vp = document.getElementById("pacsViewport");
       if (!modal || !vp) return;
 
-      // Block Safari/iOS double-click / double-tap zoom inside the viewer
+      // Block Safari/iOS double-click / double-tap zoom and long-press context menu inside the viewer
       modal.addEventListener("dblclick", (e) => {
         e.preventDefault();
       }, { passive: false });
+
+      let holdTimer = null;
+      let holdStepCount = 0;
+      let activeHoldEl = null;
+
+      function stopSlideHold() {
+        if (holdTimer) {
+          clearTimeout(holdTimer);
+          holdTimer = null;
+        }
+        if (activeHoldEl) {
+          activeHoldEl.classList.remove("is-holding");
+          activeHoldEl = null;
+        }
+        holdStepCount = 0;
+      }
+
+      function scheduleNextHoldStep(delta) {
+        // Progressive acceleration: 135ms -> 90ms -> 60ms (~16 slides/sec for large 145-slide decks)
+        const interval = holdStepCount < 5 ? 135 : (holdStepCount < 15 ? 90 : 60);
+        holdTimer = setTimeout(() => {
+          if (!currentDeck) {
+            stopSlideHold();
+            return;
+          }
+          const moved = stepSlide(delta);
+          holdStepCount++;
+          if (moved) {
+            scheduleNextHoldStep(delta);
+          } else {
+            stopSlideHold();
+          }
+        }, interval);
+      }
+
+      function bindHoldToStep(el, delta, isViewportTapZone) {
+        if (!el) return;
+        let pointerHandled = false;
+        let startX = 0;
+        let startY = 0;
+
+        el.addEventListener("contextmenu", (e) => e.preventDefault());
+
+        el.addEventListener("pointerdown", (e) => {
+          if (e.button && e.button !== 0) return;
+          if (el.disabled || !currentDeck) return;
+          pointerHandled = true;
+          startX = e.clientX || 0;
+          startY = e.clientY || 0;
+          stopSlideHold();
+
+          if (!isViewportTapZone) {
+            // Arrow button: step immediately on finger-down for zero latency, then repeat if held
+            el.classList.add("is-holding");
+            activeHoldEl = el;
+            const moved = stepSlide(delta);
+            if (moved && navigator.vibrate) {
+              try { navigator.vibrate(6); } catch (err) {}
+            }
+            holdTimer = setTimeout(() => {
+              holdStepCount = 0;
+              scheduleNextHoldStep(delta);
+            }, 260);
+          } else {
+            // Viewport tap zone: wait 260ms to distinguish from a horizontal swipe before auto-repeating
+            holdTimer = setTimeout(() => {
+              holdStepCount = 0;
+              stepSlide(delta);
+              scheduleNextHoldStep(delta);
+            }, 260);
+          }
+        });
+
+        el.addEventListener("pointermove", (e) => {
+          if (!holdTimer) return;
+          if (isViewportTapZone && (Math.abs((e.clientX || 0) - startX) > 20 || Math.abs((e.clientY || 0) - startY) > 20)) {
+            stopSlideHold();
+          }
+        });
+
+        for (const ev of ["pointerup", "pointercancel", "pointerleave", "lostpointercapture"]) {
+          el.addEventListener(ev, stopSlideHold);
+        }
+
+        // Prevent synthetic click from double-stepping when pointerdown or hold already handled it
+        el.addEventListener("click", (e) => {
+          if (pointerHandled && (!isViewportTapZone || holdStepCount > 0)) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          pointerHandled = false;
+        }, true);
+      }
+
+      bindHoldToStep(document.getElementById("btnPrevSlide"), -1, false);
+      bindHoldToStep(document.getElementById("btnNextSlide"), 1, false);
+      bindHoldToStep(vp.querySelector(".slide-tap-prev"), -1, true);
+      bindHoldToStep(vp.querySelector(".slide-tap-next"), 1, true);
+
+      window.addEventListener("blur", stopSlideHold);
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState !== "visible") stopSlideHold();
+      });
 
       let touchStartX = 0;
       let touchStartY = 0;
@@ -4555,6 +4811,7 @@
         const dy = e.changedTouches[0].clientY - touchStartY;
         const dt = Date.now() - touchStartTime;
         if (dt < 500 && Math.abs(dx) > 36 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+          stopSlideHold();
           swiped = true;
           stepSlide(dx < 0 ? 1 : -1);
         }
