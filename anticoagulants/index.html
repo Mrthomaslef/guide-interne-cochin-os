@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Anticoag RI" />
-  <title>Gestion des Anticoagulants & AAP — COCHIN·OS Radio B</title>
+  <title>Anticoagulants & AAP — COCHIN·OS Radio B</title>
   <link rel="icon" type="image/svg+xml" href="assets/icon.svg" />
   <link rel="apple-touch-icon" href="assets/icon.svg" />
   <link rel="manifest" href="manifest.json" />
@@ -44,8 +44,6 @@
       --xray-soft: rgba(2, 132, 199, 0.12);
       --vermilion: #FF4D2D;
       --vermilion-soft: rgba(255, 77, 45, 0.12);
-      --violet: #7C3AED;
-      --violet-soft: rgba(124, 58, 237, 0.12);
 
       --key-shadow: 0 3px 0 #C5BEB0;
       --key-shadow-active: 0 1px 0 #C5BEB0;
@@ -80,8 +78,6 @@
       --xray-soft: rgba(56, 189, 248, 0.15);
       --vermilion: #FF5B38;
       --vermilion-soft: rgba(255, 91, 56, 0.16);
-      --violet: #A78BFA;
-      --violet-soft: rgba(167, 139, 250, 0.15);
 
       --key-shadow: 0 3px 0 #030508;
       --key-shadow-active: 0 1px 0 #030508;
@@ -110,30 +106,29 @@
       pointer-events: none;
       background-image: radial-gradient(var(--line) 1px, transparent 1px);
       background-size: 22px 22px;
-      opacity: 0.55;
+      opacity: 0.45;
       z-index: 0;
     }
 
     .app-wrap {
       position: relative;
       z-index: 1;
-      max-width: 1080px;
+      max-width: 980px;
       margin: 0 auto;
-      padding: calc(env(safe-area-inset-top, 0px) + 14px) 14px calc(env(safe-area-inset-bottom, 0px) + 40px);
+      padding: calc(env(safe-area-inset-top, 0px) + 12px) 12px calc(env(safe-area-inset-bottom, 0px) + 36px);
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
 
-    /* TOP BAR */
+    /* TOP BAR COMPACT */
     .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      padding-bottom: 12px;
+      gap: 8px;
+      padding-bottom: 10px;
       border-bottom: 2px solid var(--ink);
-      flex-wrap: wrap;
     }
     html.negatoscope .topbar {
       border-bottom-color: var(--line);
@@ -142,80 +137,69 @@
     .brand-left {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      min-width: 0;
     }
 
     .back-btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      height: 38px;
-      padding: 0 12px;
-      border-radius: 10px;
+      gap: 4px;
+      height: 36px;
+      padding: 0 10px;
+      border-radius: 9px;
       border: 1.5px solid var(--line);
       background: var(--bg-card);
       color: var(--ink);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 800;
       text-decoration: none;
-      box-shadow: var(--key-shadow);
-      cursor: pointer;
-    }
-    .back-btn:active {
-      transform: translateY(2px);
-      box-shadow: var(--key-shadow-active);
-    }
-
-    .brand-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 11px;
-      overflow: hidden;
+      box-shadow: 0 2px 0 var(--line);
       flex-shrink: 0;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.16);
-    }
-    .brand-icon img {
-      width: 100%;
-      height: 100%;
-      display: block;
     }
 
     .brand-titles {
-      display: flex;
-      flex-direction: column;
+      min-width: 0;
     }
 
     .brand-title {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 800;
-      font-size: 20px;
+      font-size: 17px;
       letter-spacing: -0.02em;
       line-height: 1.1;
       margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .brand-sub {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 10.5px;
+      font-size: 9.5px;
       font-weight: 700;
       color: var(--ink-muted);
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
       margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .top-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      flex-shrink: 0;
     }
 
     .action-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       height: 34px;
-      padding: 0 11px;
+      padding: 0 10px;
       border-radius: 9px;
       border: 1.5px solid var(--line);
       background: var(--bg-card);
@@ -226,9 +210,6 @@
       text-decoration: none;
       cursor: pointer;
       box-shadow: 0 2px 0 var(--line);
-    }
-    .action-pill:active {
-      transform: translateY(1px);
     }
     .action-pill.primary {
       background: var(--ink);
@@ -241,62 +222,15 @@
       border-color: var(--xray);
     }
 
-    /* SOURCE BANNER */
-    .protocol-meta-banner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 10px 14px;
-      background: var(--bg-card);
-      border: 1.5px solid var(--line);
-      border-radius: 12px;
-      flex-wrap: wrap;
-    }
-
-    .meta-tags {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .meta-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10.5px;
-      font-weight: 800;
-      padding: 4px 8px;
-      border-radius: 6px;
-      letter-spacing: 0.03em;
-    }
-    .meta-badge.rfe {
-      background: var(--vermilion);
-      color: #fff;
-    }
-    .meta-badge.cochin {
-      background: var(--xray-soft);
-      color: var(--xray);
-    }
-    .meta-authors {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--ink-soft);
-    }
-
-    /* MODE NAVIGATION TABS */
+    /* NAVIGATION TABS (3 ONGLETS SIMPLES) */
     .mode-tabs {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
       background: var(--bg-well);
-      padding: 5px;
-      border-radius: 13px;
+      padding: 4px;
+      border-radius: 12px;
       border: 1.5px solid var(--line);
-    }
-    @media (max-width: 680px) {
-      .mode-tabs {
-        grid-template-columns: repeat(2, 1fr);
-      }
     }
 
     .mode-tab {
@@ -304,583 +238,465 @@
       background: transparent;
       color: var(--ink-soft);
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 13.5px;
-      font-weight: 700;
-      padding: 10px 10px;
-      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 9px 6px;
+      border-radius: 8px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
-      transition: all 0.15s ease;
-    }
-    .mode-tab .tab-num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10.5px;
-      font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 5px;
-      background: rgba(0,0,0,0.08);
-    }
-    html.negatoscope .mode-tab .tab-num {
-      background: rgba(255,255,255,0.08);
+      gap: 5px;
+      transition: all 0.12s ease;
+      text-align: center;
     }
     .mode-tab.active {
       background: var(--bg-card);
       color: var(--ink);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
       border: 1.5px solid var(--ink);
     }
     html.negatoscope .mode-tab.active {
       border-color: var(--xray);
     }
-    .mode-tab.active .tab-num {
-      background: var(--vermilion);
-      color: #fff;
-    }
 
     .view-panel {
       display: none;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
     .view-panel.active {
       display: flex;
     }
 
-    /* ASSISTANT VIEW (SIMULATEUR) */
-    .sim-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    @media (max-width: 820px) {
-      .sim-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    /* =================================================================
+       VIEW 1 : ASSISTANT DÉCISIONNEL ULTRA-SIMPLIFIÉ & MOBILE-FIRST
+       ================================================================= */
 
-    .panel-card {
-      background: var(--bg-card);
-      border: 2px solid var(--ink);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: var(--key-shadow);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    html.negatoscope .panel-card {
-      border-color: #26384B;
-    }
-
-    .step-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      border-bottom: 1.5px solid var(--line);
-      padding-bottom: 10px;
-    }
-
-    .step-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 6px;
-      background: var(--ink);
-      color: var(--bg-card);
-      letter-spacing: 0.04em;
-    }
-    html.negatoscope .step-badge {
-      background: var(--xray);
-      color: #05111A;
-    }
-
-    .step-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 17px;
-      font-weight: 800;
-      margin: 0;
-      letter-spacing: -0.02em;
-    }
-
-    /* Search & Filter pills */
-    .search-input {
-      width: 100%;
-      border: 1.5px solid var(--line);
-      background: var(--bg-elevated);
-      color: var(--ink);
-      font-family: 'Inter', sans-serif;
-      font-size: 13.5px;
-      font-weight: 600;
-      padding: 9px 12px;
-      border-radius: 9px;
-      outline: none;
-    }
-    .search-input:focus {
-      border-color: var(--xray);
-    }
-
-    .cat-pills {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .cat-pill {
-      border: 1.5px solid var(--line);
-      background: var(--bg-well);
-      color: var(--ink-soft);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 5px 10px;
-      border-radius: 7px;
-      cursor: pointer;
-      transition: all 0.12s ease;
-    }
-    .cat-pill.active {
-      background: var(--ink);
-      color: var(--bg-card);
-      border-color: var(--ink);
-    }
-    html.negatoscope .cat-pill.active {
-      background: var(--xray);
-      color: #041019;
-      border-color: var(--xray);
-    }
-
-    /* Selectable lists */
-    .choice-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      max-height: 360px;
-      overflow-y: auto;
-      padding-right: 2px;
-    }
-    @media (max-width: 520px) {
-      .choice-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .choice-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: space-between;
-      text-align: left;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1.5px solid var(--line);
-      background: var(--bg-elevated);
-      color: var(--ink);
-      cursor: pointer;
-      transition: all 0.12s ease;
-      gap: 4px;
-    }
-    .choice-btn:hover {
-      border-color: var(--ink-soft);
-    }
-    .choice-btn.selected {
-      border: 2px solid var(--vermilion);
-      background: var(--vermilion-soft);
-      box-shadow: 0 2px 0 var(--vermilion);
-    }
-    html.negatoscope .choice-btn.selected {
-      border-color: var(--xray);
-      background: var(--xray-soft);
-      box-shadow: 0 2px 0 var(--xray);
-    }
-
-    .choice-cat-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9.5px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--ink-muted);
-    }
-
-    .choice-label {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 14px;
-      font-weight: 800;
-      line-height: 1.2;
-    }
-
-    .choice-sub {
-      font-size: 11.5px;
-      font-weight: 600;
-      color: var(--ink-soft);
-      line-height: 1.25;
-    }
-
-    /* Optional Params (DFG & Date) */
-    .params-bar {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      padding-top: 8px;
-      border-top: 1.5px dashed var(--line);
-    }
-    @media (max-width: 520px) {
-      .params-bar {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .param-box {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .param-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10.5px;
-      font-weight: 800;
-      color: var(--ink-soft);
-      text-transform: uppercase;
-    }
-
-    .dfg-pills {
-      display: flex;
-      gap: 5px;
-    }
-    .dfg-pill {
-      flex: 1;
-      border: 1.5px solid var(--line);
-      background: var(--bg-elevated);
-      color: var(--ink);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 6px 4px;
-      border-radius: 7px;
-      cursor: pointer;
-      text-align: center;
-    }
-    .dfg-pill.active {
-      background: var(--xray);
-      color: #fff;
-      border-color: var(--xray);
-    }
-    html.negatoscope .dfg-pill.active {
-      color: #041019;
-    }
-
-    .date-input {
-      border: 1.5px solid var(--line);
-      background: var(--bg-elevated);
-      color: var(--ink);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 6px 10px;
-      border-radius: 7px;
-      outline: none;
-      width: 100%;
-    }
-
-    /* DECISION RESULT CARD */
-    .result-card {
+    /* RESULT BANNER STICKY / PREMIER PLAN */
+    .result-hero {
       background: var(--bg-card);
       border: 2.5px solid var(--ink);
       border-radius: var(--radius);
-      padding: 18px;
+      padding: 14px;
       box-shadow: var(--key-shadow);
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 10px;
     }
-    .result-card.status-poursuite {
-      border-color: var(--poursuite);
-    }
-    .result-card.status-adaptation {
-      border-color: var(--adaptation);
-    }
-    .result-card.status-arret {
-      border-color: var(--arret);
-    }
+    .result-hero.status-poursuite { border-color: var(--poursuite); }
+    .result-hero.status-adaptation { border-color: var(--adaptation); }
+    .result-hero.status-arret { border-color: var(--arret); }
 
-    .result-banner {
+    .verdict-strip {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding: 14px 16px;
-      border-radius: 12px;
-      flex-wrap: wrap;
+      gap: 10px;
+      padding: 11px 13px;
+      border-radius: 10px;
     }
-    .result-banner.status-poursuite {
+    .verdict-strip.status-poursuite {
       background: var(--poursuite-bg);
-      border: 2px solid var(--poursuite-border);
+      border: 1.5px solid var(--poursuite-border);
       color: var(--poursuite);
     }
-    .result-banner.status-adaptation {
+    .verdict-strip.status-adaptation {
       background: var(--adaptation-bg);
-      border: 2px solid var(--adaptation-border);
+      border: 1.5px solid var(--adaptation-border);
       color: var(--adaptation);
     }
-    .result-banner.status-arret {
+    .verdict-strip.status-arret {
       background: var(--arret-bg);
-      border: 2px solid var(--arret-border);
+      border: 1.5px solid var(--arret-border);
       color: var(--arret);
     }
 
-    .verdict-main {
+    .verdict-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      min-width: 0;
     }
 
-    .verdict-icon {
+    .verdict-badge-icon {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 26px;
+      font-size: 20px;
       font-weight: 800;
-      width: 46px;
-      height: 46px;
-      border-radius: 11px;
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255,255,255,0.65);
+      background: rgba(255,255,255,0.75);
       flex-shrink: 0;
     }
-    html.negatoscope .verdict-icon {
+    html.negatoscope .verdict-badge-icon {
       background: rgba(0,0,0,0.35);
     }
 
-    .verdict-label-group {
-      display: flex;
-      flex-direction: column;
+    .verdict-texts {
+      min-width: 0;
     }
-
-    .verdict-kicker {
+    .verdict-pair {
       font-family: 'JetBrains Mono', monospace;
       font-size: 10.5px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      opacity: 0.9;
+      letter-spacing: 0.04em;
+      color: var(--ink-soft);
     }
-
-    .verdict-title {
+    .verdict-action {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 800;
       letter-spacing: -0.02em;
       line-height: 1.1;
       color: var(--ink);
     }
 
-    .copy-cr-btn {
-      border: 1.5px solid currentColor;
+    .copy-mini-btn {
+      border: 1.5px solid var(--line);
       background: var(--bg-card);
       color: var(--ink);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 800;
-      padding: 8px 12px;
+      padding: 7px 10px;
       border-radius: 8px;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 2px 0 rgba(0,0,0,0.12);
-    }
-    .copy-cr-btn:active {
-      transform: translateY(1px);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    .protocol-details-grid {
+    .before-after-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
     }
-    @media (max-width: 720px) {
-      .protocol-details-grid {
+    @media (max-width: 560px) {
+      .before-after-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    .detail-box {
+    .ba-box {
       background: var(--bg-elevated);
       border: 1.5px solid var(--line);
-      border-radius: 11px;
-      padding: 12px 14px;
+      border-radius: 10px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 3px;
     }
-    .detail-box.highlight {
-      border-width: 2px;
-      border-color: var(--ink);
-    }
-    html.negatoscope .detail-box.highlight {
-      border-color: var(--xray);
-    }
-
-    .detail-kicker {
+    .ba-kicker {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--ink-muted);
     }
-
-    .detail-value {
+    .ba-main {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 16px;
+      font-size: 15.5px;
       font-weight: 800;
-      line-height: 1.3;
       color: var(--ink);
+      line-height: 1.25;
     }
-
-    .detail-note {
-      font-size: 12.5px;
+    .ba-sub {
+      font-size: 12px;
       font-weight: 500;
       color: var(--ink-soft);
-      line-height: 1.4;
+      line-height: 1.35;
     }
 
-    /* TIMELINE CALENDAR */
-    .calendar-strip {
-      background: var(--bg-well);
-      border: 1.5px solid var(--line);
-      border-radius: 11px;
-      padding: 12px 14px;
+    /* DFG inline selector (only shown when AOD + Arrêt) */
+    .dfg-inline-bar {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
       gap: 8px;
+      background: var(--bg-well);
+      padding: 7px 10px;
+      border-radius: 9px;
+      flex-wrap: wrap;
     }
-
-    .cal-title {
+    .dfg-inline-label {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       font-weight: 800;
       color: var(--ink);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+    }
+    .dfg-inline-pills {
+      display: flex;
+      gap: 5px;
+    }
+    .dfg-chip {
+      border: 1.5px solid var(--line);
+      background: var(--bg-card);
+      color: var(--ink);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .dfg-chip.active {
+      background: var(--xray);
+      color: #fff;
+      border-color: var(--xray);
+    }
+    html.negatoscope .dfg-chip.active {
+      color: #041019;
     }
 
-    .cal-steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 8px;
-    }
-
-    .cal-step {
+    /* SIMPLE PICKER CARDS */
+    .picker-card {
       background: var(--bg-card);
       border: 1.5px solid var(--line);
-      border-radius: 9px;
-      padding: 9px 11px;
+      border-radius: var(--radius);
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 2px;
-    }
-    .cal-step-date {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11.5px;
-      font-weight: 800;
-      color: var(--vermilion);
-    }
-    html.negatoscope .cal-step-date {
-      color: var(--xray);
-    }
-    .cal-step-desc {
-      font-size: 12.5px;
-      font-weight: 700;
-      color: var(--ink);
+      gap: 9px;
     }
 
-    /* FULL MATRIX TABLE */
-    .table-wrap {
-      background: var(--bg-card);
-      border: 2px solid var(--ink);
-      border-radius: var(--radius);
-      overflow-x: auto;
-      box-shadow: var(--key-shadow);
+    .picker-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
     }
-    html.negatoscope .table-wrap {
-      border-color: #26384B;
-    }
-
-    table.protocol-table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 820px;
-      font-size: 12.5px;
-    }
-
-    table.protocol-table th,
-    table.protocol-table td {
-      border: 1px solid var(--line);
-      padding: 8px 9px;
-      text-align: center;
-      vertical-align: middle;
-    }
-
-    table.protocol-table thead th {
-      background: var(--bg-well);
+    .picker-title {
       font-family: 'Space Grotesk', sans-serif;
+      font-size: 14.5px;
       font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      margin: 0;
       color: var(--ink);
-      font-size: 12.5px;
     }
-
-    table.protocol-table thead tr.sub-header th {
-      background: var(--bg-elevated);
+    .picker-step-tag {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 10.5px;
-      font-weight: 600;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 5px;
+      background: var(--bg-well);
       color: var(--ink-soft);
     }
 
-    table.protocol-table td.cat-cell {
+    /* Category Tabs Horizontal Scroll on Mobile */
+    .cat-strip {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+    .cat-strip::-webkit-scrollbar { display: none; }
+
+    .cat-btn {
+      border: 1.5px solid var(--line);
       background: var(--bg-well);
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 800;
-      font-size: 12px;
-      text-align: left;
-      color: var(--ink);
-      width: 135px;
+      color: var(--ink-soft);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .cat-btn.active {
+      background: var(--ink);
+      color: var(--bg-card);
+      border-color: var(--ink);
+    }
+    html.negatoscope .cat-btn.active {
+      background: var(--xray);
+      color: #041019;
+      border-color: var(--xray);
     }
 
-    table.protocol-table td.proc-cell {
+    /* Compact Chip Grid for Gestes & Molecules */
+    .chips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 6px;
+    }
+    @media (max-width: 480px) {
+      .chips-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .item-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
       text-align: left;
-      font-weight: 700;
+      padding: 8px 10px;
+      border-radius: 9px;
+      border: 1.5px solid var(--line);
+      background: var(--bg-elevated);
       color: var(--ink);
+      cursor: pointer;
+      transition: all 0.1s ease;
+      min-height: 46px;
+    }
+    .item-chip.selected {
+      border: 2px solid var(--vermilion);
+      background: var(--vermilion-soft);
+      box-shadow: 0 2px 0 var(--vermilion);
+    }
+    html.negatoscope .item-chip.selected {
+      border-color: var(--xray);
+      background: var(--xray-soft);
+      box-shadow: 0 2px 0 var(--xray);
+    }
+
+    .chip-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+    .chip-brand {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      margin-top: 2px;
+      line-height: 1.15;
+    }
+
+    /* =================================================================
+       VIEW 2 : TABLEAU MOBILE-FIRST (CARTES SUR MOBILE + TABLEAU DESKTOP)
+       ================================================================= */
+
+    .matrix-toolbar {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       background: var(--bg-card);
-      min-width: 195px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+    }
+
+    .matrix-search-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .search-input {
+      width: 100%;
+      border: 1.5px solid var(--line);
+      background: var(--bg-elevated);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 11px;
+      border-radius: 8px;
+      outline: none;
+    }
+    .search-input:focus {
+      border-color: var(--xray);
+    }
+
+    /* Mobile Cards List for Tableau */
+    .mobile-matrix-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .m-proc-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      box-shadow: 0 2px 0 var(--line);
+    }
+
+    .m-proc-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 7px;
+    }
+
+    .m-proc-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15.5px;
+      font-weight: 800;
+      margin: 0;
+      color: var(--ink);
+    }
+    .m-proc-cat {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 3px 6px;
+      border-radius: 5px;
+      background: var(--bg-well);
+      color: var(--ink-soft);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .m-med-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+    @media (min-width: 640px) {
+      .m-med-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .m-med-cell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 6px 8px;
+      border-radius: 7px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--line);
       cursor: pointer;
     }
-    table.protocol-table td.proc-cell:hover {
-      color: var(--vermilion);
+    .m-med-name {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.15;
     }
 
     .badge-cell {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 4px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 800;
-      padding: 4px 8px;
-      border-radius: 6px;
+      padding: 3px 7px;
+      border-radius: 5px;
       white-space: nowrap;
       cursor: pointer;
-      transition: transform 0.1s ease;
-    }
-    .badge-cell:hover {
-      transform: scale(1.04);
     }
     .badge-cell.poursuite {
       background: var(--poursuite-bg);
@@ -898,786 +714,562 @@
       border: 1px solid var(--arret-border);
     }
 
-    .badge-stack {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-    }
-
-    /* PAGE 3 RULES TABLE */
-    table.rules-table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 680px;
-      font-size: 13px;
-    }
-    table.rules-table th,
-    table.rules-table td {
-      border: 1px solid var(--line);
-      padding: 10px 12px;
-      text-align: left;
-      vertical-align: middle;
-    }
-    table.rules-table thead th {
-      background: var(--bg-well);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 13.5px;
-      font-weight: 800;
-    }
-    table.rules-table td.fam-cell {
-      background: var(--bg-well);
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 800;
-      width: 120px;
-    }
-    table.rules-table td.mol-cell {
-      font-weight: 700;
-      width: 190px;
-    }
-
-    /* ORIGINAL DOCUMENT GALLERY */
-    .doc-pages-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-    .doc-page-card {
+    /* Desktop Full Table (with sticky first column on scroll) */
+    .table-wrap {
       background: var(--bg-card);
       border: 2px solid var(--ink);
       border-radius: var(--radius);
-      padding: 14px;
+      overflow-x: auto;
       box-shadow: var(--key-shadow);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      -webkit-overflow-scrolling: touch;
     }
-    .doc-page-card img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      display: block;
+    html.negatoscope .table-wrap {
+      border-color: #26384B;
     }
 
-    /* FOOTER */
+    table.protocol-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      font-size: 12px;
+    }
+    table.protocol-table th,
+    table.protocol-table td {
+      border: 1px solid var(--line);
+      padding: 7px 8px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    table.protocol-table thead th {
+      background: var(--bg-well);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      color: var(--ink);
+      font-size: 12px;
+    }
+    table.protocol-table thead tr.sub-header th {
+      background: var(--bg-elevated);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+    table.protocol-table td.proc-cell {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      text-align: left;
+      font-weight: 700;
+      color: var(--ink);
+      background: var(--bg-card);
+      min-width: 165px;
+      max-width: 200px;
+      box-shadow: 2px 0 4px rgba(0,0,0,0.06);
+      cursor: pointer;
+    }
+
+    /* Responsive toggle between Mobile Cards and Desktop Grid in View 2 */
+    .desktop-matrix-only {
+      display: block;
+    }
+    @media (max-width: 760px) {
+      .desktop-matrix-only {
+        display: none;
+      }
+    }
+    .mobile-matrix-only {
+      display: none;
+    }
+    @media (max-width: 760px) {
+      .mobile-matrix-only {
+        display: flex;
+      }
+    }
+
+    /* VIEW 3 : RÈGLES D'ARRÊT & REPRISE (MOBILE CARDS) */
+    .rules-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 680px) {
+      .rules-cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .rule-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 2px 0 var(--line);
+    }
+    .rule-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 6px;
+    }
+    .rule-mol {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15.5px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+    .rule-fam {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 5px;
+      background: var(--bg-well);
+      color: var(--ink-soft);
+    }
+    .rule-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 12.5px;
+    }
+    .rule-row-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
     .footer-note {
       text-align: center;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--ink-muted);
-      padding: 10px 0;
+      padding: 8px 0;
     }
   </style>
 </head>
 <body>
   <div class="app-wrap">
-    <!-- 1. TOP INSTRUMENT BAR -->
+    <!-- 1. TOP BAR COMPACTE -->
     <header class="topbar">
       <div class="brand-left">
-        <a href="https://mrthomaslef.github.io/guide-interne-cochin-os/" class="back-btn" id="backPortalBtn" title="Retour au Guide des Internes COCHIN·OS">
+        <a href="https://mrthomaslef.github.io/guide-interne-cochin-os/" class="back-btn" title="Retour COCHIN·OS">
           <span>←</span>
-          <span>COCHIN·OS</span>
+          <span>OS</span>
         </a>
-        <div class="brand-icon">
-          <img src="assets/icon.svg" alt="Anticoag RI" />
-        </div>
         <div class="brand-titles">
-          <h1 class="brand-title">ANTICOAGULANTS & AAP</h1>
-          <div class="brand-sub">PROTOCOLE OFFICIEL RADIO B & RHUMATO COCHIN</div>
+          <h1 class="brand-title">ANTICOAGULANTS &amp; AAP</h1>
+          <div class="brand-sub">COCHIN RADIO B • RFE GIHP / SFAR / SFR 2026</div>
         </div>
       </div>
 
       <div class="top-actions">
-        <a href="PROCEDURE_ANTICOAGULANTS.pdf" target="_blank" rel="noopener" class="action-pill primary" title="Ouvrir le PDF officiel envoyé par Anne-Marie">
-          <span>📄 PDF Officiel</span>
+        <a href="PROCEDURE_ANTICOAGULANTS.pdf" target="_blank" rel="noopener" class="action-pill primary" title="Voir le PDF original envoyé par Anne-Marie">
+          <span>📄 PDF</span>
         </a>
-        <button type="button" class="action-pill" onclick="toggleTheme()" id="themeBtn">
+        <button type="button" class="action-pill" onclick="toggleTheme()" id="themeBtn" title="Mode Sombre / Clair">
           <span>◐</span>
-          <span id="themeLabel">NÉGATOSCOPE</span>
         </button>
       </div>
     </header>
 
-    <!-- 2. SOURCE BANNER -->
-    <div class="protocol-meta-banner">
-      <div class="meta-tags">
-        <span class="meta-badge rfe">RFE GIHP / SFAR / FRI / SFR — AVRIL 2026</span>
-        <span class="meta-badge cochin">MAJ JUILLET 2026 — DIFFUSION ANNE-MARIE FORTIN</span>
-      </div>
-      <div class="meta-authors">
-        Dr M.-P. TALABARD • Dr C. DASTE • Dr M.-O. CHAGNAS-MARTIN (Services Pr FEYDY & Pr RANNOU)
-      </div>
-    </div>
-
-    <!-- 3. MODE TABS -->
-    <nav class="mode-tabs" aria-label="Modes d'affichage">
+    <!-- 2. ONGLETS (TABLEAU EN PREMIER PLAN OU ASSISTANT RAPIDE) -->
+    <nav class="mode-tabs" aria-label="Navigation">
       <button type="button" class="mode-tab active" data-tab="assistant" onclick="switchTab('assistant')">
-        <span class="tab-num">01</span>
-        <span>Assistant Décisionnel</span>
+        <span>⚡ Assistant</span>
       </button>
       <button type="button" class="mode-tab" data-tab="matrix" onclick="switchTab('matrix')">
-        <span class="tab-num">02</span>
-        <span>Tableau par Geste</span>
+        <span>📋 Tableau</span>
       </button>
       <button type="button" class="mode-tab" data-tab="rules" onclick="switchTab('rules')">
-        <span class="tab-num">03</span>
-        <span>Règles Arrêt / Reprise</span>
-      </button>
-      <button type="button" class="mode-tab" data-tab="original" onclick="switchTab('original')">
-        <span class="tab-num">04</span>
-        <span>Fiche Originale (PDF)</span>
+        <span>⏱️ Délais J-X</span>
       </button>
     </nav>
 
-    <!-- ==========================================
-         VIEW 1 : ASSISTANT INTERACTIF (SIMULATEUR)
-         ========================================== -->
+    <!-- =================================================================
+         ONGLET 1 : ASSISTANT DÉCISIONNEL SIMPLIFIÉ (RÉSULTAT EN HAUT + 2 CLICS)
+         ================================================================= -->
     <section id="view-assistant" class="view-panel active">
-      <div class="sim-grid">
-        <!-- STEP 1 : GESTE -->
-        <div class="panel-card">
-          <div class="step-header">
-            <h2 class="step-title">1. Choisir le geste prévu</h2>
-            <span class="step-badge">22 GESTES</span>
-          </div>
+      <!-- CONDUITE À TENIR EN PREMIER PLAN -->
+      <div id="decisionResultContainer"></div>
 
-          <input
-            type="search"
-            id="procSearchInput"
-            class="search-input"
-            placeholder="Rechercher un geste (ex: genou, épidurale, biopsie, cimentoplastie...)"
-            oninput="renderProcedureChoices()"
-          />
-
-          <div class="cat-pills" id="procCatPills"></div>
-
-          <div class="choice-grid" id="procChoiceGrid"></div>
+      <!-- ÉTAPE 1 : CHOIX DU GESTE (PILS DE CATÉGORIE + BOUTONS DIRECTS) -->
+      <div class="picker-card">
+        <div class="picker-header">
+          <h2 class="picker-title">1. Geste prévu</h2>
+          <span class="picker-step-tag" id="selectedProcLabel">Épidurale lombaire basse</span>
         </div>
 
-        <!-- STEP 2 : TRAITEMENT & PARAMÈTRES -->
-        <div class="panel-card">
-          <div class="step-header">
-            <h2 class="step-title">2. Choisir le traitement du patient</h2>
-            <span class="step-badge">8 CLASSES / 17 MOLÉCULES</span>
-          </div>
-
-          <input
-            type="search"
-            id="medSearchInput"
-            class="search-input"
-            placeholder="Rechercher un médicament (ex: Eliquis, Kardégic, Plavix, Lovenox, Préviscan...)"
-            oninput="renderMedChoices()"
-          />
-
-          <div class="choice-grid" id="medChoiceGrid"></div>
-
-          <!-- DFG & Date du geste -->
-          <div class="params-bar">
-            <div class="param-box">
-              <span class="param-label">Fonction rénale (DFG mL/min)</span>
-              <div class="dfg-pills">
-                <button type="button" class="dfg-pill active" data-dfg="gt50" onclick="setDfg('gt50')">≥ 50</button>
-                <button type="button" class="dfg-pill" data-dfg="30to50" onclick="setDfg('30to50')">30 – 49</button>
-                <button type="button" class="dfg-pill" data-dfg="lt30" onclick="setDfg('lt30')">&lt; 30</button>
-              </div>
-            </div>
-
-            <div class="param-box">
-              <label class="param-label" for="procDateInput">Date du geste (calcul J-X / J+X)</label>
-              <input type="date" id="procDateInput" class="date-input" onchange="renderDecisionResult()" />
-            </div>
-          </div>
-        </div>
+        <div class="cat-strip" id="procCatPills"></div>
+        <div class="chips-grid" id="procChoiceGrid"></div>
       </div>
 
-      <!-- STEP 3 : CONDUITE À TENIR INSTANTANÉE -->
-      <div id="decisionResultContainer"></div>
+      <!-- ÉTAPE 2 : CHOIX DU TRAITEMENT (BOUTONS DIRECTS SANS RECHERCHE) -->
+      <div class="picker-card">
+        <div class="picker-header">
+          <h2 class="picker-title">2. Traitement du patient</h2>
+          <span class="picker-step-tag" id="selectedMedLabel">Eliquis / Xarelto / Lixiana</span>
+        </div>
+
+        <div class="chips-grid" id="medChoiceGrid"></div>
+      </div>
     </section>
 
-    <!-- ==========================================
-         VIEW 2 : TABLEAU COMPLET PAR GESTE (P1 & P2)
-         ========================================== -->
+    <!-- =================================================================
+         ONGLET 2 : TABLEAU COMPLET ADAPTÉ MOBILE (CARTES) & DESKTOP (GRILLE)
+         ================================================================= -->
     <section id="view-matrix" class="view-panel">
-      <div class="panel-card" style="padding: 12px 16px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-          <div style="font-size:13px; font-weight:600; color:var(--ink-soft);">
-            💡 Cliquez sur n'importe quelle case du tableau pour ouvrir le détail d'arrêt / adaptation et calculer les dates exactes.
-          </div>
+      <div class="matrix-toolbar">
+        <div class="matrix-search-row">
           <input
             type="search"
             id="matrixSearchInput"
             class="search-input"
-            style="max-width: 320px;"
-            placeholder="Filtrer les gestes du tableau..."
-            oninput="renderFullMatrix()"
+            placeholder="Filtrer un geste (ex: genou, épidurale, biopsie, cimentoplastie...)"
+            oninput="renderAllMatrices()"
           />
         </div>
+        <div class="cat-strip" id="matrixCatPills"></div>
       </div>
 
-      <div class="table-wrap">
+      <!-- VUE MOBILE : CARTES PAR GESTE ULTRA-LISIBLES SANS SCROLL HORIZONTAL -->
+      <div class="mobile-matrix-list mobile-matrix-only" id="mobileMatrixContainer"></div>
+
+      <!-- VUE ORDINATEUR / TABLETTE : TABLEAU COMPLET AVEC 1re COLONNE FIXE -->
+      <div class="table-wrap desktop-matrix-only">
         <table class="protocol-table" id="fullMatrixTable"></table>
       </div>
     </section>
 
-    <!-- ==========================================
-         VIEW 3 : RÈGLES D'ADAPTATION OU ARRÊT (P3)
-         ========================================== -->
+    <!-- =================================================================
+         ONGLET 3 : FICHES DÉLAIS D'ARRÊT / ADAPTATION / REPRISE (PAGE 3)
+         ================================================================= -->
     <section id="view-rules" class="view-panel">
-      <div class="table-wrap">
-        <table class="rules-table">
-          <thead>
-            <tr>
-              <th>Classe</th>
-              <th>Molécule / Spécialité</th>
-              <th style="color:var(--adaptation);">✓ Adaptation (si geste « Adaptation »)</th>
-              <th style="color:var(--arret);">✕ Arrêt (si geste « Arrêt »)</th>
-              <th style="color:var(--poursuite);">↻ Reprise post-geste</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="fam-cell" rowspan="5">Anti-agrégant plaquettaire (AAP)</td>
-              <td class="mol-cell"><strong>Aspirine seule</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">Kardégic®, Résitune®, Aspirine Protect®</span></td>
-              <td>—</td>
-              <td><span class="badge-cell arret">Dernière prise J-3</span></td>
-              <td><strong>H+6</strong> après le geste</td>
-            </tr>
-            <tr>
-              <td class="mol-cell"><strong>Clopidogrel</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">Plavix®</span></td>
-              <td><span class="badge-cell adaptation">Relais Aspirine seule à J-5</span></td>
-              <td><span class="badge-cell arret">Dernière prise J-5</span></td>
-              <td><strong>Aspirine H+6</strong>, reprise ttt habituel à <strong>J+1</strong></td>
-            </tr>
-            <tr>
-              <td class="mol-cell"><strong>Ticagrélor</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">Brilique®</span></td>
-              <td><span class="badge-cell adaptation">Relais Aspirine seule à J-5</span></td>
-              <td><span class="badge-cell arret">Dernière prise J-5</span></td>
-              <td><strong>Aspirine H+6</strong>, reprise ttt habituel à <strong>J+1</strong></td>
-            </tr>
-            <tr>
-              <td class="mol-cell"><strong>Prasugrel</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">Efient®</span></td>
-              <td><span class="badge-cell adaptation">Relais Aspirine seule à J-7</span></td>
-              <td><span class="badge-cell arret">Dernière prise J-7</span></td>
-              <td><strong>Aspirine H+6</strong>, reprise ttt habituel à <strong>J+1</strong></td>
-            </tr>
-            <tr>
-              <td class="mol-cell"><strong>Aspirine + autre AAP</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">Duoplavin® / bithérapie</span></td>
-              <td><span class="badge-cell adaptation">Maintien Aspirine seule dès J-5</span><br><span style="font-size:11px; color:var(--ink-soft);">(arrêt du 2e AAP à J-5)</span></td>
-              <td><span class="badge-cell arret">Arrêt complet J-5</span><br><span style="font-size:11px; color:var(--ink-soft);">(à discuter avec cardiologue)</span></td>
-              <td><strong>Aspirine H+6</strong>, reprise ttt complet à <strong>J+1</strong></td>
-            </tr>
-
-            <tr>
-              <td class="fam-cell" rowspan="3">Antivitamine K (AVK)</td>
-              <td class="mol-cell"><strong>Warfarine</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">Coumadine®</span></td>
-              <td>—</td>
-              <td><span class="badge-cell arret">Dernière prise J-6</span><br><span style="font-size:11px; color:var(--ink-soft);">Contrôle INR avant geste</span></td>
-              <td>Reprise à <strong>J+1</strong></td>
-            </tr>
-            <tr>
-              <td class="mol-cell"><strong>Fluindione</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">Préviscan®</span></td>
-              <td>—</td>
-              <td><span class="badge-cell arret">Dernière prise J-5</span><br><span style="font-size:11px; color:var(--ink-soft);">Contrôle INR avant geste</span></td>
-              <td>Reprise à <strong>J+1</strong></td>
-            </tr>
-            <tr>
-              <td class="mol-cell"><strong>Acénocoumarol</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">Sintrom®</span></td>
-              <td>—</td>
-              <td><span class="badge-cell arret">Dernière prise J-4</span><br><span style="font-size:11px; color:var(--ink-soft);">Contrôle INR avant geste</span></td>
-              <td>Reprise à <strong>J+1</strong></td>
-            </tr>
-
-            <tr>
-              <td class="fam-cell" rowspan="2">Anticoagulants Oraux Directs (AOD)</td>
-              <td class="mol-cell"><strong>Apixaban, Rivaroxaban, Edoxaban</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">Eliquis®, Xarelto®, Lixiana®</span></td>
-              <td>
-                <strong>Sauter la prise de la veille au soir ET du matin du geste</strong> (quel que soit le schéma : 1x/j ou 2x/j).<br>
-                Reprendre <strong>≥ 6 h après</strong> la fin du geste aux doses habituelles.
-              </td>
-              <td>
-                • <strong>DFG ≥ 30</strong> : dernière prise à <strong>J-3</strong><br>
-                • <strong>DFG &lt; 30</strong> : dernière prise à <strong>J-5</strong><br>
-                <span style="font-size:11.5px; color:var(--ink-soft);">Reprise 12–24h post-geste à dose préventive. Reprise 48–72h post-geste à dose curative.</span>
-              </td>
-              <td><strong>Entre H+6 et J+2</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">(H+6 si adaptation ; 12–24h préventif puis 48–72h curatif si arrêt)</span></td>
-            </tr>
-            <tr>
-              <td class="mol-cell"><strong>Dabigatran</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">Pradaxa®</span></td>
-              <td>
-                <strong>Sauter la prise de la veille au soir ET du matin du geste</strong>.<br>
-                Reprendre <strong>≥ 6 h après</strong> la fin du geste.
-              </td>
-              <td>
-                • <strong>DFG ≥ 50</strong> : dernière prise à <strong>J-3</strong><br>
-                • <strong>30 ≤ DFG &lt; 50</strong> : dernière prise à <strong>J-5</strong><br>
-                <span style="font-size:11.5px; color:var(--ink-soft);">Reprise 12–24h post-geste à dose préventive. Reprise 48–72h à dose curative.</span>
-              </td>
-              <td><strong>Entre H+6 et J+2</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">(H+6 si adaptation ; 12–24h préventif puis 48–72h curatif si arrêt)</span></td>
-            </tr>
-
-            <tr>
-              <td class="fam-cell" rowspan="3">Héparines</td>
-              <td class="mol-cell"><strong>HBPM</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">Lovenox®, Innohep®</span></td>
-              <td><span class="badge-cell adaptation">Dernière injection à H-24</span></td>
-              <td>— <span style="font-size:11.5px; color:var(--ink-soft);">(Suspension H-24)</span></td>
-              <td><strong>H+6</strong> à dose préventive, et si besoin <strong>J2</strong> à dose curative</td>
-            </tr>
-            <tr>
-              <td class="mol-cell"><strong>HNF SC</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">Héparine calcique (Calciparine®)</span></td>
-              <td><span class="badge-cell adaptation">Dernière injection entre H-8 et H-12</span></td>
-              <td>— <span style="font-size:11.5px; color:var(--ink-soft);">(Suspension H-8 à H-12)</span></td>
-              <td><strong>H+6</strong> à dose préventive, et si besoin <strong>J2</strong> à dose curative</td>
-            </tr>
-            <tr>
-              <td class="mol-cell"><strong>HNF IVSE</strong><br><span style="font-size:11.5px; color:var(--ink-soft);">Héparine sodique à la seringue électrique</span></td>
-              <td><span class="badge-cell adaptation">Arrêt IVSE entre H-4 et H-6</span></td>
-              <td>— <span style="font-size:11.5px; color:var(--ink-soft);">(Suspension H-4 à H-6)</span></td>
-              <td><strong>H+6</strong> à dose préventive, et si besoin <strong>J2</strong> à dose curative</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- ==========================================
-         VIEW 4 : DOCUMENT ORIGINAL (SCAN / PDF)
-         ========================================== -->
-    <section id="view-original" class="view-panel">
-      <div class="panel-card" style="flex-direction:row; align-items:center; justify-content:space-between; flex-wrap:wrap;">
-        <div>
-          <h2 class="step-title">Document original diffusé par Anne-Marie Fortin</h2>
-          <div style="font-size:12.5px; color:var(--ink-soft); margin-top:2px;">
-            Tamponné Service de Radiologie B (Pr A. Feydy) & Service de Rééducation (Pr F. Rannou) — Hôpital Cochin
+      <div class="rules-cards-grid">
+        <div class="rule-card">
+          <div class="rule-card-head">
+            <span class="rule-mol">Aspirine seule (Kardégic®, Résitune®)</span>
+            <span class="rule-fam">AAP</span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--arret);">✕ Si Arrêt requis</span>
+            <span>Dernière prise à <strong>J-3</strong></span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--poursuite);">↻ Reprise</span>
+            <span>À <strong>H+6</strong> après la fin du geste</span>
           </div>
         </div>
-        <a href="PROCEDURE_ANTICOAGULANTS.pdf" download="PROCEDURE_ANTICOAGULANTS_COCHIN.pdf" class="action-pill primary">
-          <span>⬇️ Télécharger le PDF</span>
-        </a>
-      </div>
 
-      <div class="doc-pages-grid">
-        <div class="doc-page-card">
-          <div class="step-header">
-            <span class="step-title">Page 1 — Infiltrations périphériques, Rachis, Cimentoplasties & Biopsie superficielle</span>
-            <span class="step-badge">PAGE 1 / 3</span>
+        <div class="rule-card">
+          <div class="rule-card-head">
+            <span class="rule-mol">Clopidogrel (Plavix®) / Ticagrélor (Brilique®)</span>
+            <span class="rule-fam">Autre AAP</span>
           </div>
-          <img src="assets/page_1_rot270.png" alt="Page 1 du protocole Anticoagulants Cochin" loading="lazy" />
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--adaptation);">✓ Si Adaptation</span>
+            <span>Relais par <strong>Aspirine seule à J-5</strong></span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--arret);">✕ Si Arrêt</span>
+            <span>Dernière prise à <strong>J-5</strong></span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--poursuite);">↻ Reprise</span>
+            <span><strong>Aspirine H+6</strong>, reprise ttt habituel à <strong>J+1</strong></span>
+          </div>
         </div>
 
-        <div class="doc-page-card">
-          <div class="step-header">
-            <span class="step-title">Page 2 — Biopsies profondes / osseuses & Ablations tumorales percutanées</span>
-            <span class="step-badge">PAGE 2 / 3</span>
+        <div class="rule-card">
+          <div class="rule-card-head">
+            <span class="rule-mol">Prasugrel (Efient®)</span>
+            <span class="rule-fam">Autre AAP</span>
           </div>
-          <img src="assets/page_2_rot270.png" alt="Page 2 du protocole Anticoagulants Cochin" loading="lazy" />
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--adaptation);">✓ Si Adaptation</span>
+            <span>Relais par <strong>Aspirine seule à J-7</strong></span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--arret);">✕ Si Arrêt</span>
+            <span>Dernière prise à <strong>J-7</strong></span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--poursuite);">↻ Reprise</span>
+            <span><strong>Aspirine H+6</strong>, reprise ttt habituel à <strong>J+1</strong></span>
+          </div>
         </div>
 
-        <div class="doc-page-card">
-          <div class="step-header">
-            <span class="step-title">Page 3 — Règles d'adaptation, d'arrêt et de reprise</span>
-            <span class="step-badge">PAGE 3 / 3</span>
+        <div class="rule-card">
+          <div class="rule-card-head">
+            <span class="rule-mol">Aspirine + autre AAP (Duoplavin®)</span>
+            <span class="rule-fam">Double AAP</span>
           </div>
-          <img src="assets/anticoag_page_3.png" alt="Page 3 des règles d'adaptation et arrêt" loading="lazy" />
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--adaptation);">✓ Si Adaptation</span>
+            <span>Maintien <strong>Aspirine seule dès J-5</strong> (arrêt 2e AAP à J-5)</span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--arret);">✕ Si Arrêt</span>
+            <span>Arrêt à <strong>J-5</strong> (discuter avec cardiologue)</span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--poursuite);">↻ Reprise</span>
+            <span><strong>Aspirine H+6</strong>, reprise ttt à <strong>J+1</strong></span>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-head">
+            <span class="rule-mol">AVK : Coumadine®, Préviscan®, Sintrom®</span>
+            <span class="rule-fam">AVK</span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--arret);">✕ Si Arrêt</span>
+            <span>
+              • <strong>Warfarine (Coumadine®)</strong> : dernière prise <strong>J-6</strong><br>
+              • <strong>Fluindione (Préviscan®)</strong> : dernière prise <strong>J-5</strong><br>
+              • <strong>Acénocoumarol (Sintrom®)</strong> : dernière prise <strong>J-4</strong>
+            </span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--poursuite);">↻ Reprise</span>
+            <span>Reprise à <strong>J+1</strong></span>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-head">
+            <span class="rule-mol">Eliquis®, Xarelto®, Lixiana®</span>
+            <span class="rule-fam">AOD (xaban)</span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--adaptation);">✓ Si Adaptation</span>
+            <span><strong>Sauter prise veille au soir ET matin du geste</strong> (1x/j ou 2x/j). Reprise <strong>≥ H+6</strong> aux doses habituelles.</span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--arret);">✕ Si Arrêt</span>
+            <span>
+              • <strong>DFG ≥ 30</strong> : dernière prise <strong>J-3</strong><br>
+              • <strong>DFG &lt; 30</strong> : dernière prise <strong>J-5</strong><br>
+              Reprise 12–24h à dose préventive, puis 48–72h à dose curative.
+            </span>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-head">
+            <span class="rule-mol">Dabigatran (Pradaxa®)</span>
+            <span class="rule-fam">AOD (Pradaxa)</span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--adaptation);">✓ Si Adaptation</span>
+            <span><strong>Sauter prise veille au soir ET matin du geste</strong>. Reprise <strong>≥ H+6</strong> après fin du geste.</span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--arret);">✕ Si Arrêt</span>
+            <span>
+              • <strong>DFG ≥ 50</strong> : dernière prise <strong>J-3</strong><br>
+              • <strong>30 ≤ DFG &lt; 50</strong> : dernière prise <strong>J-5</strong><br>
+              Reprise 12–24h à dose préventive, puis 48–72h à dose curative.
+            </span>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-card-head">
+            <span class="rule-mol">Héparines (HBPM, HNF SC, HNF IVSE)</span>
+            <span class="rule-fam">Héparines</span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--adaptation);">✓ Adaptation systématique</span>
+            <span>
+              • <strong>HBPM (Lovenox®, Innohep®)</strong> : <strong>H-24</strong><br>
+              • <strong>HNF SC (Calciparine®)</strong> : entre <strong>H-8 et H-12</strong><br>
+              • <strong>HNF IVSE (Héparine sodique)</strong> : entre <strong>H-4 et H-6</strong>
+            </span>
+          </div>
+          <div class="rule-row">
+            <span class="rule-row-label" style="color:var(--poursuite);">↻ Reprise</span>
+            <span><strong>H+6</strong> à dose préventive, et si besoin <strong>J2</strong> à dose curative</span>
+          </div>
         </div>
       </div>
     </section>
 
     <footer class="footer-note">
-      COCHIN·OS RADIO B • RFE GIHP / SFAR / FRI / SFR (AVRIL 2026 — MAJ JUILLET 2026)
+      COCHIN·OS RADIO B • DR TALABARD, DR DASTE, DR CHAGNAS-MARTIN (MAJ JUILLET 2026)
     </footer>
   </div>
 
   <script>
-    // =========================================================================
-    // BASE DE DONNÉES EXACTE DU PROTOCOLE COCHIN RADIO B (JUILLET 2026)
-    // =========================================================================
-
     const PROCEDURES = [
-      // 1. Articulations périphériques, bursales et péritendineuses (y compris PRP)
+      // 1. Périphérique & PRP
       {
         id: "hanche",
         category: "Périphérique & PRP",
-        categoryFull: "Articulations périphériques, bursales et péritendineuses (y compris PRP)",
         title: "Hanche",
-        subtitle: "Infiltration / arthro-infiltration / bourse / PRP",
-        cells: {
-          aspirine: "poursuite",
-          autre_aap: "poursuite",
-          bitherapie_aap: "poursuite",
-          avk: "poursuite",
-          aod: "poursuite",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        subtitle: "Infiltration / PRP",
+        cells: { aspirine: "poursuite", autre_aap: "poursuite", bitherapie_aap: "poursuite", avk: "poursuite", aod: "poursuite", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "genou",
         category: "Périphérique & PRP",
-        categoryFull: "Articulations périphériques, bursales et péritendineuses (y compris PRP)",
         title: "Genou",
-        subtitle: "Infiltration / PRP (Adaptation AOD si lavage articulaire)",
-        cells: {
-          aspirine: "poursuite",
-          autre_aap: "poursuite",
-          bitherapie_aap: "poursuite",
-          avk: "poursuite",
-          aod: "poursuite_ou_adaptation",
-          aodCondition: "Poursuite (✓ Adaptation si lavage articulaire)",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        subtitle: "Adaptation AOD si lavage",
+        cells: { aspirine: "poursuite", autre_aap: "poursuite", bitherapie_aap: "poursuite", avk: "poursuite", aod: "poursuite_ou_adaptation", aodCondition: "Poursuite (Adaptation si lavage)", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "cheville_pied",
         category: "Périphérique & PRP",
-        categoryFull: "Articulations périphériques, bursales et péritendineuses (y compris PRP)",
-        title: "Cheville et pied",
-        subtitle: "Infiltration articulaire, bursale, tendineuse ou PRP",
-        cells: {
-          aspirine: "poursuite",
-          autre_aap: "poursuite",
-          bitherapie_aap: "poursuite",
-          avk: "poursuite",
-          aod: "poursuite",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        title: "Cheville & pied",
+        subtitle: "Infiltration / PRP",
+        cells: { aspirine: "poursuite", autre_aap: "poursuite", bitherapie_aap: "poursuite", avk: "poursuite", aod: "poursuite", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "epaule",
         category: "Périphérique & PRP",
-        categoryFull: "Articulations périphériques, bursales et péritendineuses (y compris PRP)",
         title: "Épaule",
-        subtitle: "Infiltration / BSAD / PRP (Adaptation AOD si capsulodistension)",
-        cells: {
-          aspirine: "poursuite",
-          autre_aap: "poursuite",
-          bitherapie_aap: "poursuite",
-          avk: "poursuite",
-          aod: "poursuite_ou_adaptation",
-          aodCondition: "Poursuite (✓ Adaptation si capsulodistension)",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        subtitle: "Adaptation AOD si capsulodistension",
+        cells: { aspirine: "poursuite", autre_aap: "poursuite", bitherapie_aap: "poursuite", avk: "poursuite", aod: "poursuite_ou_adaptation", aodCondition: "Poursuite (Adaptation si capsulodistension)", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "coude",
         category: "Périphérique & PRP",
-        categoryFull: "Articulations périphériques, bursales et péritendineuses (y compris PRP)",
         title: "Coude",
-        subtitle: "Infiltration articulaire, épicondylienne ou PRP",
-        cells: {
-          aspirine: "poursuite",
-          autre_aap: "poursuite",
-          bitherapie_aap: "poursuite",
-          avk: "poursuite",
-          aod: "poursuite",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        subtitle: "Infiltration / PRP",
+        cells: { aspirine: "poursuite", autre_aap: "poursuite", bitherapie_aap: "poursuite", avk: "poursuite", aod: "poursuite", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "poignet_main",
         category: "Périphérique & PRP",
-        categoryFull: "Articulations périphériques, bursales et péritendineuses (y compris PRP)",
-        title: "Poignet et main",
-        subtitle: "Infiltration articulaire, gaine tendineuse ou PRP",
-        cells: {
-          aspirine: "poursuite",
-          autre_aap: "poursuite",
-          bitherapie_aap: "poursuite",
-          avk: "poursuite",
-          aod: "poursuite",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        title: "Poignet & main",
+        subtitle: "Infiltration / PRP",
+        cells: { aspirine: "poursuite", autre_aap: "poursuite", bitherapie_aap: "poursuite", avk: "poursuite", aod: "poursuite", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
 
       // 2. Rachis
       {
         id: "iap_lombaire",
         category: "Rachis",
-        categoryFull: "Rachis",
         title: "IAP lombaire",
-        subtitle: "Infiltration articulaire postérieure lombaire",
-        cells: {
-          aspirine: "poursuite",
-          autre_aap: "poursuite",
-          bitherapie_aap: "poursuite",
-          avk: "poursuite",
-          aod: "poursuite",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        subtitle: "Articulaire postérieure lombaire",
+        cells: { aspirine: "poursuite", autre_aap: "poursuite", bitherapie_aap: "poursuite", avk: "poursuite", aod: "poursuite", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "epidurale_lombaire_basse",
         category: "Rachis",
-        categoryFull: "Rachis",
         title: "Épidurale lombaire basse",
-        subtitle: "Voie inter-épineuse / hiatus sacro-coccygien (lombaire basse)",
-        cells: {
-          aspirine: "poursuite",
-          autre_aap: "adaptation",
-          bitherapie_aap: "adaptation",
-          avk: "arret",
-          aod: "adaptation",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        subtitle: "Inter-épineuse / hiatus",
+        cells: { aspirine: "poursuite", autre_aap: "adaptation", bitherapie_aap: "adaptation", avk: "arret", aod: "adaptation", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "epidurale_lombaire_haute",
         category: "Rachis",
-        categoryFull: "Rachis",
-        title: "Épidurale lombaire haute / Foraminale",
-        subtitle: "Infiltration épidurale lombaire haute ou radiculaire",
-        cells: {
-          aspirine: "poursuite",
-          autre_aap: "arret",
-          bitherapie_aap: "arret",
-          avk: "arret",
-          aod: "arret",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        title: "Épidurale lombaire haute",
+        subtitle: "Haute ou foraminale",
+        cells: { aspirine: "poursuite", autre_aap: "arret", bitherapie_aap: "arret", avk: "arret", aod: "arret", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "iap_cervicale",
         category: "Rachis",
-        categoryFull: "Rachis",
         title: "IAP cervicale",
-        subtitle: "Infiltration articulaire postérieure cervicale",
-        cells: {
-          aspirine: "poursuite",
-          autre_aap: "arret",
-          bitherapie_aap: "arret",
-          avk: "arret",
-          aod: "arret",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        subtitle: "Articulaire postérieure cervicale",
+        cells: { aspirine: "poursuite", autre_aap: "arret", bitherapie_aap: "arret", avk: "arret", aod: "arret", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "intra_durale",
         category: "Rachis",
-        categoryFull: "Rachis",
-        title: "Intra-durale / Saccoradiculographie",
-        subtitle: "Ponction lombaire / infiltration intra-durale / myélographie",
-        cells: {
-          aspirine: "poursuite",
-          autre_aap: "arret",
-          bitherapie_aap: "arret",
-          avk: "arret",
-          aod: "arret",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        title: "Intra-durale / Sacco",
+        subtitle: "PL / saccoradiculographie",
+        cells: { aspirine: "poursuite", autre_aap: "arret", bitherapie_aap: "arret", avk: "arret", aod: "arret", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "sacro_iliaque",
         category: "Rachis",
-        categoryFull: "Rachis",
         title: "Sacro-iliaque",
-        subtitle: "Infiltration de l'articulation sacro-iliaque",
-        cells: {
-          aspirine: "poursuite",
-          autre_aap: "arret",
-          bitherapie_aap: "arret",
-          avk: "arret",
-          aod: "arret",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        subtitle: "Infiltration sacro-iliaque",
+        cells: { aspirine: "poursuite", autre_aap: "arret", bitherapie_aap: "arret", avk: "arret", aod: "arret", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
 
-      // 3. Cimentoplasties et vissages
+      // 3. Cimentoplastie & Vissage
       {
         id: "cimentoplastie_vertebrale",
-        category: "Cimentoplastie & Vissage",
-        categoryFull: "Cimentoplasties et vissages",
+        category: "Cimento & Vissage",
         title: "Cimentoplastie vertébrale",
-        subtitle: "Vertébroplastie / cyphoplastie percutanée",
-        cells: {
-          aspirine: "arret",
-          autre_aap: "arret",
-          bitherapie_aap: "arret",
-          avk: "arret",
-          aod: "arret",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        subtitle: "Vertébroplastie / cyphoplastie",
+        cells: { aspirine: "arret", autre_aap: "arret", bitherapie_aap: "arret", avk: "arret", aod: "arret", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "sacroplastie",
-        category: "Cimentoplastie & Vissage",
-        categoryFull: "Cimentoplasties et vissages",
+        category: "Cimento & Vissage",
         title: "Sacroplastie",
-        subtitle: "Cimentoplastie sacrée sous scanner / scopie",
-        cells: {
-          aspirine: "arret",
-          autre_aap: "arret",
-          bitherapie_aap: "arret",
-          avk: "arret",
-          aod: "arret",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        subtitle: "Cimentoplastie sacrée",
+        cells: { aspirine: "arret", autre_aap: "arret", bitherapie_aap: "arret", avk: "arret", aod: "arret", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "vissage_bassin",
-        category: "Cimentoplastie & Vissage",
-        categoryFull: "Cimentoplasties et vissages",
-        title: "Vissage cimenté du bassin",
-        subtitle: "Ostéosynthèse percutanée / vissage ilio-sacré ou cotyloïdien",
-        cells: {
-          aspirine: "arret",
-          autre_aap: "arret",
-          bitherapie_aap: "arret",
-          avk: "arret",
-          aod: "arret",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        category: "Cimento & Vissage",
+        title: "Vissage cimenté bassin",
+        subtitle: "Ostéosynthèse percutanée",
+        cells: { aspirine: "arret", autre_aap: "arret", bitherapie_aap: "arret", avk: "arret", aod: "arret", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
 
-      // 4. Biopsie percutanée
+      // 4. Biopsies
       {
         id: "biopsie_pm_superficielle",
         category: "Biopsies",
-        categoryFull: "Biopsie percutanée",
-        title: "Biopsie des parties molles (superficielle)",
-        subtitle: "Masse superficielle compressible",
-        cells: {
-          aspirine: "poursuite",
-          autre_aap: "poursuite",
-          bitherapie_aap: "poursuite",
-          avk: "poursuite",
-          aod: "poursuite",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        title: "Biopsie PM superficielle",
+        subtitle: "Parties molles (superficielle)",
+        cells: { aspirine: "poursuite", autre_aap: "poursuite", bitherapie_aap: "poursuite", avk: "poursuite", aod: "poursuite", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "biopsie_pm_profonde",
         category: "Biopsies",
-        categoryFull: "Biopsie percutanée",
-        title: "Biopsie des parties molles (profonde)",
-        subtitle: "Masse profonde / loge non compressible",
-        cells: {
-          aspirine: "arret",
-          autre_aap: "arret",
-          bitherapie_aap: "arret",
-          avk: "arret",
-          aod: "arret",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        title: "Biopsie PM profonde",
+        subtitle: "Parties molles (masse profonde)",
+        cells: { aspirine: "arret", autre_aap: "arret", bitherapie_aap: "arret", avk: "arret", aod: "arret", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "biopsie_synoviale",
         category: "Biopsies",
-        categoryFull: "Biopsie percutanée",
         title: "Biopsie synoviale",
-        subtitle: "Prélèvement synovial sous échographie ou scanner",
-        cells: {
-          aspirine: "arret",
-          autre_aap: "arret",
-          bitherapie_aap: "arret",
-          avk: "arret",
-          aod: "arret",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        subtitle: "Échographie ou scanner",
+        cells: { aspirine: "arret", autre_aap: "arret", bitherapie_aap: "arret", avk: "arret", aod: "arret", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "biopsie_osseuse",
         category: "Biopsies",
-        categoryFull: "Biopsie percutanée",
-        title: "Biopsie osseuse ou disco-vertébrale",
-        subtitle: "Trocart osseux / biopsie de spondylodiscite ou tumeur osseuse",
-        cells: {
-          aspirine: "arret",
-          autre_aap: "arret",
-          bitherapie_aap: "arret",
-          avk: "arret",
-          aod: "arret",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        title: "Biopsie osseuse / disco",
+        subtitle: "Osseuse ou disco-vertébrale",
+        cells: { aspirine: "arret", autre_aap: "arret", bitherapie_aap: "arret", avk: "arret", aod: "arret", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
 
-      // 5. Ablation tumorale percutanée
+      // 5. Ablations
       {
         id: "rf_cryo_nerfs",
-        category: "Ablation / Thermo",
-        categoryFull: "Ablation tumorale percutanée",
-        title: "RF / Cryoablation des nerfs superficiels",
-        subtitle: "Nerfs géniculés, névrome de Morton",
-        cells: {
-          aspirine: "poursuite",
-          autre_aap: "poursuite",
-          bitherapie_aap: "poursuite",
-          avk: "poursuite",
-          aod: "poursuite",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        category: "Ablations",
+        title: "RF / Cryo nerfs",
+        subtitle: "Nerfs géniculés, Morton",
+        cells: { aspirine: "poursuite", autre_aap: "poursuite", bitherapie_aap: "poursuite", avk: "poursuite", aod: "poursuite", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "rf_cryo_profonde",
-        category: "Ablation / Thermo",
-        categoryFull: "Ablation tumorale percutanée",
-        title: "RF / Cryoablation tumeur profonde",
-        subtitle: "Tumeur profonde osseuse (ostéome ostéoïde, métastase) ou parties molles",
-        cells: {
-          aspirine: "arret",
-          autre_aap: "arret",
-          bitherapie_aap: "arret",
-          avk: "arret",
-          aod: "arret",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        category: "Ablations",
+        title: "RF / Cryo tumeur profonde",
+        subtitle: "Osseuse ou parties molles",
+        cells: { aspirine: "arret", autre_aap: "arret", bitherapie_aap: "arret", avk: "arret", aod: "arret", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       },
       {
         id: "ect_sclerotherapie",
-        category: "Ablation / Thermo",
-        categoryFull: "Ablation tumorale percutanée",
-        title: "Électrochimiothérapie / Sclérothérapie",
-        subtitle: "Traitement percutané sous guidage imagerie",
-        cells: {
-          aspirine: "arret",
-          autre_aap: "arret",
-          bitherapie_aap: "arret",
-          avk: "arret",
-          aod: "arret",
-          hbpm: "adaptation",
-          hnf_sc: "adaptation",
-          hnf_ivse: "adaptation"
-        }
+        category: "Ablations",
+        title: "ECT / Sclérothérapie",
+        subtitle: "Électrochimiothérapie / Scléro",
+        cells: { aspirine: "arret", autre_aap: "arret", bitherapie_aap: "arret", avk: "arret", aod: "arret", hbpm: "adaptation", hnf_sc: "adaptation", hnf_ivse: "adaptation" }
       }
     ];
 
@@ -1685,171 +1277,57 @@
       {
         id: "aspirine",
         colKey: "aspirine",
-        family: "AAP",
         title: "Aspirine seule",
-        brands: "Kardégic®, Résitune®, Aspirine Protect®",
+        brands: "Kardégic®, Résitune®",
         rules: {
-          adaptation: {
-            text: "Poursuite habituelle (pas de schéma d'adaptation spécifique)",
-            daysBefore: 0
-          },
-          arret: {
-            text: "Dernière prise à J-3",
-            detail: "Arrêt 3 jours avant le geste (dernière prise à J-3).",
-            daysBefore: 3
-          },
-          reprise: "Reprise à H+6 après la fin du geste."
+          adaptation: { text: "Poursuite habituelle", detail: "Pas d'arrêt nécessaire." },
+          arret: { text: "Dernière prise à J-3", detail: "Arrêt 3 jours avant le geste." },
+          reprise: "Reprise à H+6 après le geste."
         }
       },
       {
         id: "clopidogrel",
         colKey: "autre_aap",
-        family: "Autre AAP",
-        title: "Clopidogrel (Plavix®)",
-        brands: "Plavix® 75 mg",
+        title: "Clopidogrel / Ticagrélor",
+        brands: "Plavix®, Brilique®",
         rules: {
-          adaptation: {
-            text: "Relais par Aspirine seule à J-5",
-            detail: "Arrêt du Clopidogrel à J-5 avec relais par Aspirine seule.",
-            daysBefore: 5
-          },
-          arret: {
-            text: "Dernière prise à J-5",
-            detail: "Arrêt complet : dernière prise de Clopidogrel à J-5.",
-            daysBefore: 5
-          },
-          reprise: "Aspirine à H+6, reprise du Clopidogrel (ttt habituel) à J+1."
-        }
-      },
-      {
-        id: "ticagrelor",
-        colKey: "autre_aap",
-        family: "Autre AAP",
-        title: "Ticagrélor (Brilique®)",
-        brands: "Brilique® 60 / 90 mg",
-        rules: {
-          adaptation: {
-            text: "Relais par Aspirine seule à J-5",
-            detail: "Arrêt du Ticagrélor à J-5 avec relais par Aspirine seule.",
-            daysBefore: 5
-          },
-          arret: {
-            text: "Dernière prise à J-5",
-            detail: "Arrêt complet : dernière prise de Ticagrélor à J-5.",
-            daysBefore: 5
-          },
-          reprise: "Aspirine à H+6, reprise du Ticagrélor (ttt habituel) à J+1."
+          adaptation: { text: "Relais Aspirine seule à J-5", detail: "Arrêt Plavix/Brilique à J-5 et relais Aspirine seule." },
+          arret: { text: "Dernière prise à J-5", detail: "Arrêt complet à J-5." },
+          reprise: "Aspirine à H+6, reprise ttt habituel à J+1."
         }
       },
       {
         id: "prasugrel",
         colKey: "autre_aap",
-        family: "Autre AAP",
-        title: "Prasugrel (Efient®)",
-        brands: "Efient® 10 mg",
+        title: "Prasugrel",
+        brands: "Efient®",
         rules: {
-          adaptation: {
-            text: "Relais par Aspirine seule à J-7",
-            detail: "Arrêt du Prasugrel à J-7 avec relais par Aspirine seule.",
-            daysBefore: 7
-          },
-          arret: {
-            text: "Dernière prise à J-7",
-            detail: "Arrêt complet : dernière prise de Prasugrel à J-7.",
-            daysBefore: 7
-          },
-          reprise: "Aspirine à H+6, reprise du Prasugrel (ttt habituel) à J+1."
+          adaptation: { text: "Relais Aspirine seule à J-7", detail: "Arrêt Efient à J-7 et relais Aspirine seule." },
+          arret: { text: "Dernière prise à J-7", detail: "Arrêt complet à J-7." },
+          reprise: "Aspirine à H+6, reprise Efient à J+1."
         }
       },
       {
         id: "bitherapie_aap",
         colKey: "bitherapie_aap",
-        family: "Double AAP",
-        title: "Aspirine + autre AAP (Duoplavin®)",
-        brands: "Duoplavin®, Kardégic + Plavix / Brilique / Efient",
+        title: "Aspirine + autre AAP",
+        brands: "Duoplavin® / Bithérapie",
         rules: {
-          adaptation: {
-            text: "Aspirine seule à J-5",
-            detail: "Arrêt du 2e AAP à J-5 (J-7 si Prasugrel) et maintien de l'Aspirine seule.",
-            daysBefore: 5
-          },
-          arret: {
-            text: "Arrêt à J-5 (avis cardiologique requis)",
-            detail: "Dernière prise à J-5 (valider impérativement la fenêtre d'arrêt de bithérapie avec le cardiologue/anesthésiste).",
-            daysBefore: 5
-          },
-          reprise: "Aspirine à H+6, reprise du traitement complet à J+1."
-        }
-      },
-      {
-        id: "warfarine",
-        colKey: "avk",
-        family: "AVK",
-        title: "Warfarine (Coumadine®)",
-        brands: "Coumadine®",
-        rules: {
-          adaptation: {
-            text: "Contrôle INR",
-            daysBefore: 0
-          },
-          arret: {
-            text: "Dernière prise à J-6 (+ contrôle INR)",
-            detail: "Dernière prise de Warfarine à J-6. Contrôler l'INR avant le geste (cible < 1,5 ; ou ≤ 1,2 pour rachis/neuro-axial).",
-            daysBefore: 6
-          },
-          reprise: "Reprise de la Warfarine à J+1."
-        }
-      },
-      {
-        id: "fluindione",
-        colKey: "avk",
-        family: "AVK",
-        title: "Fluindione (Préviscan®)",
-        brands: "Préviscan®",
-        rules: {
-          adaptation: {
-            text: "Contrôle INR",
-            daysBefore: 0
-          },
-          arret: {
-            text: "Dernière prise à J-5 (+ contrôle INR)",
-            detail: "Dernière prise de Fluindione à J-5. Contrôler l'INR avant le geste (cible < 1,5).",
-            daysBefore: 5
-          },
-          reprise: "Reprise de la Fluindione à J+1."
-        }
-      },
-      {
-        id: "acenocoumarol",
-        colKey: "avk",
-        family: "AVK",
-        title: "Acénocoumarol (Sintrom®)",
-        brands: "Sintrom®, Minisintrom®",
-        rules: {
-          adaptation: {
-            text: "Contrôle INR",
-            daysBefore: 0
-          },
-          arret: {
-            text: "Dernière prise à J-4 (+ contrôle INR)",
-            detail: "Dernière prise d'Acénocoumarol à J-4. Contrôler l'INR avant le geste (cible < 1,5).",
-            daysBefore: 4
-          },
-          reprise: "Reprise de l'Acénocoumarol à J+1."
+          adaptation: { text: "Aspirine seule dès J-5", detail: "Arrêt du 2e AAP à J-5, maintien Aspirine seule." },
+          arret: { text: "Dernière prise à J-5", detail: "Arrêt à J-5 (avec accord cardiologique)." },
+          reprise: "Aspirine à H+6, reprise ttt complet à J+1."
         }
       },
       {
         id: "aod_xaban",
         colKey: "aod",
-        family: "AOD (Anti-Xa)",
-        title: "Apixaban / Rivaroxaban / Edoxaban",
-        brands: "Eliquis®, Xarelto®, Lixiana®",
-        isXaban: true,
+        title: "Eliquis / Xarelto / Lixiana",
+        brands: "Apixaban, Rivaroxaban, Edoxaban",
+        needsDfgOnStop: true,
         rules: {
           adaptation: {
             text: "Sauter prise veille au soir ET matin du geste",
-            detail: "Sauter la prise de la veille au soir ET du matin du geste (quel que soit le schéma : 1x/j ou 2x/j). Reprendre ≥ 6 h après la fin du geste aux doses habituelles.",
-            daysBefore: 1
+            detail: "Quel que soit le schéma (1x/j ou 2x/j)."
           },
           arret: {
             textByDfg: {
@@ -1857,115 +1335,117 @@
               "30to50": "Dernière prise à J-3 (DFG ≥ 30)",
               lt30: "Dernière prise à J-5 (DFG < 30)"
             },
-            daysByDfg: { gt50: 3, "30to50": 3, lt30: 5 },
-            detail: "DFG ≥ 30 mL/min : dernière prise à J-3. DFG < 30 mL/min : dernière prise à J-5. Reprise 12–24h post-geste à dose préventive, puis reprise 48–72h post-geste à dose curative."
+            detail: "DFG ≥ 30 : dernière prise J-3 • DFG < 30 : dernière prise J-5."
           },
-          repriseAdaptation: "Reprendre ≥ 6 h après la fin du geste aux doses habituelles.",
-          repriseArret: "Entre H6 et J2 : Reprise 12–24h post-geste à dose préventive, puis reprise 48–72h post-geste à dose curative."
+          repriseAdaptation: "Reprise ≥ 6h après la fin du geste aux doses habituelles.",
+          repriseArret: "Reprise 12–24h post-geste à dose préventive, puis 48–72h à dose curative."
         }
       },
       {
         id: "dabigatran",
         colKey: "aod",
-        family: "AOD (Anti-IIa)",
-        title: "Dabigatran (Pradaxa®)",
-        brands: "Pradaxa® 110 / 150 mg",
-        isDabigatran: true,
+        title: "Dabigatran",
+        brands: "Pradaxa®",
+        needsDfgOnStop: true,
         rules: {
           adaptation: {
             text: "Sauter prise veille au soir ET matin du geste",
-            detail: "Sauter la prise de la veille au soir ET du matin du geste. Reprendre ≥ 6 h après la fin du geste.",
-            daysBefore: 1
+            detail: "Suspendre la veille au soir et le matin."
           },
           arret: {
             textByDfg: {
               gt50: "Dernière prise à J-3 (DFG ≥ 50)",
               "30to50": "Dernière prise à J-5 (30 ≤ DFG < 50)",
-              lt30: "Dernière prise ≥ J-5 / Avis spécialisé (DFG < 30)"
+              lt30: "Dernière prise ≥ J-5 (DFG < 30)"
             },
-            daysByDfg: { gt50: 3, "30to50": 5, lt30: 5 },
-            detail: "DFG ≥ 50 mL/min : dernière prise à J-3. 30 ≤ DFG < 50 mL/min : dernière prise à J-5. Reprise 12–24h post-geste à dose préventive, puis reprise 48–72h à dose curative."
+            detail: "DFG ≥ 50 : dernière prise J-3 • 30 ≤ DFG < 50 : dernière prise J-5."
           },
-          repriseAdaptation: "Reprendre ≥ 6 h après la fin du geste aux doses habituelles.",
-          repriseArret: "Entre H6 et J2 : Reprise 12–24h post-geste à dose préventive, puis reprise 48–72h à dose curative."
+          repriseAdaptation: "Reprise ≥ 6h après la fin du geste.",
+          repriseArret: "Reprise 12–24h post-geste à dose préventive, puis 48–72h à dose curative."
+        }
+      },
+      {
+        id: "warfarine",
+        colKey: "avk",
+        title: "Warfarine",
+        brands: "Coumadine® (AVK)",
+        rules: {
+          adaptation: { text: "Poursuite", detail: "" },
+          arret: { text: "Dernière prise à J-6", detail: "Contrôler l'INR avant le geste." },
+          reprise: "Reprise à J+1."
+        }
+      },
+      {
+        id: "fluindione",
+        colKey: "avk",
+        title: "Fluindione",
+        brands: "Préviscan® (AVK)",
+        rules: {
+          adaptation: { text: "Poursuite", detail: "" },
+          arret: { text: "Dernière prise à J-5", detail: "Contrôler l'INR avant le geste." },
+          reprise: "Reprise à J+1."
+        }
+      },
+      {
+        id: "acenocoumarol",
+        colKey: "avk",
+        title: "Acénocoumarol",
+        brands: "Sintrom® (AVK)",
+        rules: {
+          adaptation: { text: "Poursuite", detail: "" },
+          arret: { text: "Dernière prise à J-4", detail: "Contrôler l'INR avant le geste." },
+          reprise: "Reprise à J+1."
         }
       },
       {
         id: "hbpm",
         colKey: "hbpm",
-        family: "Héparine",
-        title: "HBPM (Lovenox®, Innohep®)",
-        brands: "Énoxaparine (Lovenox®), Tinzaparine (Innohep®)",
+        title: "HBPM",
+        brands: "Lovenox®, Innohep®",
         rules: {
-          adaptation: {
-            text: "Dernière injection à H-24",
-            detail: "Suspension à H-24 avant le geste.",
-            daysBefore: 1
-          },
-          arret: {
-            text: "Dernière injection à H-24",
-            detail: "Suspension à H-24 avant le geste.",
-            daysBefore: 1
-          },
-          reprise: "H+6 à dose préventive, et si besoin J2 (48h) à dose curative."
+          adaptation: { text: "Dernière injection à H-24", detail: "Suspendre 24h avant le geste." },
+          arret: { text: "Dernière injection à H-24", detail: "Suspendre 24h avant le geste." },
+          reprise: "H+6 préventive, et si besoin J2 curative."
         }
       },
       {
         id: "hnf_sc",
         colKey: "hnf_sc",
-        family: "Héparine",
-        title: "HNF Sous-Cutanée (Calciparine®)",
-        brands: "Héparine calcique SC",
+        title: "HNF Sous-Cutanée",
+        brands: "Héparine calcique",
         rules: {
-          adaptation: {
-            text: "Arrêt entre H-8 et H-12",
-            detail: "Dernière injection sous-cutanée entre H-8 et H-12 avant le geste.",
-            daysBefore: 0
-          },
-          arret: {
-            text: "Arrêt entre H-8 et H-12",
-            detail: "Dernière injection sous-cutanée entre H-8 et H-12 avant le geste.",
-            daysBefore: 0
-          },
-          reprise: "H+6 à dose préventive, et si besoin J2 à dose curative."
+          adaptation: { text: "Arrêt entre H-8 et H-12", detail: "Dernière injection 8 à 12h avant." },
+          arret: { text: "Arrêt entre H-8 et H-12", detail: "Dernière injection 8 à 12h avant." },
+          reprise: "H+6 préventive, et si besoin J2 curative."
         }
       },
       {
         id: "hnf_ivse",
         colKey: "hnf_ivse",
-        family: "Héparine",
-        title: "HNF IVSE (Héparine sodique)",
-        brands: "Héparine sodique seringue électrique",
+        title: "HNF IVSE",
+        brands: "Héparine sodique SE",
         rules: {
-          adaptation: {
-            text: "Arrêt entre H-4 et H-6",
-            detail: "Suspension de la seringue électrique entre H-4 et H-6 avant le geste.",
-            daysBefore: 0
-          },
-          arret: {
-            text: "Arrêt entre H-4 et H-6",
-            detail: "Suspension de la seringue électrique entre H-4 et H-6 avant le geste.",
-            daysBefore: 0
-          },
-          reprise: "H+6 à dose préventive, et si besoin J2 à dose curative."
+          adaptation: { text: "Arrêt entre H-4 et H-6", detail: "Arrêter la seringue électrique 4 à 6h avant." },
+          arret: { text: "Arrêt entre H-4 et H-6", detail: "Arrêter la seringue électrique 4 à 6h avant." },
+          reprise: "H+6 préventive, et si besoin J2 curative."
         }
       }
     ];
 
-    const CATEGORIES = ["Tous", "Périphérique & PRP", "Rachis", "Cimentoplastie & Vissage", "Biopsies", "Ablation / Thermo"];
+    const CATEGORIES = ["Tous", "Périphérique & PRP", "Rachis", "Cimento & Vissage", "Biopsies", "Ablations"];
 
     let selectedProcId = "epidurale_lombaire_basse";
     let selectedMedId = "aod_xaban";
-    let selectedCat = "Tous";
+    let selectedCat = "Rachis";
+    let matrixCat = "Tous";
     let selectedDfg = "gt50";
+    let currentCrText = "";
 
     const THEME_STORAGE_KEY = "cochin_os_theme_v1";
 
     function applyTheme(mode) {
       const isDark = mode === "negatoscope";
       document.documentElement.classList.toggle("negatoscope", isDark);
-      const label = document.getElementById("themeLabel");
-      if (label) label.textContent = isDark ? "PAPIER RADIO" : "NÉGATOSCOPE";
       const meta = document.getElementById("metaThemeColor");
       if (meta) meta.setAttribute("content", isDark ? "#070B10" : "#F2EFE9");
     }
@@ -1988,19 +1468,25 @@
 
     function setDfg(val) {
       selectedDfg = val;
-      document.querySelectorAll(".dfg-pill").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.dfg === val);
-      });
       renderDecisionResult();
     }
 
     function renderCategoryPills() {
       const container = document.getElementById("procCatPills");
       container.innerHTML = CATEGORIES.map(cat => `
-        <button type="button" class="cat-pill ${selectedCat === cat ? 'active' : ''}" onclick="selectCategory('${cat}')">
+        <button type="button" class="cat-btn ${selectedCat === cat ? 'active' : ''}" onclick="selectCategory('${cat}')">
           ${cat}
         </button>
       `).join("");
+
+      const mContainer = document.getElementById("matrixCatPills");
+      if (mContainer) {
+        mContainer.innerHTML = CATEGORIES.map(cat => `
+          <button type="button" class="cat-btn ${matrixCat === cat ? 'active' : ''}" onclick="selectMatrixCategory('${cat}')">
+            ${cat}
+          </button>
+        `).join("");
+      }
     }
 
     function selectCategory(cat) {
@@ -2009,274 +1495,140 @@
       renderProcedureChoices();
     }
 
-    function renderProcedureChoices() {
-      const q = (document.getElementById("procSearchInput").value || "").toLowerCase().trim();
-      const grid = document.getElementById("procChoiceGrid");
+    function selectMatrixCategory(cat) {
+      matrixCat = cat;
+      renderCategoryPills();
+      renderAllMatrices();
+    }
 
-      const filtered = PROCEDURES.filter(p => {
-        const matchCat = selectedCat === "Tous" || p.category === selectedCat;
-        const matchQ = !q || p.title.toLowerCase().includes(q) || p.subtitle.toLowerCase().includes(q) || p.categoryFull.toLowerCase().includes(q);
-        return matchCat && matchQ;
-      });
+    function renderProcedureChoices() {
+      const grid = document.getElementById("procChoiceGrid");
+      const filtered = PROCEDURES.filter(p => selectedCat === "Tous" || p.category === selectedCat);
 
       grid.innerHTML = filtered.map(p => `
-        <button type="button" class="choice-btn ${p.id === selectedProcId ? 'selected' : ''}" onclick="selectProcedure('${p.id}')">
-          <span class="choice-cat-tag">${p.category}</span>
-          <span class="choice-label">${p.title}</span>
-          <span class="choice-sub">${p.subtitle}</span>
+        <button type="button" class="item-chip ${p.id === selectedProcId ? 'selected' : ''}" onclick="selectProcedure('${p.id}')">
+          <span class="chip-name">${p.title}</span>
+          <span class="chip-brand">${p.subtitle}</span>
         </button>
       `).join("");
     }
 
     function selectProcedure(id) {
       selectedProcId = id;
+      const p = PROCEDURES.find(x => x.id === id);
+      if (p) document.getElementById("selectedProcLabel").textContent = p.title;
       renderProcedureChoices();
       renderDecisionResult();
     }
 
     function renderMedChoices() {
-      const q = (document.getElementById("medSearchInput").value || "").toLowerCase().trim();
       const grid = document.getElementById("medChoiceGrid");
-
-      const filtered = MEDICATIONS.filter(m => {
-        return !q || m.title.toLowerCase().includes(q) || m.brands.toLowerCase().includes(q) || m.family.toLowerCase().includes(q);
-      });
-
-      grid.innerHTML = filtered.map(m => `
-        <button type="button" class="choice-btn ${m.id === selectedMedId ? 'selected' : ''}" onclick="selectMed('${m.id}')">
-          <span class="choice-cat-tag">${m.family}</span>
-          <span class="choice-label">${m.title}</span>
-          <span class="choice-sub">${m.brands}</span>
+      grid.innerHTML = MEDICATIONS.map(m => `
+        <button type="button" class="item-chip ${m.id === selectedMedId ? 'selected' : ''}" onclick="selectMed('${m.id}')">
+          <span class="chip-name">${m.title}</span>
+          <span class="chip-brand">${m.brands}</span>
         </button>
       `).join("");
     }
 
     function selectMed(id) {
       selectedMedId = id;
+      const m = MEDICATIONS.find(x => x.id === id);
+      if (m) document.getElementById("selectedMedLabel").textContent = m.title;
       renderMedChoices();
       renderDecisionResult();
     }
 
-    function formatDateFr(dateObj) {
-      return dateObj.toLocaleDateString("fr-FR", {
-        weekday: "short",
-        day: "2-digit",
-        month: "short"
-      });
-    }
-
-    function addDays(baseDateStr, deltaDays) {
-      const [y, m, d] = baseDateStr.split("-").map(Number);
-      const dt = new Date(y, m - 1, d, 12, 0, 0);
-      dt.setDate(dt.getDate() + deltaDays);
-      return dt;
-    }
-
-    function computeGuidance(proc, med, dfg, dateStr) {
+    function computeGuidance(proc, med, dfg) {
       const rawAction = proc.cells[med.colKey];
       let statusKey = "poursuite";
-      let statusLabel = "✓ POURSUITE DU TRAITEMENT";
+      let statusLabel = "POURSUITE DU TRAITEMENT";
       let statusIcon = "✓";
-      let preGesteTitle = "Aucune suspension requise";
-      let preGesteDetail = `Poursuite habituelle de ${med.title} (${med.brands}) pour ce geste.`;
-      let repriseTitle = "Poursuite continue";
-      let repriseDetail = "Pas d'interruption du traitement.";
-      let daysBefore = 0;
+      let beforeMain = "Aucun arrêt requis";
+      let beforeSub = `Poursuivre ${med.title} aux doses habituelles.`;
+      let afterMain = "Poursuite continue";
+      let afterSub = "Aucune modification post-geste.";
+      let showDfg = false;
 
-      if (rawAction === "poursuite") {
-        statusKey = "poursuite";
-        statusLabel = "✓ POURSUITE DU TRAITEMENT";
-        statusIcon = "✓";
-      } else if (rawAction === "poursuite_ou_adaptation") {
+      if (rawAction === "poursuite_ou_adaptation") {
         statusKey = "adaptation";
-        statusLabel = "✓ POURSUITE (OU ADAPTATION SELON GESTE)";
+        statusLabel = proc.id === "genou" ? "POURSUITE (ADAPTATION SI LAVAGE)" : "POURSUITE (ADAPTATION SI CAPSULODISTENSION)";
         statusIcon = "◐";
-        preGesteTitle = proc.cells.aodCondition || "Poursuite (Adaptation si geste spécifique)";
-        preGesteDetail = `• Geste standard (${proc.title}) : Poursuite.\n• Si ${proc.id === 'genou' ? 'lavage articulaire' : 'capsulodistension'} : ${med.rules.adaptation.detail}`;
-        repriseTitle = "Reprise ≥ H+6 (si adaptation)";
-        repriseDetail = med.rules.repriseAdaptation || med.rules.reprise;
-        daysBefore = 1;
+        beforeMain = proc.id === "genou" ? "Infiltration simple : Poursuite • Lavage : Sauter veille au soir + matin" : "Infiltration simple : Poursuite • Capsulodistension : Sauter veille au soir + matin";
+        beforeSub = med.rules.adaptation.detail;
+        afterMain = "Reprise ≥ H+6 (si adaptation)";
+        afterSub = med.rules.repriseAdaptation || med.rules.reprise;
       } else if (rawAction === "adaptation") {
         statusKey = "adaptation";
-        statusLabel = "⚡ ADAPTATION DU TRAITEMENT";
+        statusLabel = "ADAPTATION DU TRAITEMENT";
         statusIcon = "⚡";
-        preGesteTitle = med.rules.adaptation.text;
-        preGesteDetail = med.rules.adaptation.detail || med.rules.adaptation.text;
-        repriseTitle = med.rules.repriseAdaptation || med.rules.reprise;
-        repriseDetail = med.rules.repriseAdaptation || med.rules.reprise;
-        daysBefore = med.rules.adaptation.daysBefore ?? 1;
+        beforeMain = med.rules.adaptation.text;
+        beforeSub = med.rules.adaptation.detail || "";
+        afterMain = med.rules.repriseAdaptation || med.rules.reprise;
+        afterSub = "Selon protocole RFE GIHP / SFAR 2026.";
       } else if (rawAction === "arret") {
         statusKey = "arret";
-        statusLabel = "✕ ARRÊT PRÉ-PROCÉDURAL";
+        statusLabel = "ARRÊT PRÉ-PROCÉDURAL";
         statusIcon = "✕";
-        if (med.rules.arret.textByDfg) {
-          preGesteTitle = med.rules.arret.textByDfg[dfg];
-          daysBefore = med.rules.arret.daysByDfg[dfg];
+        if (med.needsDfgOnStop && med.rules.arret.textByDfg) {
+          showDfg = true;
+          beforeMain = med.rules.arret.textByDfg[dfg];
         } else {
-          preGesteTitle = med.rules.arret.text;
-          daysBefore = med.rules.arret.daysBefore || 0;
+          beforeMain = med.rules.arret.text;
         }
-        preGesteDetail = med.rules.arret.detail || preGesteTitle;
-        repriseTitle = med.rules.repriseArret || med.rules.reprise;
-        repriseDetail = med.rules.repriseArret || med.rules.reprise;
+        beforeSub = med.rules.arret.detail || "";
+        afterMain = med.rules.repriseArret || med.rules.reprise;
+        afterSub = "Reprise après validation de l'hémostase.";
       }
 
-      // Build timeline if dateStr is provided
-      const timeline = [];
-      if (dateStr) {
-        const j0 = addDays(dateStr, 0);
-        if (rawAction === "poursuite") {
-          timeline.push({
-            dateLabel: `J0 (${formatDateFr(j0)})`,
-            desc: `Geste réalisé sous ${med.title} sans interruption`
-          });
-        } else if (rawAction === "adaptation" || rawAction === "poursuite_ou_adaptation") {
-          if (med.colKey === "aod") {
-            const jMinus1 = addDays(dateStr, -1);
-            timeline.push({
-              dateLabel: `J-1 Soir (${formatDateFr(jMinus1)})`,
-              desc: "Sauter la prise de la veille au soir"
-            });
-            timeline.push({
-              dateLabel: `J0 Matin (${formatDateFr(j0)})`,
-              desc: "Sauter la prise du matin • Réalisation du geste"
-            });
-            timeline.push({
-              dateLabel: `J0 à H+6 (${formatDateFr(j0)})`,
-              desc: "Reprise ≥ 6h après la fin du geste aux doses habituelles"
-            });
-          } else if (daysBefore > 0) {
-            const jStop = addDays(dateStr, -daysBefore);
-            timeline.push({
-              dateLabel: `J-${daysBefore} (${formatDateFr(jStop)})`,
-              desc: preGesteTitle
-            });
-            timeline.push({
-              dateLabel: `J0 (${formatDateFr(j0)})`,
-              desc: `Geste : ${proc.title}`
-            });
-            timeline.push({
-              dateLabel: `Post-geste`,
-              desc: repriseTitle
-            });
-          } else {
-            timeline.push({
-              dateLabel: `J0 (${formatDateFr(j0)})`,
-              desc: `${preGesteTitle} • Réalisation du geste`
-            });
-            timeline.push({
-              dateLabel: `Post-geste`,
-              desc: repriseTitle
-            });
-          }
-        } else if (rawAction === "arret") {
-          if (daysBefore > 0) {
-            const jLast = addDays(dateStr, -daysBefore);
-            timeline.push({
-              dateLabel: `J-${daysBefore} (${formatDateFr(jLast)})`,
-              desc: `Dernière prise de ${med.title}`
-            });
-          }
-          timeline.push({
-            dateLabel: `J0 (${formatDateFr(j0)})`,
-            desc: `Jour du geste (${proc.title})${med.colKey === 'avk' ? ' • Vérifier INR' : ''}`
-          });
-          const jPlus1 = addDays(dateStr, 1);
-          const jPlus2 = addDays(dateStr, 2);
-          if (med.colKey === "aod") {
-            timeline.push({
-              dateLabel: `H+12 à H+24 (${formatDateFr(jPlus1)})`,
-              desc: "Reprise à dose préventive (12–24h post-geste)"
-            });
-            timeline.push({
-              dateLabel: `J+2 à J+3 (${formatDateFr(jPlus2)})`,
-              desc: "Reprise à dose curative (48–72h post-geste)"
-            });
-          } else {
-            timeline.push({
-              dateLabel: `Reprise (${formatDateFr(jPlus1)})`,
-              desc: repriseTitle
-            });
-          }
-        }
-      }
+      const crText = `[Protocole Anticoagulants Cochin Radio B] ${proc.title} sous ${med.title} (${med.brands}) : ${statusLabel}. Avant : ${beforeMain}. Reprise : ${afterMain}`;
 
-      const crText = `[Protocole Anticoagulants Cochin Radio B — RFE GIHP/SFAR/FRI/SFR]\n• Geste : ${proc.title} (${proc.category})\n• Traitement : ${med.title} (${med.brands})\n• Conduite : ${statusLabel.replace(/^[✓✕⚡◐]\s*/, '')}\n• Avant le geste : ${preGesteDetail}\n• Reprise : ${repriseDetail}`;
-
-      return {
-        statusKey,
-        statusLabel,
-        statusIcon,
-        preGesteTitle,
-        preGesteDetail,
-        repriseTitle,
-        repriseDetail,
-        timeline,
-        crText
-      };
+      return { statusKey, statusLabel, statusIcon, beforeMain, beforeSub, afterMain, afterSub, showDfg, crText };
     }
-
-    let currentCrText = "";
 
     function renderDecisionResult() {
       const proc = PROCEDURES.find(p => p.id === selectedProcId) || PROCEDURES[0];
       const med = MEDICATIONS.find(m => m.id === selectedMedId) || MEDICATIONS[0];
-      const dateStr = document.getElementById("procDateInput").value;
-      const g = computeGuidance(proc, med, selectedDfg, dateStr);
+      const g = computeGuidance(proc, med, selectedDfg);
       currentCrText = g.crText;
 
       const container = document.getElementById("decisionResultContainer");
       container.innerHTML = `
-        <div class="result-card status-${g.statusKey}">
-          <div class="result-banner status-${g.statusKey}">
-            <div class="verdict-main">
-              <div class="verdict-icon">${g.statusIcon}</div>
-              <div class="verdict-label-group">
-                <span class="verdict-kicker">${proc.title} × ${med.title}</span>
-                <div class="verdict-title">${g.statusLabel}</div>
+        <div class="result-hero status-${g.statusKey}">
+          <div class="verdict-strip status-${g.statusKey}">
+            <div class="verdict-left">
+              <div class="verdict-badge-icon">${g.statusIcon}</div>
+              <div class="verdict-texts">
+                <div class="verdict-pair">${proc.title} • ${med.title}</div>
+                <div class="verdict-action">${g.statusLabel}</div>
               </div>
             </div>
-            <button type="button" class="copy-cr-btn" onclick="copyCurrentCr(this)">
-              <span>📋 Copier la consigne</span>
-            </button>
+            <button type="button" class="copy-mini-btn" onclick="copyCurrentCr(this)">📋 Copier</button>
           </div>
 
-          <div class="protocol-details-grid">
-            <div class="detail-box highlight">
-              <span class="detail-kicker">1. Avant le geste (Arrêt / Adaptation)</span>
-              <div class="detail-value">${g.preGesteTitle}</div>
-              <div class="detail-note">${g.preGesteDetail.replace(/\n/g, '<br>')}</div>
-            </div>
-
-            <div class="detail-box highlight">
-              <span class="detail-kicker">2. Reprise post-procédure</span>
-              <div class="detail-value">${g.repriseTitle}</div>
-              <div class="detail-note">${g.repriseDetail}</div>
-            </div>
-
-            <div class="detail-box">
-              <span class="detail-kicker">3. Rappel Geste & Molécule</span>
-              <div class="detail-value">${proc.title}</div>
-              <div class="detail-note">
-                <strong>Catégorie :</strong> ${proc.categoryFull}<br>
-                <strong>Spécialités :</strong> ${med.brands}
-              </div>
-            </div>
-          </div>
-
-          ${g.timeline.length > 0 ? `
-            <div class="calendar-strip">
-              <div class="cal-title">📅 Calendrier personnalisé pour un geste le ${formatDateFr(addDays(dateStr, 0))}</div>
-              <div class="cal-steps">
-                ${g.timeline.map(st => `
-                  <div class="cal-step">
-                    <span class="cal-step-date">${st.dateLabel}</span>
-                    <span class="cal-step-desc">${st.desc}</span>
-                  </div>
-                `).join("")}
+          ${g.showDfg ? `
+            <div class="dfg-inline-bar">
+              <span class="dfg-inline-label">Fonction rénale (DFG) :</span>
+              <div class="dfg-inline-pills">
+                <button type="button" class="dfg-chip ${selectedDfg === 'gt50' ? 'active' : ''}" onclick="setDfg('gt50')">≥ 50 mL/min</button>
+                <button type="button" class="dfg-chip ${selectedDfg === '30to50' ? 'active' : ''}" onclick="setDfg('30to50')">30 – 49</button>
+                <button type="button" class="dfg-chip ${selectedDfg === 'lt30' ? 'active' : ''}" onclick="setDfg('lt30')">&lt; 30</button>
               </div>
             </div>
           ` : ''}
+
+          <div class="before-after-grid">
+            <div class="ba-box">
+              <span class="ba-kicker">Avant le geste</span>
+              <div class="ba-main">${g.beforeMain}</div>
+              ${g.beforeSub ? `<div class="ba-sub">${g.beforeSub}</div>` : ''}
+            </div>
+            <div class="ba-box">
+              <span class="ba-kicker">Reprise après le geste</span>
+              <div class="ba-main">${g.afterMain}</div>
+              ${g.afterSub ? `<div class="ba-sub">${g.afterSub}</div>` : ''}
+            </div>
+          </div>
         </div>
       `;
     }
@@ -2284,15 +1636,15 @@
     function copyCurrentCr(btn) {
       if (!currentCrText) return;
       navigator.clipboard.writeText(currentCrText).then(() => {
-        const old = btn.innerHTML;
-        btn.innerHTML = "<span>✓ Copié dans le presse-papier !</span>";
-        setTimeout(() => { btn.innerHTML = old; }, 1800);
+        const old = btn.textContent;
+        btn.textContent = "✓ Copié";
+        setTimeout(() => { btn.textContent = old; }, 1500);
       }).catch(() => {});
     }
 
-    // =========================================================================
-    // FULL MATRIX RENDERER (VIEW 2)
-    // =========================================================================
+    // =================================================================
+    // TABLEAU MOBILE (CARTES) + DESKTOP (GRILLE)
+    // =================================================================
 
     function formatBadgeCell(procId, colKey, val, proc) {
       const medMap = {
@@ -2318,13 +1670,8 @@
         return `<span class="badge-cell arret" ${clickAttr}>✕ Arrêt</span>`;
       }
       if (val === "poursuite_ou_adaptation") {
-        const sub = proc.id === "genou" ? "si lavage" : "si capsulodistension";
-        return `
-          <div class="badge-stack" ${clickAttr}>
-            <span class="badge-cell poursuite">✓ Poursuite</span>
-            <span class="badge-cell adaptation" style="font-size:10px;">✓ Adaptation ${sub}</span>
-          </div>
-        `;
+        const sub = proc.id === "genou" ? "Adapt. si lavage" : "Adapt. si distension";
+        return `<span class="badge-cell adaptation" ${clickAttr}>✓ Poursuite / ${sub}</span>`;
       }
       return "—";
     }
@@ -2332,7 +1679,15 @@
     function jumpToSimulator(procId, medId) {
       selectedProcId = procId;
       selectedMedId = medId;
-      selectedCat = "Tous";
+      const p = PROCEDURES.find(x => x.id === procId);
+      if (p) {
+        selectedCat = p.category;
+        document.getElementById("selectedProcLabel").textContent = p.title;
+      }
+      const m = MEDICATIONS.find(x => x.id === medId);
+      if (m) {
+        document.getElementById("selectedMedLabel").textContent = m.title;
+      }
       renderCategoryPills();
       renderProcedureChoices();
       renderMedChoices();
@@ -2341,96 +1696,109 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function renderFullMatrix() {
+    function renderAllMatrices() {
       const q = (document.getElementById("matrixSearchInput").value || "").toLowerCase().trim();
-      const table = document.getElementById("fullMatrixTable");
-
       const filtered = PROCEDURES.filter(p => {
-        return !q || p.title.toLowerCase().includes(q) || p.subtitle.toLowerCase().includes(q) || p.categoryFull.toLowerCase().includes(q);
+        const matchCat = matrixCat === "Tous" || p.category === matrixCat;
+        const matchQ = !q || p.title.toLowerCase().includes(q) || p.subtitle.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
+        return matchCat && matchQ;
       });
 
+      // 1. Mobile Cards View
+      const mobileContainer = document.getElementById("mobileMatrixContainer");
+      mobileContainer.innerHTML = filtered.map(p => `
+        <div class="m-proc-card">
+          <div class="m-proc-top">
+            <div>
+              <h3 class="m-proc-title">${p.title}</h3>
+              <div style="font-size:11.5px; color:var(--ink-muted); margin-top:1px;">${p.subtitle}</div>
+            </div>
+            <span class="m-proc-cat">${p.category}</span>
+          </div>
+          <div class="m-med-grid">
+            <div class="m-med-cell" onclick="jumpToSimulator('${p.id}', 'aspirine')">
+              <span class="m-med-name">Aspirine</span>
+              ${formatBadgeCell(p.id, 'aspirine', p.cells.aspirine, p)}
+            </div>
+            <div class="m-med-cell" onclick="jumpToSimulator('${p.id}', 'clopidogrel')">
+              <span class="m-med-name">Autre AAP</span>
+              ${formatBadgeCell(p.id, 'autre_aap', p.cells.autre_aap, p)}
+            </div>
+            <div class="m-med-cell" onclick="jumpToSimulator('${p.id}', 'bitherapie_aap')">
+              <span class="m-med-name">Aspirine+AAP</span>
+              ${formatBadgeCell(p.id, 'bitherapie_aap', p.cells.bitherapie_aap, p)}
+            </div>
+            <div class="m-med-cell" onclick="jumpToSimulator('${p.id}', 'warfarine')">
+              <span class="m-med-name">AVK</span>
+              ${formatBadgeCell(p.id, 'avk', p.cells.avk, p)}
+            </div>
+            <div class="m-med-cell" onclick="jumpToSimulator('${p.id}', 'aod_xaban')">
+              <span class="m-med-name">AOD</span>
+              ${formatBadgeCell(p.id, 'aod', p.cells.aod, p)}
+            </div>
+            <div class="m-med-cell" onclick="jumpToSimulator('${p.id}', 'hbpm')">
+              <span class="m-med-name">Héparines</span>
+              ${formatBadgeCell(p.id, 'hbpm', p.cells.hbpm, p)}
+            </div>
+          </div>
+        </div>
+      `).join("");
+
+      // 2. Desktop Table View
+      const table = document.getElementById("fullMatrixTable");
       const thead = `
         <thead>
           <tr>
-            <th rowspan="2" colspan="2">Geste interventionnel</th>
+            <th rowspan="2">Geste interventionnel</th>
             <th colspan="3">Anti-agrégant plaquettaire (AAP)</th>
-            <th>Antivitamine K (AVK)</th>
-            <th>Anticoagulants oraux directs (AOD)</th>
-            <th colspan="3">Héparines</th>
+            <th>AVK</th>
+            <th>AOD</th>
+            <th>Héparines</th>
           </tr>
           <tr class="sub-header">
-            <th><strong>Aspirine seul</strong><br>Kardégic®, Résitune®, Aspirine Protect®</th>
-            <th><strong>Autre AAP</strong><br>Clopidogrel (Plavix®), Prasugrel (Efient®), Ticagrélor (Brilique®)</th>
+            <th><strong>Aspirine seul</strong><br>Kardégic®, Résitune®</th>
+            <th><strong>Autre AAP</strong><br>Plavix®, Efient®, Brilique®</th>
             <th><strong>Aspirine + AAP</strong><br>Duoplavin®</th>
-            <th>Warfarine (Coumadine®), Fluindione (Préviscan®), Acénocoumarol (Sintrom®)</th>
-            <th>Apixaban (Eliquis®), Rivaroxaban (Xarelto®), Edoxaban (Lixiana®), Dabigatran (Pradaxa®)</th>
-            <th><strong>HBPM</strong><br>Lovenox®, Innohep®</th>
-            <th><strong>HNF SC</strong><br>Héparine calcique</th>
-            <th><strong>HNF IVSE</strong><br>Héparine sodique</th>
+            <th>Coumadine®, Préviscan®, Sintrom®</th>
+            <th>Eliquis®, Xarelto®, Lixiana®, Pradaxa®</th>
+            <th>HBPM (Lovenox®), HNF SC / IVSE</th>
           </tr>
         </thead>
       `;
 
-      // Group rows by categoryFull for clean rowspan
-      const groups = [];
-      filtered.forEach(p => {
-        let g = groups.find(item => item.cat === p.categoryFull);
-        if (!g) {
-          g = { cat: p.categoryFull, items: [] };
-          groups.push(g);
-        }
-        g.items.push(p);
-      });
-
-      let tbody = "<tbody>";
-      groups.forEach(g => {
-        g.items.forEach((p, idx) => {
-          tbody += "<tr>";
-          if (idx === 0) {
-            tbody += `<td class="cat-cell" rowspan="${g.items.length}">${g.cat}</td>`;
-          }
-          tbody += `
-            <td class="proc-cell" onclick="jumpToSimulator('${p.id}', '${selectedMedId}')">${p.title}</td>
-            <td>${formatBadgeCell(p.id, 'aspirine', p.cells.aspirine, p)}</td>
-            <td>${formatBadgeCell(p.id, 'autre_aap', p.cells.autre_aap, p)}</td>
-            <td>${formatBadgeCell(p.id, 'bitherapie_aap', p.cells.bitherapie_aap, p)}</td>
-            <td>${formatBadgeCell(p.id, 'avk', p.cells.avk, p)}</td>
-            <td>${formatBadgeCell(p.id, 'aod', p.cells.aod, p)}</td>
-            <td>${formatBadgeCell(p.id, 'hbpm', p.cells.hbpm, p)}</td>
-            <td>${formatBadgeCell(p.id, 'hnf_sc', p.cells.hnf_sc, p)}</td>
-            <td>${formatBadgeCell(p.id, 'hnf_ivse', p.cells.hnf_ivse, p)}</td>
-          `;
-          tbody += "</tr>";
-        });
-      });
-      tbody += "</tbody>";
+      const tbody = `
+        <tbody>
+          ${filtered.map(p => `
+            <tr>
+              <td class="proc-cell" onclick="jumpToSimulator('${p.id}', '${selectedMedId}')">
+                <div>${p.title}</div>
+                <div style="font-size:10px; color:var(--ink-muted); font-weight:500;">${p.category}</div>
+              </td>
+              <td>${formatBadgeCell(p.id, 'aspirine', p.cells.aspirine, p)}</td>
+              <td>${formatBadgeCell(p.id, 'autre_aap', p.cells.autre_aap, p)}</td>
+              <td>${formatBadgeCell(p.id, 'bitherapie_aap', p.cells.bitherapie_aap, p)}</td>
+              <td>${formatBadgeCell(p.id, 'avk', p.cells.avk, p)}</td>
+              <td>${formatBadgeCell(p.id, 'aod', p.cells.aod, p)}</td>
+              <td>${formatBadgeCell(p.id, 'hbpm', p.cells.hbpm, p)}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      `;
 
       table.innerHTML = thead + tbody;
     }
 
-    // Init
     (function init() {
       try {
         const saved = localStorage.getItem(THEME_STORAGE_KEY);
         if (saved) applyTheme(saved);
       } catch (e) {}
 
-      // Default date to tomorrow for practical simulation
-      const dateInput = document.getElementById("procDateInput");
-      if (dateInput) {
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 4);
-        const yyyy = tomorrow.getFullYear();
-        const mm = String(tomorrow.getMonth() + 1).padStart(2, "0");
-        const dd = String(tomorrow.getDate()).padStart(2, "0");
-        dateInput.value = `${yyyy}-${mm}-${dd}`;
-      }
-
       renderCategoryPills();
       renderProcedureChoices();
       renderMedChoices();
       renderDecisionResult();
-      renderFullMatrix();
+      renderAllMatrices();
     })();
   </script>
 </body>

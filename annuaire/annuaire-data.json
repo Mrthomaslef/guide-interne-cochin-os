@@ -426,6 +426,17 @@
     "building": "Bâtiment Ollier"
   },
   {
+    "id": "tel-ortho-corsia-ruterana",
+    "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
+    "name": "Chirurgie Orthopédique — Dr Simon CORSIA & Dr Paul RUTERANA (Mme Hélène Bard)",
+    "role": "Secrétariat Dr S. Corsia & Dr P. Ruterana : 11493 • RDV CS Orthopédie : 13038",
+    "poste": "11493 / 13038",
+    "phone": "01 58 41 14 93",
+    "fax": "",
+    "email": "helene.bard@aphp.fr / simon.corsia@aphp.fr / paul.ruterana@aphp.fr",
+    "building": "Bâtiment Ollier"
+  },
+  {
     "id": "tel-rhumato-allanore",
     "category": "Services Partenaires (Ortho, Rhumato, Anesth, Anapath)",
     "name": "Service de Rhumatologie (Pr Y. ALLANORE — Mme Canvel)",
