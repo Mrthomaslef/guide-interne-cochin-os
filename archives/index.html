@@ -2165,7 +2165,7 @@
 
     // Auto-update: home-screen web apps (iOS) keep old pages for a long time.
     // On open and when the app comes back to the foreground, compare with version.json and reload if newer.
-    const APP_VERSION = "2026-11-05.2";
+    const APP_VERSION = "2026-11-05.3";
     function checkForNewVersion() {
       fetch(`version.json?ts=${Date.now()}`, { cache: "no-store" })
         .then(r => (r.ok ? r.json() : null))
