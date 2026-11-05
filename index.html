@@ -745,7 +745,7 @@
         </a>
 
         <!-- 07 : GESTION ANTICOAGULANTS & AAP -->
-        <a href="./anticoagulants/index.html?v=2026-11-05.4" class="app-key key-anticoag">
+        <a href="./anticoagulants/index.html?v=2026-11-05.5" class="app-key key-anticoag">
           <div class="key-top">
             <span class="key-index">07 // PROTOCOLE RI</span>
             <span class="key-arrow">→</span>
@@ -770,7 +770,7 @@
   <script>
     // Auto-update: home-screen web apps (iOS) keep old pages for a long time.
     // On open and when the app comes back to the foreground, compare with version.json and reload if newer.
-    const APP_VERSION = "2026-11-05.4";
+    const APP_VERSION = "2026-11-05.5";
     function checkForNewVersion() {
       fetch(`version.json?ts=${Date.now()}`, { cache: "no-store" })
         .then(r => (r.ok ? r.json() : null))
@@ -859,7 +859,7 @@
       } else if (e.key === "6") {
         window.location.href = "./infiltrations/index.html?v=2026-11-04.6";
       } else if (e.key === "7") {
-        window.location.href = "./anticoagulants/index.html?v=2026-11-05.4";
+        window.location.href = "./anticoagulants/index.html?v=2026-11-05.5";
       } else if (e.key === "8") {
         window.location.href = "./archives/index.html";
       }
