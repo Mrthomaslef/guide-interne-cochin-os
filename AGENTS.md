@@ -29,7 +29,7 @@ Ces règles sont extraites chaque nuit des inputs et corrections de Thomas. **Ap
 ```text
 # Active Instincts (11/13 | project=guide-interne-cochin-os)
 - [0.98][GLOBAL][ui-pwa] fullscreen-launch-and-controller-verify: WHEN Lors de la création ou configuration d'un lanceur de jeu (Recomp, Pegasus, Moonlight), d'un lecteur vidéo (Stremio/Film) ou d'un bouton 'Jouer direct' -> Toujours forcer l'ouverture en plein écran d'emblée (sans modale ni pop-up bloquante), vérifier le mapping manette (8BitDo) et la présence des sauvegardes avant d'annoncer que c'est terminé.
-- [0.98][GLOBAL][ui-pwa] mobile-first-no-overflow-no-zoom: WHEN Lors de la création d'interfaces web, de tableaux cliniques ou de boutons interactifs consultés sur iPhone / mobile -> Empêcher le zoom au double-clic (touch-action: manipulation), garantir zéro débordement horizontal des tableaux sur mobile et privilégier des interfaces épurées orientées action directe.
+- [0.98][GLOBAL][workflow] mobile-first-no-overflow-no-zoom: WHEN Lors de la création d'interfaces web, de tableaux cliniques ou de boutons interactifs consultés sur iPhone / mobile -> Empêcher le zoom au double-clic (touch-action: manipulation), garantir zéro débordement horizontal des tableaux sur mobile et privilégier des interfaces épurées orientées action directe.
 - [0.98][PROJECT:COCHIN][cochin-ri] anticoag-alert-badge-and-short-text: WHEN Affichage d'une alerte hémostase / anticoagulant sur une fiche patient (Agenda RI ou Gestion Anticoagulants) -> Afficher uniquement un badge/logo discret d'alerte hémostase (sans dupliquer tout le dossier patient au clic) et générer un texte d'arrêt/reprise court (2-3 lignes), lisible et adapté au geste et à la molécule.
 - [0.95][GLOBAL][ui-pwa] pull-to-refresh-systematic: WHEN Lors de la création ou modification d'une application web ou PWA mobile/desktop -> Implanter systématiquement le Pull-to-Refresh tactile (touch) et souris (mouse) avec overscroll-behavior-y: contain et vibration haptique.
 - [0.95][GLOBAL][security] t3-vault-keychain-only: WHEN Lorsqu'un identifiant, secret, token API ou mot de passe est requis ou fourni -> Ne jamais demander ni afficher de mot de passe en clair dans le chat. Toujours interroger /Users/thomaslefevre/.t3/bin/t3-vault ou utiliser request_secret (delivery: file) puis t3-vault set.
@@ -43,6 +43,7 @@ Ces règles sont extraites chaque nuit des inputs et corrections de Thomas. **Ap
 - Dès que Thomas exprime une préférence récurrente ou corrige un comportement en session, enregistrez l'instinct immédiatement :
   `/Users/thomaslefevre/.t3/bin/t3-instincts learn --id "<slug>" --trigger "<quand>" --action "<action>" --project "$PWD"`
 <!-- SUPER_AGENT_ROUTER_END -->
+
 
 
 
