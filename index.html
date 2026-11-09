@@ -69,6 +69,10 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    a, button, input {
+      touch-action: manipulation;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
@@ -78,7 +82,46 @@
       min-height: 100dvh;
       overflow-y: auto;
       overflow-x: hidden;
+      overscroll-behavior-y: contain;
       transition: background-color 0.18s ease, color 0.18s ease;
+    }
+
+    /* Pull-to-Refresh circular arrow indicator (no text) */
+    .ptr-indicator {
+      position: fixed;
+      top: calc(env(safe-area-inset-top, 0px) + 10px);
+      left: 50%;
+      margin-left: -18px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1.5px solid var(--line);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--vermilion);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 250;
+      transform: translateY(-20px);
+      transition: opacity 0.15s ease, transform 0.18s ease;
+    }
+    html.negatoscope .ptr-indicator {
+      color: var(--xray);
+    }
+    .ptr-indicator svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+    .ptr-indicator.spinning svg {
+      animation: ptrSpin 0.7s linear infinite;
+    }
+    @keyframes ptrSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     /* Radiographic calibration grid */
@@ -103,7 +146,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: calc(env(safe-area-inset-top, 0px) + 16px) 16px calc(env(safe-area-inset-bottom, 0px) + 18px);
+      padding: calc(env(safe-area-inset-top, 0px) + 16px) 16px calc(env(safe-area-inset-bottom, 0px) + 28px);
       gap: 14px;
     }
 
@@ -571,6 +614,20 @@
       background: var(--vermilion);
       color: #fff;
     }
+    .key-anatomie {
+      border-color: var(--violet);
+    }
+    html.negatoscope .key-anatomie {
+      border-color: var(--violet);
+    }
+    .key-anatomie .key-index {
+      background: var(--violet);
+      color: #fff;
+    }
+    html.negatoscope .key-anatomie .key-index {
+      background: var(--violet);
+      color: #0F0720;
+    }
     .key-sub {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
@@ -600,6 +657,12 @@
   </style>
 </head>
 <body>
+  <div class="ptr-indicator" id="ptrIndicator" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12a9 9 0 1 1-2.64-6.36" />
+      <polyline points="21 3 21 9 15 9" />
+    </svg>
+  </div>
   <div class="console-wrap">
     <div>
       <!-- Top Instrument Header -->
@@ -746,13 +809,23 @@
         </a>
 
         <!-- 07 : ARCHIVES DES INTERNES (CAS · COURS · BIBLIO) -->
-        <a href="./archives/index.html" class="app-key key-archives span-2">
+        <a href="./archives/index.html" class="app-key key-archives">
           <div class="key-top">
             <span class="key-index">07 // ARCHIVES PDF</span>
             <span class="key-arrow">→</span>
           </div>
           <h2 class="key-title">Archives des Internes</h2>
           <div class="key-sub">BONE CLUB · CAS DU MARDI · BIBLIO · COURS</div>
+        </a>
+
+        <!-- 08 : QUIZ ANATOMIE (IMAIOS MSK) -->
+        <a href="https://mrthomaslef.github.io/anatomie-quiz/" class="app-key key-anatomie">
+          <div class="key-top">
+            <span class="key-index">08 // E-ANATOMY</span>
+            <span class="key-arrow">↗</span>
+          </div>
+          <h2 class="key-title">Quiz Anatomie</h2>
+          <div class="key-sub">MEMBRE SUP · MEMBRE INF · RACHIS · IMAIOS</div>
         </a>
       </main>
     </div>
@@ -761,9 +834,9 @@
   <script>
     // Auto-update: home-screen web apps (iOS) keep old pages for a long time.
     // On open and when the app comes back to the foreground, compare with version.json and reload if newer.
-    const APP_VERSION = "2026-11-06.1";
+    const APP_VERSION = "2026-11-09.1";
     function checkForNewVersion() {
-      fetch(`version.json?ts=${Date.now()}`, { cache: "no-store" })
+      return fetch(`version.json?ts=${Date.now()}`, { cache: "no-store" })
         .then(r => (r.ok ? r.json() : null))
         .then(j => {
           if (!j || !j.version || j.version === APP_VERSION) return;
@@ -844,28 +917,20 @@
       } else if (e.key === "3") {
         window.location.href = "https://mrthomaslef.github.io/biblioosteo/";
       } else if (e.key === "4") {
-        window.location.href = "https://radio-thomas-ten.vercel.app";
+        window.location.href = "https://radio-thomas-ten.vercel.app/#/";
       } else if (e.key === "5") {
         window.location.href = "./infiltrations/index.html?v=2026-11-04.6";
       } else if (e.key === "6") {
         window.location.href = "./anticoagulants/index.html?v=2026-11-05.6";
       } else if (e.key === "7") {
         window.location.href = "./archives/index.html";
+      } else if (e.key === "8") {
+        window.location.href = "https://mrthomaslef.github.io/anatomie-quiz/";
       }
     });
 
-    // Init
-    (function init() {
-      try {
-        const saved = localStorage.getItem(THEME_STORAGE_KEY);
-        if (saved) applyTheme(saved);
-      } catch (e) {}
-
-      updateClock();
-      setInterval(updateClock, 15000);
-
-      // Fetch live guard / today's info from agenda-internes
-      fetch("https://mrthomaslef.github.io/agenda-internes/internes_data.json")
+    function refreshLiveGuard() {
+      return fetch(`https://mrthomaslef.github.io/agenda-internes/internes_data.json?ts=${Date.now()}`, { cache: "no-store" })
         .then(r => r.ok ? r.json() : null)
         .then(data => {
           if (!data) return;
@@ -891,6 +956,113 @@
           }
         })
         .catch(() => {});
+    }
+
+    function initPullToRefresh() {
+      const ptr = document.getElementById("ptrIndicator");
+      if (!ptr) return;
+      const svg = ptr.querySelector("svg");
+      const THRESHOLD = 64;
+      let startY = null;
+      let pulling = false;
+      let crossedThreshold = false;
+      let refreshing = false;
+
+      function onStart(clientY) {
+        if (refreshing || window.scrollY > 2) return;
+        startY = clientY;
+        pulling = false;
+        crossedThreshold = false;
+      }
+
+      function onMove(clientY, ev) {
+        if (startY === null || refreshing) return;
+        if (window.scrollY > 2) {
+          startY = null;
+          return;
+        }
+        const dy = clientY - startY;
+        if (dy <= 6) return;
+        pulling = true;
+        if (ev && ev.cancelable) ev.preventDefault();
+        const damped = Math.min(dy * 0.48, 92);
+        const ratio = Math.min(damped / THRESHOLD, 1);
+        ptr.style.opacity = String(Math.min(ratio * 1.15, 1));
+        ptr.style.transform = `translateY(${Math.round(damped - 18)}px)`;
+        if (svg) svg.style.transform = `rotate(${Math.round(damped * 4.2)}deg)`;
+        if (ratio >= 1 && !crossedThreshold) {
+          crossedThreshold = true;
+          if (navigator.vibrate) {
+            try { navigator.vibrate(12); } catch (e) {}
+          }
+        } else if (ratio < 1) {
+          crossedThreshold = false;
+        }
+      }
+
+      async function onEnd() {
+        if (startY === null) return;
+        startY = null;
+        if (!pulling) return;
+        pulling = false;
+
+        if (crossedThreshold && !refreshing) {
+          refreshing = true;
+          if (svg) svg.style.transform = "";
+          ptr.classList.add("spinning");
+          ptr.style.opacity = "1";
+          ptr.style.transform = "translateY(38px)";
+          updateClock();
+          await Promise.all([
+            refreshLiveGuard(),
+            checkForNewVersion(),
+            new Promise(r => setTimeout(r, 450))
+          ]);
+          ptr.classList.remove("spinning");
+          refreshing = false;
+        }
+        ptr.style.opacity = "0";
+        ptr.style.transform = "translateY(-20px)";
+        if (svg) svg.style.transform = "";
+      }
+
+      window.addEventListener("touchstart", e => {
+        if (e.touches && e.touches.length === 1) onStart(e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener("touchmove", e => {
+        if (e.touches && e.touches.length === 1) onMove(e.touches[0].clientY, e);
+      }, { passive: false });
+      window.addEventListener("touchend", onEnd, { passive: true });
+      window.addEventListener("touchcancel", onEnd, { passive: true });
+
+      let mouseDown = false;
+      window.addEventListener("mousedown", e => {
+        if (e.button !== 0) return;
+        mouseDown = true;
+        onStart(e.clientY);
+      });
+      window.addEventListener("mousemove", e => {
+        if (!mouseDown) return;
+        onMove(e.clientY, null);
+      });
+      window.addEventListener("mouseup", () => {
+        if (!mouseDown) return;
+        mouseDown = false;
+        onEnd();
+      });
+    }
+
+    // Init
+    (function init() {
+      try {
+        const saved = localStorage.getItem(THEME_STORAGE_KEY);
+        if (saved) applyTheme(saved);
+      } catch (e) {}
+
+      updateClock();
+      setInterval(updateClock, 15000);
+      refreshLiveGuard();
+      initPullToRefresh();
     })();
   </script>
 </body>
