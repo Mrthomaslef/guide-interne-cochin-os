@@ -628,6 +628,16 @@
       background: var(--violet);
       color: #0F0720;
     }
+    .key-tcg {
+      border-color: var(--amber);
+    }
+    .key-tcg .key-index {
+      background: var(--amber);
+      color: #fff;
+    }
+    html.negatoscope .key-tcg .key-index {
+      color: #1A1003;
+    }
     .key-sub {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
@@ -827,6 +837,16 @@
           <h2 class="key-title">Quiz Anatomie</h2>
           <div class="key-sub">MEMBRE SUP · MEMBRE INF · RACHIS · IMAIOS</div>
         </a>
+
+        <!-- 09 : MSK TCG (CARTES D'IMAGERIE) -->
+        <a href="https://mrthomaslef.github.io/msk-tcg/" class="app-key key-tcg span-2">
+          <div class="key-top">
+            <span class="key-index">09 // CARTES</span>
+            <span class="key-arrow">↗</span>
+          </div>
+          <h2 class="key-title">MSK TCG</h2>
+          <div class="key-sub">198 CARTES D'IMAGERIE · BOOSTERS · CLASSEUR</div>
+        </a>
       </main>
     </div>
   </div>
@@ -834,7 +854,7 @@
   <script>
     // Auto-update: home-screen web apps (iOS) keep old pages for a long time.
     // On open and when the app comes back to the foreground, compare with version.json and reload if newer.
-    const APP_VERSION = "2026-11-09.1";
+    const APP_VERSION = "2026-11-18.1";
     function checkForNewVersion() {
       return fetch(`version.json?ts=${Date.now()}`, { cache: "no-store" })
         .then(r => (r.ok ? r.json() : null))
