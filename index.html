@@ -734,11 +734,11 @@
         <span class="sem-progress-pill" id="semBadge">S1 / 26</span>
       </div>
 
-      <!-- Top Banner : Je fais mes quiz journaliers (Chemin Quiz Cochin) -->
-      <a href="https://radio-thomas-ten.vercel.app/#/" class="daily-quiz-banner">
+      <!-- Top Banner : parcours du semestre Cochin–HEGP (Quiz Cochin) -->
+      <a href="https://quizcotten.fr/#/semestre" class="daily-quiz-banner">
         <div class="daily-quiz-left">
-          <span class="daily-quiz-badge">CHEMIN DU JOUR</span>
-          <span class="daily-quiz-text">Je fais mes quiz journaliers</span>
+          <span class="daily-quiz-badge">PARCOURS SEMESTRE</span>
+          <span class="daily-quiz-text">Je révise le chapitre de la semaine</span>
         </div>
         <span class="daily-quiz-cta">GO ↗</span>
       </a>
@@ -791,7 +791,7 @@
         </a>
 
         <!-- 04 : QUIZ COURS -->
-        <a href="https://radio-thomas-ten.vercel.app/#/" class="app-key key-quiz2">
+        <a href="https://quizcotten.fr/#/semestre" class="app-key key-quiz2">
           <div class="key-top">
             <span class="key-index">04</span>
             <span class="key-arrow">↗</span>
@@ -854,7 +854,7 @@
   <script>
     // Auto-update: home-screen web apps (iOS) keep old pages for a long time.
     // On open and when the app comes back to the foreground, compare with version.json and reload if newer.
-    const APP_VERSION = "2026-11-18.3";
+    const APP_VERSION = "2026-11-18.4";
     function checkForNewVersion() {
       return fetch(`version.json?ts=${Date.now()}`, { cache: "no-store" })
         .then(r => (r.ok ? r.json() : null))
@@ -937,7 +937,7 @@
       } else if (e.key === "3") {
         window.location.href = "https://mrthomaslef.github.io/biblioosteo/";
       } else if (e.key === "4") {
-        window.location.href = "https://radio-thomas-ten.vercel.app/#/";
+        window.location.href = "https://quizcotten.fr/#/semestre";
       } else if (e.key === "5") {
         window.location.href = "./infiltrations/index.html?v=2026-11-04.6";
       } else if (e.key === "6") {
